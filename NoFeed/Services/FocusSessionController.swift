@@ -139,6 +139,13 @@ final class FocusSessionController {
         // A session the user just asked for is never already tucked away.
         self.isMinimized = false
 
+        // A pass granted during an earlier session must not survive into this
+        // one. `ShieldReconciler` treats an open window as outranking every
+        // enforcer, so without this a session started inside one would run its
+        // full countdown over a phone with no shields on it — the same silent
+        // failure the sub-15-minute registration bug produced.
+        UnlockWindow.clear()
+
         beginPhase(.focus, minutes: focusMinutes)
 
         blocking.startBlocking(block, allowing: allow, blockAll: blockAll,
@@ -155,7 +162,8 @@ final class FocusSessionController {
         // The block screen renders in another process and reads this to say how
         // much quiet is left.
         ActiveSessionInfo.set(profileName: profileName,
-                              endsAt: focusStartedAt.addingTimeInterval(TimeInterval(focusMinutes * 60)))
+                              endsAt: focusStartedAt.addingTimeInterval(TimeInterval(focusMinutes * 60)),
+                              isStrict: isStrict)
 
         // Persist so the session is recorded even if iOS kills the app while
         // it's backgrounded during the session.
@@ -239,7 +247,8 @@ final class FocusSessionController {
                                endsAt: phaseStart.addingTimeInterval(TimeInterval(totalSeconds)),
                                phase: .focus)
             ActiveSessionInfo.set(profileName: profileName,
-                                  endsAt: phaseStart.addingTimeInterval(TimeInterval(totalSeconds)))
+                                  endsAt: phaseStart.addingTimeInterval(TimeInterval(totalSeconds)),
+                                  isStrict: isStrict)
             startTicker()
         }
     }
@@ -318,7 +327,8 @@ final class FocusSessionController {
                            endsAt: phaseStart.addingTimeInterval(TimeInterval(totalSeconds)),
                            phase: .focus)
         ActiveSessionInfo.set(profileName: profileName,
-                              endsAt: phaseStart.addingTimeInterval(TimeInterval(totalSeconds)))
+                              endsAt: phaseStart.addingTimeInterval(TimeInterval(totalSeconds)),
+                              isStrict: isStrict)
         persistSnapshot()
         startTicker()
         Haptics.light()

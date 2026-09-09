@@ -106,6 +106,29 @@ enum ShieldTheme {
         )
         let primary = ShieldConfiguration.Label(text: "Back to focus", color: onTone)
 
+        // The second button is back, on different terms.
+        //
+        // The old one tried to exempt *this app* and could not name it (see the
+        // note above). This one lifts everything for a fixed window, which needs
+        // no token and so works on every shield, category or not. It is drawn
+        // only when there is a real pass behind it:
+        //
+        //   · the user set a duration — off by default, because a blocker should
+        //     not ship with its own way out already switched on; and
+        //   · no strict session is running — strict mode's whole promise is that
+        //     there is no early exit, and a door on that screen would break it.
+        //
+        // Both conditions are read from the App Group, the only channel this
+        // process has. A button that cannot deliver is worse than no button, so
+        // when either fails the screen stays one-button exactly as before.
+        let secondary: ShieldConfiguration.Label? = {
+            guard UnlockWindow.isEnabled, !ActiveSessionInfo.isStrict else { return nil }
+            return ShieldConfiguration.Label(
+                text: "Unlock for \(UnlockWindow.configuredMinutes) minutes",
+                color: secondaryText
+            )
+        }()
+
         // No icon. The words carry the screen on their own.
         //
         // The comp draws a door here — a 190pt seam of light. It cannot be
@@ -131,7 +154,8 @@ enum ShieldTheme {
             title: title,
             subtitle: subtitle,
             primaryButtonLabel: primary,
-            primaryButtonBackgroundColor: tone
+            primaryButtonBackgroundColor: tone,
+            secondaryButtonLabel: secondary
         )
     }
 }

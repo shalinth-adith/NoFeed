@@ -35,6 +35,22 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
 
     override func intervalDidEnd(for activity: DeviceActivityName) {
         super.intervalDidEnd(for: activity)
+
+        // Close the pass explicitly before reconciling, and do not rely on the
+        // clock to have overtaken it.
+        //
+        // This wake-up IS the end of the unlock window, so the two instants are
+        // the same by construction. `ShieldReconciler` treats an open window as
+        // outranking everything, so arriving even a millisecond early — or
+        // exactly on the boundary — made it clear the shields and return, with
+        // nothing left scheduled to try again. The shields then stayed off until
+        // the app was next opened, which is exactly what happened on device.
+        //
+        // Relying on expiry here was the mistake: it only helps if something
+        // reconciles *after* the window ends, and this was the one thing that
+        // would have.
+        if activity == .unlockWindow { UnlockWindow.clear() }
+
         // Re-assert whatever is STILL active instead of clearing the whole store —
         // otherwise ending one window (or the one-off focus session) lifts a
         // schedule that is still in its window. Runs even if the app was killed.

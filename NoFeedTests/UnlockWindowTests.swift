@@ -144,6 +144,30 @@ struct UnlockWindowTests {
         }
     }
 
+    /// The regression, stated as the hazard it is.
+    ///
+    /// A pass is still open a moment before it expires — which is correct, and is
+    /// precisely why `DeviceActivityMonitorExtension.intervalDidEnd` must *clear*
+    /// the window rather than trust the clock to have overtaken it. That wake-up
+    /// is the end of the window by construction, so arriving a hair early found
+    /// `isOpen` true, took the reconciler's suppression branch, re-cleared the
+    /// shields, and left nothing scheduled to try again. On device the shields
+    /// stayed off until the app was next opened.
+    ///
+    /// The extension is a separate target and cannot be exercised from here, so
+    /// this pins the semantics its correctness depends on rather than the call.
+    @Test func aWindowIsStillOpenAMomentBeforeItExpires() {
+        withCleanState {
+            UnlockWindow.configuredMinutes = 15
+            // Half a second short of expiry — the size of the race.
+            UnlockWindow.open(now: Date().addingTimeInterval(-15 * 60 + 0.5))
+            #expect(UnlockWindow.isOpen())
+            // ...and an explicit close does not care what the clock says.
+            UnlockWindow.clear()
+            #expect(!UnlockWindow.isOpen())
+        }
+    }
+
     @Test func clearingClosesAnOpenWindow() {
         withCleanState {
             UnlockWindow.configuredMinutes = 60

@@ -195,6 +195,7 @@ targets:
       - path: Shared/AppGroup.swift
       - path: Shared/DistractionLog.swift
       - path: Shared/UnlockWindow.swift
+      - path: Shared/UnlockActivity.swift
       - path: Shared/ShieldApplier.swift
     settings:
       base:

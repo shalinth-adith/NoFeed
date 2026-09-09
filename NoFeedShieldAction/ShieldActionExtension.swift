@@ -26,12 +26,6 @@ import Foundation
 import ManagedSettings
 import ManagedSettingsUI
 
-extension DeviceActivityName {
-    /// The interval whose *end* puts the shields back. Nothing is enforced while
-    /// it runs — it exists purely so the system wakes `NoFeedMonitor` on time.
-    static let unlockWindow = Self("nofeed.unlock.window")
-}
-
 final class ShieldActionExtension: ShieldActionDelegate {
     override func handle(action: ShieldAction,
                          for application: ApplicationToken,
@@ -95,9 +89,23 @@ final class ShieldActionExtension: ShieldActionDelegate {
 
     private func startCloser(at until: Date) {
         let calendar = Calendar.current
+
+        // Wake a minute PAST the window rather than exactly on it.
+        //
+        // Belt to the braces of `UnlockWindow.clear()` in the monitor's
+        // `intervalDidEnd`. The two instants used to coincide by construction, so
+        // a wake-up arriving on or a hair before the boundary found the window
+        // still open and re-cleared the shields instead of restoring them. Either
+        // fix alone closes that; both together mean the restore does not depend on
+        // the order two clocks happen to tick in.
+        //
+        // Costs the user nothing they would notice — the pass they were promised
+        // is honoured in full, and a minute later the shields come back.
+        let wake = until.addingTimeInterval(60)
+
         let schedule = DeviceActivitySchedule(
             intervalStart: calendar.dateComponents([.hour, .minute, .second], from: Date()),
-            intervalEnd: calendar.dateComponents([.hour, .minute, .second], from: until),
+            intervalEnd: calendar.dateComponents([.hour, .minute, .second], from: wake),
             repeats: false
         )
         do {

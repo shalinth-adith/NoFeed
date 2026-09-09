@@ -75,6 +75,6 @@ struct SessionShareCardTests {
     @Test func suggestsARealFilename() throws {
         let image = try #require(SessionShareCardRenderer.image(for: summary(minutes: 25)))
         let card = SharedSessionCard(image: image, minutes: 25)
-        #expect(card.suggestedName == "zen-ly-25-min")
+        #expect(card.suggestedName == "nofeed-25-min")
     }
 }

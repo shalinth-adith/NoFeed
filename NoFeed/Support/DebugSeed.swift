@@ -187,6 +187,31 @@ enum DebugSeed {
             session.note = "\(demoMarker) · \(what)"
         }
 
+        // Blocked-attempt counts, so a demo week can actually show the sentence
+        // the weekly recap is built around ("you reached for a blocked app N
+        // times, and stopped every time"). Without these the seeded week reports
+        // "Nothing pulled at you this week", which is the one branch of the recap
+        // that does not demonstrate anything.
+        //
+        // Uneven on purpose — a flat count across seven days looks generated,
+        // which it is. Guarded by the same `isSeeded` check above, so relaunching
+        // into an already-seeded store does not double them.
+        // Spaced seven minutes apart, not stacked on one timestamp:
+        // `recordAttempt` drops repeats inside a 1.5s window (iOS asks for the
+        // shield configuration more than once per app open, and without that
+        // guard a single glance would count three times). Seeding them all at
+        // 11:00 therefore records exactly one per day — which is how this fixture
+        // first produced "4 distractions" for a week meant to have seventeen.
+        let attemptsPerDay = [3, 5, 2, 7, 4, 1, 1]
+        for (offset, count) in attemptsPerDay.enumerated() where offset <= todayOffset {
+            guard let day = calendar.date(byAdding: .day, value: offset, to: weekStart) else { continue }
+            for i in 0..<count {
+                guard let at = calendar.date(byAdding: .minute, value: 11 * 60 + i * 7, to: day)
+                else { continue }
+                DistractionLog.recordAttempt(on: at)
+            }
+        }
+
         try? context.save()
     }
 

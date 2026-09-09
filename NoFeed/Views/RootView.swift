@@ -19,11 +19,17 @@ extension Notification.Name {
     /// Posted by screens that want to land the user on the Focus tab (e.g. the
     /// Insights first-run "Begin your first focus" call).
     static let noFeedOpenFocus = Notification.Name("noFeedOpenFocus")
+
+    /// Posted when the weekly recap notification is tapped. Handled here rather
+    /// than on a tab for the same reason the session cover is (see below): the
+    /// tap can arrive with any tab selected.
+    static let noFeedOpenRecap = Notification.Name("noFeedOpenRecap")
 }
 
 struct RootView: View {
     @Environment(FocusSessionController.self) private var session
     @State private var selection = 0
+    @State private var showingRecap = false
 
     /// The running session covers the whole app, not just the Focus tab.
     ///
@@ -82,6 +88,16 @@ struct RootView: View {
                 session.surface()
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .noFeedOpenRecap)) { _ in
+            // Never over a running session. The cover on this same view is
+            // already presenting, and stacking a sheet on it is the flaky case;
+            // more to the point, pulling someone out of the session they are in
+            // to show them last week's numbers is the wrong trade. The recap
+            // keeps: it stays reachable from the row on Insights.
+            guard !session.hasScreenToShow else { return }
+            showingRecap = true
+        }
+        .sheet(isPresented: $showingRecap) { WeeklyRecapView() }
         .fullScreenCover(isPresented: isShowingSession) {
             switch session.phase {
             case .focus, .breakTime: SessionView(onMinimize: { session.minimize() })

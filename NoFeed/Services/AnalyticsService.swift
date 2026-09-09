@@ -121,6 +121,75 @@ final class AnalyticsService {
         return calendar.dateInterval(of: .weekOfYear, for: today)?.start ?? today
     }
 
+    // MARK: - Weekly recap
+
+    /// The current calendar week, gathered into a `WeeklyRecap`.
+    ///
+    /// "Current" is right because the recap is delivered on the *last* day of the
+    /// locale's week (see `NotificationService.scheduleWeeklyRecap`), so at the
+    /// moment it fires this week is the week that is ending. Anchoring to the
+    /// calendar rather than to a hardcoded Sunday is what keeps that true in the
+    /// US, where the week starts on Sunday and a "Sunday recap" would otherwise
+    /// summarise a week six hours old.
+    func weeklyRecap() -> WeeklyRecap {
+        let calendar = Calendar.current
+        let start = Self.startOfWeek(calendar: calendar)
+        let end = calendar.date(byAdding: .day, value: 7, to: start) ?? start
+        let stats = calendarWeekStats()
+
+        // Abandoned sessions are why this asks for the unfiltered fetch: one
+        // walked-out-of session downgrades "stopped every time" to "almost".
+        let held = !history.focusSessions(from: start, to: end).contains { $0.endedEarly }
+
+        // Anything completed before this week means there is a real basis for
+        // comparison, even if last week itself was empty. Without this an app
+        // opened for the first time on a Friday would claim it did "45m less
+        // than the week before" against a week that never happened.
+        let hadPrevious = history.completedFocusSessions()
+            .contains { ($0.startedAt ?? .distantFuture) < start }
+
+        return WeeklyRecap(
+            weekStart: start,
+            focusMinutes: stats.reduce(0) { $0 + $1.focusMinutes },
+            previousMinutes: previousCalendarWeekMinutes(),
+            sessionCount: calendarWeekSessionCount(),
+            attempts: stats.reduce(0) { $0 + $1.attempts },
+            heldEveryTime: held,
+            days: stats.map { WeeklyRecap.Day(label: $0.label, minutes: $0.focusMinutes) },
+            hadPreviousWeek: hadPrevious
+        )
+    }
+
+    /// Arm — or clear — the weekly recap notification for the end of this week.
+    ///
+    /// The single place that decision is made. Three callers need it and they
+    /// must not disagree: app foreground (`NoFeedApp`), the settings toggle, and
+    /// the session summary — the last because finishing a session in the
+    /// foreground never produces a `scenePhase` change, so without it the first
+    /// session of a week would not arm the recap until the app was backgrounded
+    /// and reopened.
+    ///
+    /// Refuses to arm an empty week. An unprompted "0m of quiet across 0
+    /// sessions" is a guilt notification, and this app does not send those.
+    ///
+    /// Defaults to on when the key was never written — `bool(forKey:)` reads an
+    /// unset key as false, which would ship the feature silently disabled.
+    func armWeeklyRecap() {
+        let defaults = AppGroup.defaults
+        let enabled = defaults.object(forKey: "weeklyRecapEnabled") as? Bool ?? true
+        let recap = weeklyRecap()
+
+        guard enabled, !recap.isEmpty else {
+            NotificationService.shared.cancelWeeklyRecap()
+            return
+        }
+        NotificationService.shared.scheduleWeeklyRecap(
+            hour: defaults.object(forKey: "weeklyRecapHour") as? Int ?? 18,
+            minute: defaults.object(forKey: "weeklyRecapMinute") as? Int ?? 0,
+            body: recap.notificationBody
+        )
+    }
+
     // MARK: - Score
 
     /// 0–100 score: focus volume + consistency, minus distraction attempts.

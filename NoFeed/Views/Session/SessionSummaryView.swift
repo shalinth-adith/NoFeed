@@ -52,6 +52,12 @@ struct SessionSummaryView: View {
                 shareCard = SharedSessionCard(image: image,
                                               minutes: summary.completedMinutes)
             }
+            // Finishing a session in the foreground produces no `scenePhase`
+            // change, so the app's own re-arm on `.active` does not run here.
+            // Without this the first session of a week would not arm the recap
+            // until the app happened to be backgrounded and reopened, and every
+            // later session would leave its numbers stale.
+            analytics.armWeeklyRecap()
         }
     }
 

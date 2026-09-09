@@ -73,6 +73,23 @@ final class SessionHistory {
         return (try? context.fetch(request)) ?? []
     }
 
+    /// Focus sessions started in `[start, end)` — **abandoned ones included**.
+    ///
+    /// Everything else here reads `completedFocusSessions()`, which filters the
+    /// abandoned ones out. The weekly recap is the one caller that needs them: it
+    /// claims the user "stopped every time" they reached for a blocked app, and
+    /// that sentence is only true if no session was walked out of. Asking the
+    /// completed-only fetch would make the claim unfalsifiable and therefore wrong.
+    func focusSessions(from start: Date, to end: Date) -> [FocusSession] {
+        let request = FocusSession.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "kind == %@ AND startedAt >= %@ AND startedAt < %@",
+            "focus", start as NSDate, end as NSDate
+        )
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \FocusSession.startedAt, ascending: true)]
+        return (try? context.fetch(request)) ?? []
+    }
+
     func todayFocusMinutes() -> Int {
         let calendar = Calendar.current
         return completedFocusSessions()

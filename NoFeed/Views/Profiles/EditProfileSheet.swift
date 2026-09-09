@@ -287,6 +287,15 @@ struct EditProfileSheet: View {
                       identifier: "profile-edit-choose-allowed") { showAllowPicker = true }
             QuietHairline(color: ZTheme.Palette.glassFill)
 
+            // The allowed row read as "None chosen" with nothing to say why
+            // anyone would choose one, so the feature went unfound — including
+            // by the person who wrote it. It is the answer to "what if someone
+            // needs to reach me", which is the most common reason people give up
+            // on a blocker, so it says so instead of waiting to be discovered.
+            // Same line in `ProfileEditView`; the two editors split creation and
+            // editing, and someone hits exactly one of them.
+            QuietHelper(text: "Allowed apps are never blocked. Most people allow a messaging app, so someone important can still reach them.")
+
             if !authorization.isAuthorized {
                 QuietHelper(text: "Screen Time access is off, so these choices can\u{2019}t be enforced yet.",
                             color: ZTheme.Palette.warn)

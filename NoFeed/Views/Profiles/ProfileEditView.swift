@@ -367,6 +367,14 @@ struct ProfileEditView: View {
                                value: countText(draft.allow.applicationTokens.count)) {
                 showAllowPicker = true
             }
+
+            // Every other section in this editor ends with a line saying what the
+            // control is for; Blocking was the only one that did not, and the
+            // allowed-apps row read as "None chosen" with nothing to say why
+            // anyone would choose one. It is the answer to "what if someone needs
+            // to reach me", which is the most common reason people stop using a
+            // blocker — so the row says so rather than waiting to be discovered.
+            QuietHelper(text: "Allowed apps are never blocked. Most people allow a messaging app, so someone important can still reach them.")
         }
         .animation(ZTheme.Motion.smooth, value: draft.blockAllApps)
     }

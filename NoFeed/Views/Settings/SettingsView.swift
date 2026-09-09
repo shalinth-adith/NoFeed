@@ -250,7 +250,26 @@ struct SettingsView: View {
             // constraint rather than a preference. Also says it lifts everything,
             // since a pass that only looked like it covered one app would be the
             // more dangerous misunderstanding.
-            Text("Adds a second button to the block screen that lifts every block for a while, then puts them back. Fifteen minutes is the shortest window iOS can reliably close on its own. Never offered during a strict session.")
+            //
+            // The last sentence used to read "Never offered during a strict
+            // session", which is true of the code and misleading to the reader.
+            // A strict *schedule* is not a session until `ScheduleAutoStart.run`
+            // converts it into one, and that only happens in the foreground — so
+            // between a strict schedule firing and NoFeed next being opened,
+            // `ActiveSessionInfo.isStrict` is false and the button is drawn.
+            //
+            // The honest fix is not to describe that rule. "Unless you have not
+            // opened the app since the schedule started" is accurate and useless
+            // to someone staring at a block screen. So this promises the WEAKER
+            // guarantee and lets the code over-deliver: a strict session is
+            // always covered, a schedule may not be. For a commitment device the
+            // error has to run that way round — claiming less protection than is
+            // delivered is recoverable, claiming more is what breaks trust.
+            //
+            // Fixing the behaviour instead (propagate schedule strictness through
+            // ActivityShieldStore so the extensions can read it) would let this
+            // promise cover both. Until then it must not.
+            Text("Adds a second button to the block screen that lifts every block for a while, then puts them back. Fifteen minutes is the shortest window iOS can reliably close on its own. A strict session always hides it; a scheduled block may still offer it, so leave this off for a schedule you don\u{2019}t want to talk your way out of.")
         }
         .listRowBackground(glassRow)
         .onChange(of: unlockMinutes) { _, new in

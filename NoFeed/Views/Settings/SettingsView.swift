@@ -328,10 +328,24 @@ struct SettingsView: View {
     private var aboutSection: some View {
         Section("About") {
             LabeledContent("Version", value: appVersion)
-            LabeledContent("Phase", value: "2 — Sessions & Scheduling")
         }
         .listRowBackground(glassRow)
     }
+
+    // There was a "Phase — 2 · Sessions & Scheduling" row here. It is gone, and
+    // should not come back:
+    //
+    //   · It was the development roadmap leaking into a shipped screen. Nobody
+    //     outside this repo knows what a phase is, and it answered no question a
+    //     user of the app was asking.
+    //   · It was a hardcoded string, so it could only ever go stale — and had.
+    //     The app has weekly recaps, share cards and unlock windows now, none of
+    //     which are "Sessions & Scheduling".
+    //   · Sitting directly under the version it read "Version 2.1 / Phase 2",
+    //     two unrelated 2s stacked, which looks like a bug even though it wasn't.
+    //
+    // Version stays because it answers a real question — the one asked whenever
+    // somebody reports something odd.
 
     private var reminderTime: Binding<Date> {
         Binding(

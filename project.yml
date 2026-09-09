@@ -153,6 +153,10 @@ targets:
       - path: Shared/PausedApp.swift
       # Read only to decide whether the block screen draws its second button.
       - path: Shared/UnlockWindow.swift
+      # Per-activity strictness, so a strict SCHEDULE (which is not a session and
+      # so is invisible to ActiveSessionInfo) also suppresses that button.
+      - path: Shared/ActivityShieldStore.swift
+      - path: Shared/SelectionCodec.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: me.adithyan.shalinth.Zenly.ZenlyShield
@@ -197,6 +201,13 @@ targets:
       - path: Shared/UnlockWindow.swift
       - path: Shared/UnlockActivity.swift
       - path: Shared/ShieldApplier.swift
+      # Re-checks strictness at the moment the pass is granted, not only where
+      # the button was drawn — the two happen in different processes. Both
+      # sources are needed: ActiveSessionInfo answers for an in-app session,
+      # ActivityShieldStore for a schedule that never became one.
+      - path: Shared/ActivityShieldStore.swift
+      - path: Shared/SelectionCodec.swift
+      - path: Shared/ActiveSessionInfo.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: me.adithyan.shalinth.Zenly.ZenlyShieldAction

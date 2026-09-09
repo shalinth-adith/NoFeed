@@ -395,7 +395,12 @@ final class ScheduleStore {
             blockAll: schedule.blockAllApps,
             start: start,
             end: end,
-            weekdaysMask: Int(schedule.weekdaysMask)
+            weekdaysMask: Int(schedule.weekdaysMask),
+            // Carries the schedule's own strict flag across the process boundary
+            // so the block screen can honour it before the app has ever been
+            // opened during the window. Without this a strict schedule read as
+            // non-strict to the shield and was offered the unlock pass.
+            isStrict: schedule.isStrict
         )
 
         // If the window is already open right now, apply the shields immediately.

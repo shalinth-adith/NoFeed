@@ -115,14 +115,24 @@ enum ShieldTheme {
         //
         //   · the user set a duration — off by default, because a blocker should
         //     not ship with its own way out already switched on; and
-        //   · no strict session is running — strict mode's whole promise is that
+        //   · nothing strict is enforcing — strict mode's whole promise is that
         //     there is no early exit, and a door on that screen would break it.
+        //
+        // Strictness is asked of BOTH sources, and it has to be. `ActiveSessionInfo`
+        // only ever describes an in-app session, so a strict *schedule* that fired
+        // while the app was closed read as non-strict and was offered the pass —
+        // it does not become a session until `ScheduleAutoStart.run` converts it,
+        // and that only runs in the foreground. `ActivityShieldStore` now carries
+        // the flag per activity, which covers the schedule case and the window
+        // before any conversion happens.
         //
         // Both conditions are read from the App Group, the only channel this
         // process has. A button that cannot deliver is worse than no button, so
         // when either fails the screen stays one-button exactly as before.
         let secondary: ShieldConfiguration.Label? = {
-            guard UnlockWindow.isEnabled, !ActiveSessionInfo.isStrict else { return nil }
+            guard UnlockWindow.isEnabled,
+                  !ActiveSessionInfo.isStrict,
+                  !ActivityShieldStore.anyActiveEnforcerIsStrict() else { return nil }
             return ShieldConfiguration.Label(
                 text: "Unlock for \(UnlockWindow.configuredMinutes) minutes",
                 color: secondaryText

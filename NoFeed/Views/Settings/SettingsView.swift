@@ -251,25 +251,24 @@ struct SettingsView: View {
             // since a pass that only looked like it covered one app would be the
             // more dangerous misunderstanding.
             //
-            // The last sentence used to read "Never offered during a strict
-            // session", which is true of the code and misleading to the reader.
-            // A strict *schedule* is not a session until `ScheduleAutoStart.run`
-            // converts it into one, and that only happens in the foreground — so
-            // between a strict schedule firing and NoFeed next being opened,
-            // `ActiveSessionInfo.isStrict` is false and the button is drawn.
+            // The last sentence says "anything strict", not "a strict session",
+            // and both words are load-bearing.
             //
-            // The honest fix is not to describe that rule. "Unless you have not
-            // opened the app since the schedule started" is accurate and useless
-            // to someone staring at a block screen. So this promises the WEAKER
-            // guarantee and lets the code over-deliver: a strict session is
-            // always covered, a schedule may not be. For a commitment device the
-            // error has to run that way round — claiming less protection than is
-            // delivered is recoverable, claiming more is what breaks trust.
+            // It briefly read "A strict session always hides it; a scheduled
+            // block may still offer it" — deliberately weaker than intended,
+            // because a strict SCHEDULE is not a session until
+            // `ScheduleAutoStart.run` converts it in the foreground, so one that
+            // fired while the app was closed was still offered the pass. That
+            // gap is now closed: `ActivityShieldStore` carries strictness per
+            // activity, and both `ShieldTheme` (which draws the button) and
+            // `ShieldActionExtension.grantPass` (which grants the pass) consult
+            // it alongside `ActiveSessionInfo`.
             //
-            // Fixing the behaviour instead (propagate schedule strictness through
-            // ActivityShieldStore so the extensions can read it) would let this
-            // promise cover both. Until then it must not.
-            Text("Adds a second button to the block screen that lifts every block for a while, then puts them back. Fifteen minutes is the shortest window iOS can reliably close on its own. A strict session always hides it; a scheduled block may still offer it, so leave this off for a schedule you don\u{2019}t want to talk your way out of.")
+            // Do not weaken or strengthen this sentence without checking those
+            // two call sites — it is the user-facing statement of what they
+            // enforce, and the whole value of strict mode is that the promise
+            // holds.
+            Text("Adds a second button to the block screen that lifts every block for a while, then puts them back. Fifteen minutes is the shortest window iOS can reliably close on its own. Never offered while anything strict is running — a session or a schedule.")
         }
         .listRowBackground(glassRow)
         .onChange(of: unlockMinutes) { _, new in

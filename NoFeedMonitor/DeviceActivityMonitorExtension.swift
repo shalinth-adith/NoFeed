@@ -27,6 +27,16 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
             guard (mask & (1 << weekday)) != 0 else { return }
         }
 
+        // A pass cannot survive into a strict window.
+        //
+        // The third way strictness leaked: a pass granted at 08:59 under a
+        // non-strict block was still open when a strict schedule began at 09:00,
+        // and `ShieldReconciler` lets an open window outrank every enforcer — so
+        // the strict window opened already suppressed. `FocusSessionController`
+        // clears the window when a *session* starts, but nothing did when a
+        // schedule started, because that path never runs in the app.
+        if ActivityShieldStore.isStrict(for: activity.rawValue) { UnlockWindow.clear() }
+
         // Reconcile to the union of every currently-active enforcer rather than
         // overwriting the store, so a newly-started window composes with any that
         // are already open instead of clobbering them.

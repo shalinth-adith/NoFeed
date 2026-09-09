@@ -150,7 +150,7 @@ struct SharedSessionCard: Transferable {
     let image: UIImage
     let minutes: Int
 
-    var suggestedName: String { "zen-ly-\(minutes)-min" }
+    var suggestedName: String { "nofeed-\(minutes)-min" }
 
     static var transferRepresentation: some TransferRepresentation {
         DataRepresentation(exportedContentType: .png) { card in

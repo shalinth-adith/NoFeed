@@ -102,6 +102,7 @@ struct NoFeedApp: App {
                 ScheduleAutoStart.run(schedules: schedules, session: session, profiles: profiles)
                 ScheduleCountdown.run(schedules: schedules, session: session, profiles: profiles)
                 rescheduleDailyReminder()
+                analytics.armWeeklyRecap()
             case .background:
                 BackgroundRefresh.schedule()
             default:

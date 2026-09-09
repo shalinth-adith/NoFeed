@@ -19,6 +19,15 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     private let challengeReminderID = "zenly.challenge.reminder"
     private let challengeDoneID = "zenly.challenge.done"
 
+    /// Note the prefix: `nofeed.`, not `zenly.` like its neighbours.
+    ///
+    /// The others keep the old spelling because they are already registered on
+    /// devices — renaming them would orphan a pending request that nothing could
+    /// then cancel. This one is new, has no installed base, and so has no reason
+    /// to inherit a name the app no longer goes by. Do not "fix" the
+    /// inconsistency by changing the ones above.
+    private let weeklyRecapID = "nofeed.weekly.recap"
+
     /// Install as the notification-center delegate. Without a delegate, iOS
     /// silently drops any notification that arrives while the app is in the
     /// foreground — schedule start reminders/alerts included. Call once at
@@ -36,6 +45,20 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         let id = notification.request.identifier
         if id == focusEndID || id == breakEndID { return [] }
         return [.banner, .sound, .list]
+    }
+
+    /// Handle a tap. Only the weekly recap opens a screen of its own — every
+    /// other alert either lands somewhere the app already goes on launch, or is
+    /// about a session whose own cover is already presenting.
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse) async {
+        let info = response.notification.request.content.userInfo
+        guard info["kind"] as? String == Self.weeklyRecapKind else { return }
+        // Posted rather than presented directly: only `RootView` knows whether a
+        // session cover is already up, and it owns the presentation either way.
+        await MainActor.run {
+            NotificationCenter.default.post(name: .noFeedOpenRecap, object: nil)
+        }
     }
 
     func requestAuthorization() async {
@@ -113,6 +136,66 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
 
     func cancelDailyBreakReminder() {
         center.removePendingNotificationRequests(withIdentifiers: [breakReminderID])
+    }
+
+    // MARK: - Weekly recap
+
+    /// Arm the weekly recap for the end of the current week, carrying `body`.
+    ///
+    /// Non-repeating, for the same reason `scheduleDailyReminder` is: the body is
+    /// *entirely* numbers, and a repeating `UNCalendarNotificationTrigger` would
+    /// deliver this week's totals every Sunday for the rest of time. It is re-armed
+    /// from `NoFeedApp` on every foreground and from `FocusSessionController` after
+    /// every completed session, so the numbers track the week as it fills in.
+    ///
+    /// The body can still go a little stale — someone who finishes a session on
+    /// Friday and does not open the app again gets Friday's totals on Sunday. That
+    /// is accepted rather than solved: the *screen* it opens recomputes from Core
+    /// Data, so a slightly-old banner still leads to correct numbers, and the
+    /// alternative (a background task racing the fire time) is far more machinery
+    /// than the gap deserves.
+    func scheduleWeeklyRecap(hour: Int, minute: Int, body: String) {
+        let content = UNMutableNotificationContent()
+        content.title = "Your week"
+        content.body = body
+        content.sound = .default
+        content.userInfo = ["kind": Self.weeklyRecapKind]
+
+        let next = Self.nextWeekEnd(hour: hour, minute: minute)
+        let comps = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: next)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
+        center.add(UNNotificationRequest(identifier: weeklyRecapID, content: content, trigger: trigger))
+    }
+
+    func cancelWeeklyRecap() {
+        center.removePendingNotificationRequests(withIdentifiers: [weeklyRecapID])
+        center.removeDeliveredNotifications(withIdentifiers: [weeklyRecapID])
+    }
+
+    /// Marks the recap notification so the tap handler can tell it apart from a
+    /// session or challenge alert and open the right screen.
+    static let weeklyRecapKind = "weeklyRecap"
+
+    /// The next time the **last day of the user's week** comes round at
+    /// `hour:minute`, strictly in the future.
+    ///
+    /// Not hardcoded to Sunday. `Calendar.current.firstWeekday` is Monday across
+    /// most of the world but Sunday in the US, and the recap summarises the
+    /// calendar week — so firing on a fixed Sunday evening would, for US users,
+    /// report a week that had been running for six hours. Deriving the last day
+    /// from `firstWeekday` keeps "the week just ending" true everywhere.
+    static func nextWeekEnd(hour: Int, minute: Int, from now: Date = Date(),
+                            calendar: Calendar = .current) -> Date {
+        // firstWeekday is 1...7 with 1 = Sunday. The day before it, wrapping.
+        let lastWeekday = calendar.firstWeekday == 1 ? 7 : calendar.firstWeekday - 1
+
+        var comps = DateComponents()
+        comps.weekday = lastWeekday
+        comps.hour = hour
+        comps.minute = minute
+
+        return calendar.nextDate(after: now, matching: comps,
+                                 matchingPolicy: .nextTime) ?? now.addingTimeInterval(7 * 86_400)
     }
 
     /// Morning nudge that a fresh daily challenge is waiting.

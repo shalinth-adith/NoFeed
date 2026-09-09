@@ -26,6 +26,7 @@ struct AnalyticsView: View {
     @State private var previousWeekMinutes = 0
     @State private var weekSessions = 0
     @State private var streak = 0
+    @State private var showingRecap = false
 
     /// The single accent — the active profile's Quiet tone.
     private var tone: Color { ZTheme.tone(forHex: profiles.activeProfile?.accentHex) }
@@ -53,6 +54,8 @@ struct AnalyticsView: View {
                                 .padding(.top, 28)
                             sessionRows
                             historyLink
+                            hairline()
+                            recapLink
 
                             sectionLabel("Goals")
                                 .padding(.top, 34)
@@ -68,6 +71,7 @@ struct AnalyticsView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
             .onAppear(perform: refresh)
+            .sheet(isPresented: $showingRecap) { WeeklyRecapView() }
         }
     }
 
@@ -154,6 +158,34 @@ struct AnalyticsView: View {
         .accessibilityLabel(
             "\(weekAttempts) \(weekAttempts == 1 ? "distraction" : "distractions") blocked this week"
             + (todayAttempts > 0 ? ", \(todayAttempts) today" : ""))
+    }
+
+    /// The recap's door inside the app.
+    ///
+    /// It has to have one. The notification is the reason most people will see a
+    /// recap, but a feature reachable *only* from a notification is invisible to
+    /// anyone who declined notification permission, turned the recap off, or
+    /// simply swiped the banner away — and it is the same screen either way.
+    private var recapLink: some View {
+        Button {
+            Haptics.light()
+            showingRecap = true
+        } label: {
+            HStack {
+                Text("Your week in review")
+                    .font(ZTheme.Font.body(15))
+                    .foregroundStyle(ZTheme.Palette.textPrimary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(ZTheme.Palette.text(0.30))
+            }
+            .padding(.vertical, 14)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("insights-weekly-recap")
+        .accessibilityHint("Opens this week's recap, with the time you focused and the distractions you turned down")
     }
 
     /// Push into the full chronological log. Insights shows only the 5 most

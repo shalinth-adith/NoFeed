@@ -16,6 +16,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(AuthorizationService.self) private var authorization
     @Environment(ProfileStore.self) private var profiles
+    @Environment(AnalyticsService.self) private var analytics
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     /// The name shown in the Focus greeting ("Good evening, <name>"). Empty by
@@ -29,6 +30,14 @@ struct SettingsView: View {
     @AppStorage("breakReminderEnabled", store: AppGroup.defaults) private var reminderEnabled = false
     @AppStorage("breakReminderHour", store: AppGroup.defaults) private var reminderHour = 15
     @AppStorage("breakReminderMinute", store: AppGroup.defaults) private var reminderMinute = 0
+    /// Defaults to **true**, unlike the break reminder above. The recap is a
+    /// once-a-week summary rather than a nudge, and it is suppressed entirely on
+    /// a week with nothing in it — so an unused install is never notified by it.
+    /// The default here and the `?? true` in `NoFeedApp.rescheduleWeeklyRecap`
+    /// must agree; a mismatch ships the feature silently off.
+    @AppStorage("weeklyRecapEnabled", store: AppGroup.defaults) private var recapEnabled = true
+    @AppStorage("weeklyRecapHour", store: AppGroup.defaults) private var recapHour = 18
+    @AppStorage("weeklyRecapMinute", store: AppGroup.defaults) private var recapMinute = 0
 
     /// A source the user picked but hasn't confirmed switching to yet.
     @State private var showProfiles = false
@@ -53,6 +62,7 @@ struct SettingsView: View {
                     goalSection
                     shieldSection
                     breakReminderSection
+                    weeklyRecapSection
                     aboutSection
                 }
                 .scrollContentBackground(.hidden)
@@ -218,6 +228,52 @@ struct SettingsView: View {
         .listRowBackground(glassRow)
     }
 
+    private var weeklyRecapSection: some View {
+        Section {
+            Toggle("Weekly recap", isOn: $recapEnabled)
+                .toggleStyle(.noFeed)
+                .accessibilityIdentifier("settings-weekly-recap")
+            if recapEnabled {
+                DatePicker("Send it at", selection: recapTime, displayedComponents: .hourAndMinute)
+            }
+        } header: {
+            Text("Weekly Recap")
+        } footer: {
+            // Says the day out loud because it is derived from the locale rather
+            // than fixed — Sunday for most readers, Saturday where the week
+            // starts on Sunday — and a setting that will not say when it fires
+            // is a setting people turn off.
+            Text("A summary of your week on \(lastDayOfWeekName) — hours focused, and how many times you reached for a blocked app and stopped. Skipped on weeks with no sessions.")
+        }
+        .listRowBackground(glassRow)
+        .onChange(of: recapEnabled) { _, _ in updateRecap() }
+        .onChange(of: recapHour) { _, _ in updateRecap() }
+        .onChange(of: recapMinute) { _, _ in updateRecap() }
+    }
+
+    private var recapTime: Binding<Date> {
+        Binding(
+            get: {
+                Calendar.current.date(bySettingHour: recapHour, minute: recapMinute,
+                                      second: 0, of: Date()) ?? Date()
+            },
+            set: { newValue in
+                let comps = Calendar.current.dateComponents([.hour, .minute], from: newValue)
+                recapHour = comps.hour ?? 18
+                recapMinute = comps.minute ?? 0
+            }
+        )
+    }
+
+    /// The name of the last day of the reader's week, matching the day
+    /// `NotificationService.nextWeekEnd` will actually pick.
+    private var lastDayOfWeekName: String {
+        let calendar = Calendar.current
+        let index = calendar.firstWeekday == 1 ? 7 : calendar.firstWeekday - 1
+        let symbols = calendar.weekdaySymbols          // [Sunday ... Saturday]
+        return symbols.indices.contains(index - 1) ? symbols[index - 1] : "Sunday"
+    }
+
     private var aboutSection: some View {
         Section("About") {
             LabeledContent("Version", value: appVersion)
@@ -252,5 +308,13 @@ struct SettingsView: View {
         } else {
             NotificationService.shared.cancelDailyBreakReminder()
         }
+    }
+
+    /// Re-arm the recap after a settings change rather than waiting for the next
+    /// foreground. The decision itself lives in `AnalyticsService.armWeeklyRecap`,
+    /// which reads these same keys — duplicating it here is how the toggle and
+    /// the app end up disagreeing about whether the recap is on.
+    private func updateRecap() {
+        analytics.armWeeklyRecap()
     }
 }

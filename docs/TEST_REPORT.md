@@ -1,4 +1,4 @@
-# Zenly — Test Execution Report
+# NoFeed — Test Execution Report
 
 ## Launch-readiness at a glance
 
@@ -33,7 +33,7 @@ deleted, so there is nothing left to test.
 
 ## 1. Scope — what could and could not be executed
 
-The plan is explicit that most of Zenly depends on Apple's Screen Time stack, which does not run on
+The plan is explicit that most of NoFeed depends on Apple's Screen Time stack, which does not run on
 the Simulator. That constraint dominated this run.
 
 | Bucket | Cases | Status |
@@ -53,10 +53,10 @@ inherently manual — I cannot drive a physical iPhone's Springboard.
 
 ## 2. Test results
 
-### 2.1 Unit tests — `ZenlyTests`
+### 2.1 Unit tests — `NoFeedTests`
 
 ```
-xcodebuild test-without-building -scheme Zenly -only-testing:ZenlyTests
+xcodebuild test-without-building -scheme NoFeed -only-testing:NoFeedTests
 → Executed 21 tests, 0 failures
 ```
 
@@ -68,10 +68,10 @@ These are the authority for the `[Sim logic]` cases: **TC-6.2** (score is 0 with
 0–100 with data), the accounting behind **TC-3.6** (ended-early sessions excluded from streak and
 today's minutes), **TC-5.1** weekday mask/summary, and **TC-8.2** challenge titles.
 
-### 2.2 UI tests — `ZenlyQuietSuite` (new, written for this run)
+### 2.2 UI tests — `NoFeedQuietSuite` (new, written for this run)
 
 ```
-xcodebuild test-without-building -scheme Zenly -only-testing:ZenlyUITests/ZenlyQuietSuite
+xcodebuild test-without-building -scheme NoFeed -only-testing:NoFeedUITests/NoFeedQuietSuite
 → Executed 14 tests, 2 skipped, 0 failures
 ```
 
@@ -109,11 +109,11 @@ Screenshot evidence: `docs/test-evidence/` (11 images, extracted from the result
 
 ```
 error: Build input file cannot be found:
-  …/Zenly/Resources/Fonts/.claude/logs/commands.log
+  …/NoFeed/Resources/Fonts/.claude/logs/commands.log
 ** TEST BUILD FAILED **   (CpResource + Ld __preview.dylib)
 ```
 
-`project.yml` declares `sources: - path: Zenly`, which makes XcodeGen sweep **everything** under
+`project.yml` declares `sources: - path: NoFeed`, which makes XcodeGen sweep **everything** under
 that folder — including the hidden `.claude/logs/` directory Claude Code writes. A stray
 `commands.log` was captured into the app's **Resources** build phase. Because `.claude/logs/` is
 `.gitignore`d, the file is absent on a fresh checkout while the committed-in-place
@@ -126,7 +126,7 @@ normal workflow). Build then succeeded and all testing proceeded.
 
 ```yaml
 sources:
-  - path: Zenly
+  - path: NoFeed
     excludes:
       - "**/.claude/**"
 ```
@@ -138,15 +138,15 @@ sources:
 ### Finding 1 — Five features are wired up but have no reachable UI (**High — RESOLVED**)
 
 `TasksView` is never presented anywhere in the app, and `AmbientSoundService`, `MusicController`
-and `CalendarService` are instantiated and injected in `ZenlyApp.swift` but **no view consumes
+and `CalendarService` are instantiated and injected in `NoFeedApp.swift` but **no view consumes
 them**:
 
 ```
 TasksView          → only its own definition; zero call sites
-AmbientSoundService→ only ZenlyApp.swift:22
-MusicController    → only ZenlyApp.swift:26
-CalendarService    → only ZenlyApp.swift:24
-AccountabilityService → ZenlyApp.swift:23 + LeaderboardView  ✅ (this one is fine)
+AmbientSoundService→ only NoFeedApp.swift:22
+MusicController    → only NoFeedApp.swift:26
+CalendarService    → only NoFeedApp.swift:24
+AccountabilityService → NoFeedApp.swift:23 + LeaderboardView  ✅ (this one is fine)
 ```
 
 `HomeView` declares only four environment dependencies (profiles, session, authorization,
@@ -168,7 +168,7 @@ delete the service and its test cases so the plan stops describing a product tha
 
 ### Finding 2 — The committed UI test suite is stale and fails 3/3 (**Medium**)
 
-`ZenlyUITests.swift` navigates to tabs that no longer exist:
+`NoFeedUITests.swift` navigates to tabs that no longer exist:
 
 ```
 testCreateProfileSaveWorks  → XCTAssertTrue failed - Profiles tab missing
@@ -179,7 +179,7 @@ testScheduleToggleWorks     → XCTAssertTrue failed - Schedules tab missing
 The tabs are now `Focus · Insights · Schedule · Settings`. "Profiles" is no longer a tab at all
 (it moved to Settings → Focus profiles, and a "New profile" row on Schedule), and "Schedules" was
 renamed singular. **The app is fine — the tests are out of date.** All three cases are correctly
-covered by the new `ZenlyQuietSuite`. Recommend deleting the three stale tests (I left them
+covered by the new `NoFeedQuietSuite`. Recommend deleting the three stale tests (I left them
 untouched rather than edit tests I wasn't asked to change).
 
 ### Finding 3 — TC-11.2: label/placeholder overlap at accessibility text sizes (**FIXED**)
@@ -191,7 +191,7 @@ See `docs/test-evidence/…2-Settings-XXXL.png`.
 Schedule and the splash render cleanly at XXXL. Home was not captured at XXXL (the screenshot
 fired during the splash crossfade) — worth a manual re-check.
 
-**Fixed** (`Zenly/Views/Settings/SettingsView.swift`): the row is now `nameRow`, which switches
+**Fixed** (`NoFeed/Views/Settings/SettingsView.swift`): the row is now `nameRow`, which switches
 from `HStack` to a stacked `VStack` when `dynamicTypeSize.isAccessibilitySize`. An `HStack` with
 `label / Spacer / TextField` leaves neither child enough width at accessibility sizes, so the
 field drew over the wrapped label. Re-captured at XXXL: label and placeholder now sit on separate
@@ -237,7 +237,7 @@ TC-3.5 path — the relaunched process has `activity == nil` while the system is
 timer, so every `end()` silently no-opped and the countdown was stranded. `start()` calls `end()`
 first, so a resumed session could also add a *second* activity alongside the orphan.
 
-**Fix** (`Zenly/Services/LiveActivityManager.swift`): `end()` now snapshots
+**Fix** (`NoFeed/Services/LiveActivityManager.swift`): `end()` now snapshots
 `Activity<FocusActivityAttributes>.activities` synchronously and ends every one, making it
 authoritative and idempotent regardless of process lifetime. The snapshot is taken before the
 `Task` on purpose — reading the list inside the task would let the sweep tear down the new
@@ -262,9 +262,9 @@ The plan has drifted from the Quiet redesign. These are plan bugs, not app bugs:
    `…/data/Library/Preferences/group.me.adithyan.shalinth.Zenly.plist` plus the matching
    `Containers/Shared/AppGroup/<uuid>` directory.
 
-2. **TC-1.1 copy is wrong.** The splash shows **"Zen-ly" / "A calm and simple way to stay
+2. **TC-1.1 copy is wrong.** The splash shows **"NoFeed" / "A calm and simple way to stay
    focused."** with a periwinkle ring + focus dot and a "TAP TO BEGIN" hint — not
-   "Zenly / Find your focus". It also auto-advances at **3.6s** (1.6s under Reduce Motion), not
+   "NoFeed / Find your focus". It also auto-advances at **3.6s** (1.6s under Reduce Motion), not
    ~2.2s.
 
 3. **TC-4.1 seeds four profiles**, not three: Work, Study, Gym **and Sleep**
@@ -284,13 +284,13 @@ items still need a real archive.
 
 | Item | Result | Evidence |
 |---|---|---|
-| No `91179` (ZenlyReport is ExtensionKit in `Extensions/`) | **PASS** | `Zenly.app/Extensions/ZenlyReport.appex`, `EXExtensionPointIdentifier = com.apple.deviceactivityui.report-extension` |
+| No `91179` (NoFeedReport is ExtensionKit in `Extensions/`) | **PASS** | `NoFeed.app/Extensions/NoFeedReport.appex`, `EXExtensionPointIdentifier = com.apple.deviceactivityui.report-extension` |
 | No `90349` (shield-action id) | **PASS** | `NSExtensionPointIdentifier = com.apple.ManagedSettings.shield-action-service` |
 | Export compliance not prompted | **PASS** | `ITSAppUsesNonExemptEncryption = false` in built `Info.plist` |
 | App icon 1024² light + dark | **PASS** | `AppIconLight.png` + `AppIconDark.png` (luminosity/dark) |
-| App Groups on all App IDs | **PASS** | `group.me.adithyan.shalinth.Zenly` on all 6 targets incl. ZenlyShield + ZenlyShieldAction |
-| Family Controls capability | **PASS** (config) | Zenly, ZenlyMonitor, ZenlyReport |
-| Family Controls **Distribution** entitlement granted | **PASS** | `iOS Team Store Provisioning Profile` for `…Zenly`, `…ZenlyMonitor`, `…ZenlyReport` all contain `com.apple.developer.family-controls = true` (team `649T62WKAQ`, valid to 2027-06-11). Apple only issues App Store profiles with this entitlement after approving the distribution request — so it is already granted; no request needs filing. |
+| App Groups on all App IDs | **PASS** | `group.me.adithyan.shalinth.Zenly` on all 6 targets incl. NoFeedShield + NoFeedShieldAction |
+| Family Controls capability | **PASS** (config) | NoFeed, NoFeedMonitor, NoFeedReport |
+| Family Controls **Distribution** entitlement granted | **PASS** | `iOS Team Store Provisioning Profile` for `…NoFeed`, `…NoFeedMonitor`, `…NoFeedReport` all contain `com.apple.developer.family-controls = true` (team `649T62WKAQ`, valid to 2027-06-11). Apple only issues App Store profiles with this entitlement after approving the distribution request — so it is already granted; no request needs filing. |
 | Archive uploads without entitlement errors | **NOT YET RUN** | Entitlement is in place (row above); still needs an actual `xcodebuild archive` + upload to confirm |
 | Privacy policy URL + App Privacy labels | **NOT VERIFIED** | App Store Connect, not in-repo |
 | TestFlight build installs; blocking works E2E | **BLOCKED** | Device required |
@@ -325,19 +325,19 @@ Mechanism confirmed by inspection, so this is structural rather than incidental:
   resumes with the correct remainder and the Live Activity restarts.
 - `finishFocus` records `startedAt: focusStartedAt` — the **original** start, not the reopen
   time — so a session finished on one day but reopened later is credited to the correct day and
-  the streak does not skew. `ZenlyTests` covers this bucketing.
+  the streak does not skew. `NoFeedTests` covers this bucketing.
 
 Residual (inherent to iOS, not a defect): the write happens on next app open, so a completed
-session is not in the store until the user reopens Zenly.
+session is not in the store until the user reopens NoFeed.
 
 ---
 
 ## 8. Changes made to the repo
 
 **Application source**
-- `Zenly/Services/LiveActivityManager.swift` — `end()` now sweeps all system activities (Finding 6).
-- `Zenly/Views/Settings/SettingsView.swift` — `nameRow` stacks at accessibility text sizes (Finding 3).
-- `Zenly/App/ZenlyApp.swift` — dropped 5 dead `@State` services, their injections, and the
+- `NoFeed/Services/LiveActivityManager.swift` — `end()` now sweeps all system activities (Finding 6).
+- `NoFeed/Views/Settings/SettingsView.swift` — `nameRow` stacks at accessibility text sizes (Finding 3).
+- `NoFeed/App/NoFeedApp.swift` — dropped 5 dead `@State` services, their injections, and the
   Spotify `onOpenURL` callback.
 - **Deleted** (~736 lines): `MusicController`, `Music/SpotifyController`, `Music/SpotifyConfig`,
   `AmbientSoundService`, `CalendarService`, `TaskService`, `Views/Tasks/TasksView`.
@@ -347,13 +347,13 @@ session is not in the store until the user reopens Zenly.
   [spotify]`, and the `NSAppleMusicUsageDescription` /
   `NSCalendarsFullAccessUsageDescription` / `NSRemindersFullAccessUsageDescription` purpose strings.
 - **Added** `PrivacyInfo.xcprivacy` to the app and all five extensions.
-- **Regenerated** `Zenly.xcodeproj` via `xcodegen` (untracked, generated) — also clears the stale
+- **Regenerated** `NoFeed.xcodeproj` via `xcodegen` (untracked, generated) — also clears the stale
   `commands.log` resource reference from §3.
 
 **Tests & docs**
-- **Added** `ZenlyUITests/ZenlyQuietSuite.swift` — 14 UI tests against the current Quiet UI.
+- **Added** `NoFeedUITests/NoFeedQuietSuite.swift` — 14 UI tests against the current Quiet UI.
 - **Added** `docs/test-evidence/` (11 screenshots) and this report.
-- **Not touched:** the three stale tests in `ZenlyUITests.swift` (Finding 2) — left for the owner
+- **Not touched:** the three stale tests in `NoFeedUITests.swift` (Finding 2) — left for the owner
   to delete.
 
 ---
@@ -373,9 +373,9 @@ session is not in the store until the user reopens Zenly.
    only way to clear the last checklist rows.
 
 **Worth doing, not blocking**
-4. Add `excludes: ["**/.claude/**"]` to the `Zenly` target in `project.yml` so a clean clone
+4. Add `excludes: ["**/.claude/**"]` to the `NoFeed` target in `project.yml` so a clean clone
    cannot hit the §3 build failure again.
-5. Delete the three stale tests in `ZenlyUITests.swift` (Finding 2).
+5. Delete the three stale tests in `NoFeedUITests.swift` (Finding 2).
 6. Fix the stale "Profiles tab" copy in `HomeView.swift` (Finding 5).
 7. Correct `TEST_CASES.md` per §5 — especially the clean-install prerequisite, which will keep
    producing false "onboarding is broken" reports.

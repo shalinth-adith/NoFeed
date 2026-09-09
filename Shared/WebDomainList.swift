@@ -1,6 +1,6 @@
 //
 //  WebDomainList.swift
-//  Zenly (shared: app + ZenlyMonitor)
+//  NoFeed (shared: app + NoFeedMonitor)
 //
 //  Parses a free-text list of allowed websites (for "research mode") into
 //  sanitized WebDomain values. Users type domains like "claude.ai, docs.google.com".

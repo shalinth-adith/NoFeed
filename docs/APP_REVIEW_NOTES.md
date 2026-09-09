@@ -11,11 +11,11 @@ Everything below is checked against the build at `35882ef`.
 
 ## Paste from here
 
-**Zen-ly needs a physical device.** Screen Time (Family Controls / Managed
+**NoFeed needs a physical device.** Screen Time (Family Controls / Managed
 Settings) does nothing at all in the Simulator — permission cannot be granted
 and no app can be blocked. Please test on an iPhone.
 
-Zen-ly is an iPhone app. It runs on iPad in iPhone compatibility mode; Screen
+NoFeed is an iPhone app. It runs on iPad in iPhone compatibility mode; Screen
 Time must be granted on whichever device is used.
 
 ### Seeing an app get blocked — about 60 seconds
@@ -28,7 +28,7 @@ Time must be granted on whichever device is used.
    **−** button to shorten the session if you like; five minutes is the
    minimum.
 4. Tap **Begin focus**.
-5. Leave Zen-ly and open any other app. Zen-ly's block screen appears in its
+5. Leave NoFeed and open any other app. NoFeed's block screen appears in its
    place: *"<App> is behind this door."* with a **Back to focus** button.
 
 No setup is required to see this. All four bundled profiles — Work, Study, Gym,
@@ -49,7 +49,7 @@ Sleep — block everything by default, so step 1 to step 5 is the whole path.
 
 ### Privacy
 
-Zen-ly uses Apple's Screen Time APIs. App usage stays on the device inside the
+NoFeed uses Apple's Screen Time APIs. App usage stays on the device inside the
 Family Controls sandbox — the app never receives, stores or transmits which
 apps the user has installed or opened. There is no account and no server.
 

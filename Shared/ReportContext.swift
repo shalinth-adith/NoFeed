@@ -1,6 +1,6 @@
 //
 //  ReportContext.swift
-//  Zenly (shared: app + ZenlyReport)
+//  NoFeed (shared: app + NoFeedReport)
 //
 //  The report context name must match between the app (which embeds the
 //  DeviceActivityReport) and the report extension (which renders it).

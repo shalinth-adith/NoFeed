@@ -1,6 +1,6 @@
 //
 //  SessionControlIntents.swift
-//  Zenly (shared: app + ZenlyWidget)
+//  NoFeed (shared: app + NoFeedWidget)
 //
 //  The button the Live Activity carries: "Resume" on a held session.
 //

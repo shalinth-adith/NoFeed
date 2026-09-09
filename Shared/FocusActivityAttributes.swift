@@ -1,6 +1,6 @@
 //
 //  FocusActivityAttributes.swift
-//  Zenly (shared: app + ZenlyWidget)
+//  NoFeed (shared: app + NoFeedWidget)
 //
 //  Live Activity model for the running focus/break timer. The app requests/ends
 //  the activity; the widget extension renders it (Lock Screen + Dynamic Island).

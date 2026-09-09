@@ -1,6 +1,6 @@
 //
 //  StatsSnapshot.swift
-//  Zenly (shared: app + ZenlyWidget)
+//  NoFeed (shared: app + NoFeedWidget)
 //
 //  Compact snapshot of today's stats written by the app and read by the widget
 //  (which can't easily reach Core Data from its own process).

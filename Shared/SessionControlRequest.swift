@@ -1,6 +1,6 @@
 //
 //  SessionControlRequest.swift
-//  Zenly (shared: app + ZenlyWidget)
+//  NoFeed (shared: app + NoFeedWidget)
 //
 //  The bridge behind the Live Activity's Resume / Again buttons.
 //

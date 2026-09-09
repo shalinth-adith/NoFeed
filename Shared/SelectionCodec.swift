@@ -1,6 +1,6 @@
 //
 //  SelectionCodec.swift
-//  Zenly (shared: app + ZenlyMonitor)
+//  NoFeed (shared: app + NoFeedMonitor)
 //
 //  Encodes/decodes FamilyActivitySelection to Data for storage in Core Data
 //  Binary attributes and the App-Group activity map.

@@ -1,9 +1,9 @@
 //
 //  DistractionLog.swift
-//  Zenly (shared: app + ZenlyShield)
+//  NoFeed (shared: app + NoFeedShield)
 //
 //  Counts "distraction attempts" — each time a blocked app's shield is shown.
-//  Written by the ZenlyShield extension, read by analytics. Per-day counts are
+//  Written by the NoFeedShield extension, read by analytics. Per-day counts are
 //  kept in the App Group so they survive across processes and launches.
 //
 

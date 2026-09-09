@@ -60,7 +60,7 @@ fastlane/test_output
 
 # XcodeGen: project.yml is the source of truth. The .xcodeproj is generated
 # by `xcodegen generate` and must NOT be committed or hand-edited.
-Zenly.xcodeproj/
+NoFeed.xcodeproj/
 
 # Local verification artifacts — regenerable, 60MB+ of PNGs. Evidence that is
 # meant to be kept lives in docs/test-evidence/ instead.

@@ -1,6 +1,6 @@
 //
 //  ActiveSessionInfo.swift
-//  Zenly (shared: app + ZenlyShield)
+//  NoFeed (shared: app + NoFeedShield)
 //
 //  The little the shield needs to know about the session that is blocking.
 //

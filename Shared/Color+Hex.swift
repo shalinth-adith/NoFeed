@@ -1,6 +1,6 @@
 //
 //  Color+Hex.swift
-//  Zenly
+//  NoFeed
 //
 //  Hex string <-> Color for profile/schedule accent colors stored in Core Data.
 //

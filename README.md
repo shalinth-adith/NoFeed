@@ -1,4 +1,4 @@
-# Zenly
+# NoFeed
 
 An iOS focus app that blocks distracting apps and websites during focus sessions —
 like Screen Time, but more powerful and user-friendly. Built with SwiftUI on Apple's
@@ -24,8 +24,8 @@ follow in later phases.
 The Xcode project is **generated** from `project.yml` — it is not committed.
 
 ```bash
-xcodegen generate      # creates Zenly.xcodeproj
-open Zenly.xcodeproj
+xcodegen generate      # creates NoFeed.xcodeproj
+open NoFeed.xcodeproj
 ```
 
 After changing targets, capabilities, or build settings, edit `project.yml` and re-run
@@ -37,16 +37,16 @@ Four targets sharing one App Group (`group.me.adithyan.shalinth.Zenly`):
 
 | Target | Type | Role |
 |---|---|---|
-| `Zenly` | app | UI, authorization, app picker, block toggle |
-| `ZenlyMonitor` | DeviceActivityMonitor extension | Schedule-driven blocking (Phase 2) |
-| `ZenlyShield` | ShieldConfiguration extension | Custom shield UI shown over blocked apps |
-| `ZenlyShieldAction` | ShieldAction extension | Shield button handling / override (strict mode) |
+| `NoFeed` | app | UI, authorization, app picker, block toggle |
+| `NoFeedMonitor` | DeviceActivityMonitor extension | Schedule-driven blocking (Phase 2) |
+| `NoFeedShield` | ShieldConfiguration extension | Custom shield UI shown over blocked apps |
+| `NoFeedShieldAction` | ShieldAction extension | Shield button handling / override (strict mode) |
 
 The app target follows **MVVM**:
 
 ```
-Zenly/
-├── App/         ZenlyApp.swift — composition root, injects services
+NoFeed/
+├── App/         NoFeedApp.swift — composition root, injects services
 ├── Views/       SwiftUI views (ContentView, BlockingView) — UI only
 ├── ViewModels/  @Observable presentation logic (BlockingViewModel)
 ├── Services/    System-framework wrappers (AuthorizationService, BlockingService)
@@ -59,7 +59,7 @@ shields via a **named** `ManagedSettingsStore`, so the extensions can manage the
 
 ## Verifying the blocking engine (on-device)
 
-1. Run `Zenly` on a physical iPhone from Xcode.
+1. Run `NoFeed` on a physical iPhone from Xcode.
 2. Grant Screen Time access (system Face ID / passcode prompt).
 3. Choose apps/websites to block, then tap **Block Now**.
 4. Try to open a blocked app → it's shielded. Tap **Stop Blocking** → it opens normally.

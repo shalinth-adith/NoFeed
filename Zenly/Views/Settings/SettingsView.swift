@@ -134,8 +134,10 @@ struct SettingsView: View {
         Section("Screen Time") {
             switch authorization.status {
             case .approved:
+                // Neutral Quiet chrome: the checkmark shape still reads as
+                // "granted"; no standout green competing with the flat palette.
                 Label("Access granted", systemImage: "checkmark.seal.fill")
-                    .foregroundStyle(ZTheme.Palette.teal)
+                    .foregroundStyle(ZTheme.Palette.textPrimary)
             default:
                 Button("Grant Screen Time Access") {
                     Task { await authorization.requestAuthorization() }

@@ -21,6 +21,10 @@ struct SessionSummaryView: View {
 
     @State private var newBadges: [BadgeDefinition] = []
     @State private var rating = 0
+    /// Rendered once when the screen appears rather than when the button is
+    /// tapped — ImageRenderer is synchronous, and doing it on tap puts a hitch
+    /// between the tap and the share sheet.
+    @State private var shareCard: SharedSessionCard?
 
     var body: some View {
         ZStack {
@@ -35,20 +39,53 @@ struct SessionSummaryView: View {
                 // celebration.
                 if summary.wasCompleted {
                     completed(summary)
+                        .overlay(alignment: .topTrailing) { shareButton(summary) }
                 } else {
                     endedEarly(summary)
                 }
             }
         }
         .onAppear {
-            if session.summary?.wasCompleted == true {
-                newBadges = achievements.evaluate()
+            guard let summary = session.summary, summary.wasCompleted else { return }
+            newBadges = achievements.evaluate()
+            if let image = SessionShareCardRenderer.image(for: summary) {
+                shareCard = SharedSessionCard(image: image,
+                                              minutes: summary.completedMinutes)
             }
         }
     }
 
     private func tone(_ summary: SessionSummary) -> Color {
         ZTheme.tone(forHex: summary.accentHex)
+    }
+
+    // MARK: - Share
+
+    /// A corner icon rather than a third stacked button. The comp leaves the
+    /// band under the stat empty on purpose and the file already argues against
+    /// turning this screen into a list; a standard iOS share glyph in the
+    /// trailing corner is discoverable without touching the vertical rhythm.
+    ///
+    /// Absent until the card has rendered, so the sheet can never open empty.
+    @ViewBuilder
+    private func shareButton(_ summary: SessionSummary) -> some View {
+        if let card = shareCard {
+            ShareLink(
+                item: card,
+                preview: SharePreview("\(summary.completedMinutes) minutes of focus",
+                                      image: Image(uiImage: card.image))
+            ) {
+                Image(systemName: "square.and.arrow.up")
+                    .font(.system(size: 17))
+                    .foregroundStyle(ZTheme.Palette.text(0.40))
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
+            }
+            .accessibilityLabel("Share this session")
+            .accessibilityIdentifier("summary-share")
+            .padding(.trailing, 10)
+            .padding(.top, 6)
+        }
     }
 
     // MARK: - 04 · Complete

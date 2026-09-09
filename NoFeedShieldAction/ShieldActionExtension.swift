@@ -72,6 +72,23 @@ final class ShieldActionExtension: ShieldActionDelegate {
     /// pure function of the clock, so the next reconcile from any source restores
     /// the shields. The interval only makes that prompt.
     private func grantPass(_ completionHandler: @escaping (ShieldActionResponse) -> Void) {
+        // Strictness is re-checked HERE, not only where the button was drawn.
+        //
+        // Drawing and pressing happen in two different processes at two different
+        // times, and the shield configuration on screen can be older than the
+        // state it described: a strict session or schedule can begin between the
+        // two. Checking only at render time meant a stale screen could still hand
+        // out a pass out of a block that promises none.
+        //
+        // The general shape of the bug this closes: the guard belonged at the
+        // privileged operation, and was sitting at the place that merely offered
+        // it.
+        guard !ActiveSessionInfo.isStrict,
+              !ActivityShieldStore.anyActiveEnforcerIsStrict() else {
+            completionHandler(.close)
+            return
+        }
+
         guard let until = UnlockWindow.open() else {
             // The setting was switched off between drawing the button and pressing
             // it. No pass, no pretending there was one.

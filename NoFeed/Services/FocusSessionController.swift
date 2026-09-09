@@ -152,7 +152,8 @@ final class FocusSessionController {
                                allowedWebDomains: allowedWebDomains)
         schedule.startOneOff(activity: .focusSession, block: block, allow: allow,
                              blockAll: blockAll, allowedWebDomains: allowedWebDomains,
-                             durationMinutes: focusMinutes)
+                             durationMinutes: focusMinutes,
+                             isStrict: isStrict)
         notifications.scheduleFocusEnd(after: TimeInterval(focusMinutes * 60),
                                        profileName: profileName)
         liveActivity.start(profileName: profileName, accentHex: accentHex,
@@ -264,7 +265,8 @@ final class FocusSessionController {
                              block: currentBlock, allow: currentAllow,
                              blockAll: currentBlockAll,
                              allowedWebDomains: currentAllowedWebDomains,
-                             durationMinutes: max(1, Int(ceil(Double(seconds) / 60))))
+                             durationMinutes: max(1, Int(ceil(Double(seconds) / 60))),
+                             isStrict: isStrict)
         blocking.startBlocking(currentBlock, allowing: currentAllow,
                                blockAll: currentBlockAll,
                                allowedWebDomains: currentAllowedWebDomains)
@@ -317,7 +319,8 @@ final class FocusSessionController {
         schedule.startOneOff(activity: .focusSession, block: currentBlock, allow: currentAllow,
                              blockAll: currentBlockAll,
                              allowedWebDomains: currentAllowedWebDomains,
-                             durationMinutes: max(1, Int(ceil(secondsLeft / 60))))
+                             durationMinutes: max(1, Int(ceil(secondsLeft / 60))),
+                             isStrict: isStrict)
         notifications.scheduleFocusEnd(after: secondsLeft, profileName: profileName)
         // Anchor the card to the (shifted) phase start, not to now — otherwise
         // the progress rule snaps back to empty every time you resume, and a

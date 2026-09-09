@@ -22,6 +22,7 @@ enum ActivityShieldStore {
     private static let endKey = "activityEndMinutesMap"
     private static let windowStartKey = "activityWindowStartMap"
     private static let windowEndKey = "activityWindowEndMap"
+    private static let strictKey = "activityStrictMap"
 
     /// - Parameters:
     ///   - weekdaysMask: bitmask of Calendar weekdays (1=Sun…7=Sat) the activity
@@ -38,6 +39,13 @@ enum ActivityShieldStore {
     ///     entry left behind by a killed app would come back to life at the same
     ///     clock time the next day. When this is set it decides `isActive` on its
     ///     own. Recurring schedules pass nil and keep the weekday + daily rules.
+    ///   - isStrict: whether this enforcer promised no early exit.
+    ///
+    ///     Recorded here because the block screen runs in a separate process and
+    ///     has no other way to learn it. `ActiveSessionInfo` only ever describes
+    ///     an *in-app session*, so before this a strict **schedule** that fired
+    ///     while the app was closed read as non-strict, and the shield offered
+    ///     the unlock pass out of a block that had promised there was none.
     static func set(block: FamilyActivitySelection,
                     allow: FamilyActivitySelection,
                     blockAll: Bool,
@@ -46,6 +54,7 @@ enum ActivityShieldStore {
                     startMinutes: Int = -1,
                     endMinutes: Int = -1,
                     absoluteWindow: (start: Date, end: Date)? = nil,
+                    isStrict: Bool = false,
                     for activity: String) {
         var blockMap = map(blockKey)
         var allowMap = map(allowKey)
@@ -65,6 +74,10 @@ enum ActivityShieldStore {
         var webMap = strListMap(webKey)
         webMap[activity] = allowedWebDomains
         AppGroup.defaults.set(webMap, forKey: webKey)
+
+        var strictMap = boolMap(strictKey)
+        strictMap[activity] = isStrict
+        AppGroup.defaults.set(strictMap, forKey: strictKey)
 
         var startMap = intMap(startKey)
         startMap[activity] = startMinutes
@@ -99,6 +112,26 @@ enum ActivityShieldStore {
 
     static func blockAll(for activity: String) -> Bool {
         boolMap(blockAllKey)[activity] ?? false
+    }
+
+    /// Did this enforcer promise no early exit? Defaults to false, which is also
+    /// what entries written by an older build read as — a build that predates
+    /// this flag never had strict schedules honoured on the shield either, so
+    /// false is the honest answer for them rather than a guess.
+    static func isStrict(for activity: String) -> Bool {
+        boolMap(strictKey)[activity] ?? false
+    }
+
+    /// Is *any* enforcer that is live right now strict?
+    ///
+    /// The question the block screen actually needs answered. Several enforcers
+    /// can overlap — a recurring schedule and a one-off session — and
+    /// `ShieldReconciler` already composes their blocks as a union. Strictness
+    /// composes the same way and for the same reason: if any active enforcer
+    /// promised no way out, offering one breaks that promise, regardless of which
+    /// other blocks happen to be open alongside it.
+    static func anyActiveEnforcerIsStrict(_ now: Date = Date()) -> Bool {
+        activeActivitiesNow(now).contains { isStrict(for: $0) }
     }
 
     static func allowedWebDomains(for activity: String) -> [String] {
@@ -176,6 +209,8 @@ enum ActivityShieldStore {
         AppGroup.defaults.set(blockAllMap, forKey: blockAllKey)
         var webMap = strListMap(webKey); webMap[activity] = nil
         AppGroup.defaults.set(webMap, forKey: webKey)
+        var strictMap = boolMap(strictKey); strictMap[activity] = nil
+        AppGroup.defaults.set(strictMap, forKey: strictKey)
         var startMap = intMap(startKey); startMap[activity] = nil
         AppGroup.defaults.set(startMap, forKey: startKey)
         var endMap = intMap(endKey); endMap[activity] = nil

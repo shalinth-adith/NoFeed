@@ -1,6 +1,6 @@
 //
 //  ShieldMessage.swift
-//  Zenly (shared: app + ZenlyShield)
+//  NoFeed (shared: app + NoFeedShield)
 //
 //  Every word on the block screen (Quiet spec, screen 03).
 //

@@ -1,6 +1,6 @@
-# Zenly — Full Manual Test Plan
+# NoFeed — Full Manual Test Plan
 
-Most of Zenly depends on Apple's Screen Time stack, which **does not run on the
+Most of NoFeed depends on Apple's Screen Time stack, which **does not run on the
 iOS Simulator**. Each case is tagged:
 
 - **[Device]** — needs a physical iPhone (FamilyControls / ManagedSettings / DeviceActivity).
@@ -9,12 +9,12 @@ iOS Simulator**. Each case is tagged:
 ## Prerequisites
 
 - Physical iPhone + paid Apple Developer account.
-- Family Controls capability enabled on App IDs: `…Zenly`, `…ZenlyMonitor`, `…ZenlyReport`.
+- Family Controls capability enabled on App IDs: `…NoFeed`, `…NoFeedMonitor`, `…NoFeedReport`.
 - App Groups enabled on **all** App IDs (`group.me.adithyan.shalinth.Zenly`) — including
-  `…ZenlyShield` and `…ZenlyShieldAction` (needed for distraction-attempt logging).
+  `…NoFeedShield` and `…NoFeedShieldAction` (needed for distraction-attempt logging).
 - Spotify cases: Spotify app installed, **Premium**, redirect URI `zenly://spotify-callback`
   registered in the Spotify dashboard.
-- Lo-fi sound: a `lofi.m4a`/`.mp3` added to the Zenly app target.
+- Lo-fi sound: a `lofi.m4a`/`.mp3` added to the NoFeed app target.
 - Clean install (delete app first) to test onboarding / splash / first-run.
 
 Legend: **Pre** = preconditions · **Steps** · **Expected**.
@@ -26,7 +26,7 @@ Legend: **Pre** = preconditions · **Steps** · **Expected**.
 ### TC-1.1 Animated splash [Sim OK]
 - **Steps:** Launch the app.
 - **Expected:** Deep-indigo splash with the periwinkle "scope" mark, breathing rings, and
-  "Zenly / Find your focus", then a smooth crossfade into the app (~2.2s). No white flash first.
+  "NoFeed / Find your focus", then a smooth crossfade into the app (~2.2s). No white flash first.
 
 ### TC-1.2 First-run onboarding [Sim OK]
 - **Pre:** Fresh install.
@@ -55,12 +55,12 @@ Legend: **Pre** = preconditions · **Steps** · **Expected**.
 ### TC-2.1 Block selected apps [Device]
 - **Pre:** Profile, "Block all apps" OFF, a specific app chosen in the blocklist.
 - **Steps:** Start Focus → open the blocked app.
-- **Expected:** Zenly's custom shield appears instead of the app.
+- **Expected:** NoFeed's custom shield appears instead of the app.
 
 ### TC-2.2 Block all apps [Device]
 - **Pre:** Profile with "Block all apps" ON (default).
 - **Steps:** Start Focus → try several apps + Safari.
-- **Expected:** All non-system apps shielded; Phone, Messages, Settings, and Zenly stay usable.
+- **Expected:** All non-system apps shielded; Phone, Messages, Settings, and NoFeed stay usable.
 
 ### TC-2.3 Allowed apps (keep open) [Device]
 - **Pre:** Block-all ON, one app added under "Allowed apps" (Profiles → profile → Blocking).
@@ -109,7 +109,7 @@ Legend: **Pre** = preconditions · **Steps** · **Expected**.
 - **Expected:** Celebration summary (confetti + haptic); "Focus complete" notification; shields lift.
 
 ### TC-3.5 Recorded after app is killed [Device] ⚠️ regression-critical
-- **Steps:** Start a session, leave Zenly for the full duration so iOS terminates it, reopen.
+- **Steps:** Start a session, leave NoFeed for the full duration so iOS terminates it, reopen.
 - **Expected:** The session is recorded (focus minutes / streak update or summary shows). Not lost.
 
 ### TC-3.6 End early excluded [Sim logic / Device flow]
@@ -180,7 +180,7 @@ Legend: **Pre** = preconditions · **Steps** · **Expected**.
 - **Expected:** 0–100; rises with focus + consistency, falls with distractions; 0 with no data.
 
 ### TC-6.3 Distraction attempts [Device]
-- **Pre:** App Groups enabled on ZenlyShield/ZenlyShieldAction App IDs.
+- **Pre:** App Groups enabled on NoFeedShield/NoFeedShieldAction App IDs.
 - **Steps:** During a session, open a blocked app a few times (trigger the shield).
 - **Expected:** The distraction chart/count increases (deduped ~1 per open). If 0: verify the
   custom shield shows AND App Groups is enabled on the shield App IDs.
@@ -203,7 +203,7 @@ Legend: **Pre** = preconditions · **Steps** · **Expected**.
 ## 7. Widget & Live Activity
 
 ### TC-7.1 Home-screen widget [Device]
-- **Steps:** Add the Zenly widget; configure metric (streak / minutes / attempts).
+- **Steps:** Add the NoFeed widget; configure metric (streak / minutes / attempts).
 - **Expected:** Shows the chosen stat; updates after sessions.
 
 ### TC-7.2 Live Activity — Lock Screen [Device]
@@ -251,12 +251,12 @@ Legend: **Pre** = preconditions · **Steps** · **Expected**.
 ### TC-9.4 Spotify [Device, Premium]
 - **Pre:** Spotify app + Premium; redirect URI registered.
 - **Steps:** Settings → Music → Spotify → Connect → authorize → return; use the music row.
-- **Expected:** Returns to Zenly; play/pause/next control Spotify. (Non-Premium: connects but
+- **Expected:** Returns to NoFeed; play/pause/next control Spotify. (Non-Premium: connects but
   controls do nothing — expected.)
 
 ### TC-9.5 Focus filter [Device]
-- **Steps:** iOS Settings → Focus → add the Zenly filter, pick a profile.
-- **Expected:** When that Focus turns on, Zenly switches to that profile on next open.
+- **Steps:** iOS Settings → Focus → add the NoFeed filter, pick a profile.
+- **Expected:** When that Focus turns on, NoFeed switches to that profile on next open.
 
 ### TC-9.6 Permission denied states [Device]
 - **Pre:** Deny Calendar or Reminders.
@@ -267,12 +267,12 @@ Legend: **Pre** = preconditions · **Steps** · **Expected**.
 ## 10. Start Focus Everywhere
 
 ### TC-10.1 Siri / Shortcuts [Device]
-- **Steps:** "Hey Siri, start a focus session in Zenly" (or run from Shortcuts).
-- **Expected:** Zenly opens and a session starts with the active profile.
+- **Steps:** "Hey Siri, start a focus session in NoFeed" (or run from Shortcuts).
+- **Expected:** NoFeed opens and a session starts with the active profile.
 
 ### TC-10.2 Control Center [Device, iOS 18+]
 - **Steps:** Add the "Start Focus" control to Control Center; tap it.
-- **Expected:** Zenly opens and starts a session.
+- **Expected:** NoFeed opens and starts a session.
 
 ---
 
@@ -294,7 +294,7 @@ Legend: **Pre** = preconditions · **Steps** · **Expected**.
 ## 12. App Store / Signing checklist
 
 - [ ] Archive uploads without entitlement errors (Family Controls Distribution granted).
-- [ ] No `91179` (ZenlyReport is ExtensionKit, embeds in `Extensions/`).
+- [ ] No `91179` (NoFeedReport is ExtensionKit, embeds in `Extensions/`).
 - [ ] No `90349` (shield-action id `com.apple.ManagedSettings.shield-action-service`).
 - [ ] Export compliance not prompted (`ITSAppUsesNonExemptEncryption=false`).
 - [ ] App icon renders (1024² light + dark).

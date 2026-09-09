@@ -1,6 +1,6 @@
 //
 //  StartFocusIntent.swift
-//  Zenly (shared: app + ZenlyWidget)
+//  NoFeed (shared: app + NoFeedWidget)
 //
 //  Starts a focus session with the active profile. Powers Siri/Spotlight/
 //  Shortcuts and the Control Center button. Runs by opening the app, which
@@ -11,7 +11,7 @@ import AppIntents
 
 struct StartFocusIntent: AppIntent {
     static var title: LocalizedStringResource = "Start Focus Session"
-    static var description = IntentDescription("Starts a Zen-ly focus session with your active profile.")
+    static var description = IntentDescription("Starts a NoFeed focus session with your active profile.")
     static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {

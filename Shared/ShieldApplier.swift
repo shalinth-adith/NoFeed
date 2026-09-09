@@ -1,6 +1,6 @@
 //
 //  ShieldApplier.swift
-//  Zenly (shared: app + ZenlyMonitor)
+//  NoFeed (shared: app + NoFeedMonitor)
 //
 //  Single source of truth for translating a block/allow selection into shield
 //  settings on a ManagedSettingsStore. Used by the app (instant blocking) and
@@ -14,7 +14,7 @@ import ManagedSettings
 enum ShieldApplier {
     /// - Parameter blockAll: when true, shield *every* (non-system) app and all
     ///   websites except the allowlist — "block everything" focus mode. The
-    ///   controlling app (Zenly) and system apps are auto-exempt by the OS.
+    ///   controlling app (NoFeed) and system apps are auto-exempt by the OS.
     static func apply(block: FamilyActivitySelection,
                       allow: FamilyActivitySelection,
                       blockAll: Bool,

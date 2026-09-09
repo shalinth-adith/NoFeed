@@ -1,6 +1,6 @@
 //
 //  PausedApp.swift
-//  Zenly (shared: app + ZenlyShield)
+//  NoFeed (shared: app + NoFeedShield)
 //
 //  The last app a shield stood in front of.
 //
@@ -29,7 +29,7 @@ enum PausedApp {
 
     /// How recent a pause has to be for the app to still be talking about it.
     ///
-    /// Long enough to survive putting the phone down and picking Zen-ly up;
+    /// Long enough to survive putting the phone down and picking NoFeed up;
     /// short enough that opening the app an hour later does not greet you with
     /// news about something you have forgotten.
     static let window: TimeInterval = 10 * 60

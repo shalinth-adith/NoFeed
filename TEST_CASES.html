@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Zenly — Manual Test Plan</title>
+<title>NoFeed — Manual Test Plan</title>
 <style>
 :root{--accent:#5C6BFA;--ink:#1c1c1e;--muted:#6b7280;--line:#e5e7eb;}
 *{box-sizing:border-box;}
@@ -25,9 +25,9 @@ a{color:var(--accent);text-decoration:none;}
 @media print{h2,h3,h4{break-after:avoid;}li,p{break-inside:avoid;}main{padding:0;max-width:none;}}
 </style></head>
 <body><main>
-<p class="meta">Zenly · github.com/shalinth-adith/Zenly · generated 2026-06-19</p>
-<h1>Zenly — Full Manual Test Plan</h1>
-<p>Most of Zenly depends on Apple&#x27;s Screen Time stack, which **does not run on the</p>
+<p class="meta">NoFeed · github.com/shalinth-adith/NoFeed · generated 2026-06-19</p>
+<h1>NoFeed — Full Manual Test Plan</h1>
+<p>Most of NoFeed depends on Apple&#x27;s Screen Time stack, which **does not run on the</p>
 <p>iOS Simulator**. Each case is tagged:</p>
 <ul>
 <li><strong>[Device]</strong> — needs a physical iPhone (FamilyControls / ManagedSettings / DeviceActivity).</li>
@@ -36,16 +36,16 @@ a{color:var(--accent);text-decoration:none;}
 <h2>Prerequisites</h2>
 <ul>
 <li>Physical iPhone + paid Apple Developer account.</li>
-<li>Family Controls capability enabled on App IDs: <code>…Zenly</code>, <code>…ZenlyMonitor</code>, <code>…ZenlyReport</code>.</li>
+<li>Family Controls capability enabled on App IDs: <code>…NoFeed</code>, <code>…NoFeedMonitor</code>, <code>…NoFeedReport</code>.</li>
 <li>App Groups enabled on <strong>all</strong> App IDs (<code>group.me.adithyan.shalinth.Zenly</code>) — including</li>
 </ul>
-<p><code>…ZenlyShield</code> and <code>…ZenlyShieldAction</code> (needed for distraction-attempt logging).</p>
+<p><code>…NoFeedShield</code> and <code>…NoFeedShieldAction</code> (needed for distraction-attempt logging).</p>
 <ul>
 <li>Spotify cases: Spotify app installed, <strong>Premium</strong>, redirect URI <code>zenly://spotify-callback</code></li>
 </ul>
 <p>registered in the Spotify dashboard.</p>
 <ul>
-<li>Lo-fi sound: a <code>lofi.m4a</code>/<code>.mp3</code> added to the Zenly app target.</li>
+<li>Lo-fi sound: a <code>lofi.m4a</code>/<code>.mp3</code> added to the NoFeed app target.</li>
 <li>Clean install (delete app first) to test onboarding / splash / first-run.</li>
 </ul>
 <p>Legend: <strong>Pre</strong> = preconditions · <strong>Steps</strong> · <strong>Expected</strong>.</p>
@@ -56,7 +56,7 @@ a{color:var(--accent);text-decoration:none;}
 <li><strong>Steps:</strong> Launch the app.</li>
 <li><strong>Expected:</strong> Deep-indigo splash with the periwinkle &quot;scope&quot; mark, breathing rings, and</li>
 </ul>
-<p>&quot;Zenly / Find your focus&quot;, then a smooth crossfade into the app (~2.2s). No white flash first.</p>
+<p>&quot;NoFeed / Find your focus&quot;, then a smooth crossfade into the app (~2.2s). No white flash first.</p>
 <h3>TC-1.2 First-run onboarding [Sim OK]</h3>
 <ul>
 <li><strong>Pre:</strong> Fresh install.</li>
@@ -88,13 +88,13 @@ a{color:var(--accent);text-decoration:none;}
 <ul>
 <li><strong>Pre:</strong> Profile, &quot;Block all apps&quot; OFF, a specific app chosen in the blocklist.</li>
 <li><strong>Steps:</strong> Start Focus → open the blocked app.</li>
-<li><strong>Expected:</strong> Zenly&#x27;s custom shield appears instead of the app.</li>
+<li><strong>Expected:</strong> NoFeed&#x27;s custom shield appears instead of the app.</li>
 </ul>
 <h3>TC-2.2 Block all apps [Device]</h3>
 <ul>
 <li><strong>Pre:</strong> Profile with &quot;Block all apps&quot; ON (default).</li>
 <li><strong>Steps:</strong> Start Focus → try several apps + Safari.</li>
-<li><strong>Expected:</strong> All non-system apps shielded; Phone, Messages, Settings, and Zenly stay usable.</li>
+<li><strong>Expected:</strong> All non-system apps shielded; Phone, Messages, Settings, and NoFeed stay usable.</li>
 </ul>
 <h3>TC-2.3 Allowed apps (keep open) [Device]</h3>
 <ul>
@@ -151,7 +151,7 @@ a{color:var(--accent);text-decoration:none;}
 </ul>
 <h3>TC-3.5 Recorded after app is killed [Device] ⚠️ regression-critical</h3>
 <ul>
-<li><strong>Steps:</strong> Start a session, leave Zenly for the full duration so iOS terminates it, reopen.</li>
+<li><strong>Steps:</strong> Start a session, leave NoFeed for the full duration so iOS terminates it, reopen.</li>
 <li><strong>Expected:</strong> The session is recorded (focus minutes / streak update or summary shows). Not lost.</li>
 </ul>
 <h3>TC-3.6 End early excluded [Sim logic / Device flow]</h3>
@@ -232,7 +232,7 @@ a{color:var(--accent);text-decoration:none;}
 </ul>
 <h3>TC-6.3 Distraction attempts [Device]</h3>
 <ul>
-<li><strong>Pre:</strong> App Groups enabled on ZenlyShield/ZenlyShieldAction App IDs.</li>
+<li><strong>Pre:</strong> App Groups enabled on NoFeedShield/NoFeedShieldAction App IDs.</li>
 <li><strong>Steps:</strong> During a session, open a blocked app a few times (trigger the shield).</li>
 <li><strong>Expected:</strong> The distraction chart/count increases (deduped ~1 per open). If 0: verify the</li>
 </ul>
@@ -257,7 +257,7 @@ a{color:var(--accent);text-decoration:none;}
 <h2>7. Widget &amp; Live Activity</h2>
 <h3>TC-7.1 Home-screen widget [Device]</h3>
 <ul>
-<li><strong>Steps:</strong> Add the Zenly widget; configure metric (streak / minutes / attempts).</li>
+<li><strong>Steps:</strong> Add the NoFeed widget; configure metric (streak / minutes / attempts).</li>
 <li><strong>Expected:</strong> Shows the chosen stat; updates after sessions.</li>
 </ul>
 <h3>TC-7.2 Live Activity — Lock Screen [Device]</h3>
@@ -311,13 +311,13 @@ a{color:var(--accent);text-decoration:none;}
 <ul>
 <li><strong>Pre:</strong> Spotify app + Premium; redirect URI registered.</li>
 <li><strong>Steps:</strong> Settings → Music → Spotify → Connect → authorize → return; use the music row.</li>
-<li><strong>Expected:</strong> Returns to Zenly; play/pause/next control Spotify. (Non-Premium: connects but</li>
+<li><strong>Expected:</strong> Returns to NoFeed; play/pause/next control Spotify. (Non-Premium: connects but</li>
 </ul>
 <p>controls do nothing — expected.)</p>
 <h3>TC-9.5 Focus filter [Device]</h3>
 <ul>
-<li><strong>Steps:</strong> iOS Settings → Focus → add the Zenly filter, pick a profile.</li>
-<li><strong>Expected:</strong> When that Focus turns on, Zenly switches to that profile on next open.</li>
+<li><strong>Steps:</strong> iOS Settings → Focus → add the NoFeed filter, pick a profile.</li>
+<li><strong>Expected:</strong> When that Focus turns on, NoFeed switches to that profile on next open.</li>
 </ul>
 <h3>TC-9.6 Permission denied states [Device]</h3>
 <ul>
@@ -328,13 +328,13 @@ a{color:var(--accent);text-decoration:none;}
 <h2>10. Start Focus Everywhere</h2>
 <h3>TC-10.1 Siri / Shortcuts [Device]</h3>
 <ul>
-<li><strong>Steps:</strong> &quot;Hey Siri, start a focus session in Zenly&quot; (or run from Shortcuts).</li>
-<li><strong>Expected:</strong> Zenly opens and a session starts with the active profile.</li>
+<li><strong>Steps:</strong> &quot;Hey Siri, start a focus session in NoFeed&quot; (or run from Shortcuts).</li>
+<li><strong>Expected:</strong> NoFeed opens and a session starts with the active profile.</li>
 </ul>
 <h3>TC-10.2 Control Center [Device, iOS 18+]</h3>
 <ul>
 <li><strong>Steps:</strong> Add the &quot;Start Focus&quot; control to Control Center; tap it.</li>
-<li><strong>Expected:</strong> Zenly opens and starts a session.</li>
+<li><strong>Expected:</strong> NoFeed opens and starts a session.</li>
 </ul>
 <hr/>
 <h2>11. Accessibility</h2>
@@ -355,7 +355,7 @@ a{color:var(--accent);text-decoration:none;}
 <h2>12. App Store / Signing checklist</h2>
 <ul>
 <li class="task"><input type="checkbox" disabled /> Archive uploads without entitlement errors (Family Controls Distribution granted).</li>
-<li class="task"><input type="checkbox" disabled /> No <code>91179</code> (ZenlyReport is ExtensionKit, embeds in <code>Extensions/</code>).</li>
+<li class="task"><input type="checkbox" disabled /> No <code>91179</code> (NoFeedReport is ExtensionKit, embeds in <code>Extensions/</code>).</li>
 <li class="task"><input type="checkbox" disabled /> No <code>90349</code> (shield-action id <code>com.apple.ManagedSettings.shield-action-service</code>).</li>
 <li class="task"><input type="checkbox" disabled /> Export compliance not prompted (<code>ITSAppUsesNonExemptEncryption=false</code>).</li>
 <li class="task"><input type="checkbox" disabled /> App icon renders (1024² light + dark).</li>

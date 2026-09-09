@@ -1,6 +1,6 @@
 //
 //  ShieldReconciler.swift
-//  Zenly (shared: app + ZenlyMonitor)
+//  NoFeed (shared: app + NoFeedMonitor)
 //
 //  Single source of truth for "what should be shielded right now". Both the app
 //  (when a focus session ends, or a schedule is disabled/deleted) and the

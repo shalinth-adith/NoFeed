@@ -1,6 +1,6 @@
 //
 //  AppGroup.swift
-//  Zenly
+//  NoFeed
 //
 //  Shared App Group container + named ManagedSettingsStore.
 //  These identifiers MUST stay byte-identical to the entitlements in every
@@ -30,5 +30,5 @@ enum AppGroup {
 extension ManagedSettingsStore.Name {
     /// The single named store the app and the DeviceActivityMonitor extension
     /// both mutate, so shields applied in one are visible to the other.
-    static let zenly = Self("zenly.focus")
+    static let noFeed = Self("zenly.focus")
 }

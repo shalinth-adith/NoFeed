@@ -1,6 +1,6 @@
 //
 //  FocusLaunchRequest.swift
-//  Zenly (shared: app + ZenlyWidget)
+//  NoFeed (shared: app + NoFeedWidget)
 //
 //  Handoff flag for starting a focus session from outside the app (App Intent /
 //  Control Center / Siri). The intent sets it + opens the app; the app consumes

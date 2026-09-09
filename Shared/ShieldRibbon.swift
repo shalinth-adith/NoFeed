@@ -1,6 +1,6 @@
 //
 //  ShieldRibbon.swift
-//  Zenly (app only)
+//  NoFeed (app only)
 //
 //  The comp's ribbon — Quiet spec, screen 03b ("Back to focus").
 //

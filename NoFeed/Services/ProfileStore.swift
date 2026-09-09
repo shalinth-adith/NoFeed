@@ -1,0 +1,212 @@
+//
+//  ProfileStore.swift
+//  NoFeed
+//
+//  Owns FocusProfiles (Core Data) and the active-profile selection. Seeds the
+//  three default profiles (Work / Study / Gym) on first launch. A profile
+//  bundles a block/allow selection, strict mode, and focus/break lengths — the
+//  unit a focus session is started from.
+//
+
+import Foundation
+import CoreData
+import FamilyControls
+import Observation
+
+/// Editable representation of a profile, used by the edit screen.
+struct ProfileDraft {
+    var name: String = ""
+    var iconName: String = "brain.head.profile"
+    var accentHex: String = "7C93E8"
+    var focusMinutes: Int = 25
+    var breakMinutes: Int = 5
+    var isStrict: Bool = false
+    var blockAllApps: Bool = true
+    var allowedWebDomains: String = ""
+    var block = FamilyActivitySelection()
+    var allow = FamilyActivitySelection()
+}
+
+@Observable
+@MainActor
+final class ProfileStore {
+    private(set) var profiles: [FocusProfile] = []
+
+    var activeProfileID: UUID? {
+        didSet { AppGroup.defaults.set(activeProfileID?.uuidString, forKey: activeKey) }
+    }
+
+    private let context: NSManagedObjectContext
+    private let activeKey = "activeProfileID"
+
+    init(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        self.context = context
+        if let stored = AppGroup.defaults.string(forKey: activeKey) {
+            activeProfileID = UUID(uuidString: stored)
+        }
+        seedDefaultsIfNeeded()
+        fetch()
+        ensureSleepProfileOnce()
+    }
+
+    var activeProfile: FocusProfile? {
+        profiles.first { $0.id == activeProfileID } ?? profiles.first
+    }
+
+    func fetch() {
+        let request = FocusProfile.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \FocusProfile.sortIndex, ascending: true)]
+        profiles = (try? context.fetch(request)) ?? []
+        if activeProfileID == nil { activeProfileID = profiles.first?.id }
+    }
+
+    func setActive(_ profile: FocusProfile) {
+        activeProfileID = profile.id
+    }
+
+    func block(for profile: FocusProfile) -> FamilyActivitySelection {
+        SelectionCodec.decode(profile.blockSelectionData)
+    }
+
+    func allow(for profile: FocusProfile) -> FamilyActivitySelection {
+        SelectionCodec.decode(profile.allowSelectionData)
+    }
+
+    func draft(from profile: FocusProfile) -> ProfileDraft {
+        ProfileDraft(
+            name: profile.name ?? "",
+            iconName: profile.iconName ?? "brain.head.profile",
+            accentHex: profile.accentHex ?? "1A3FA8",
+            focusMinutes: Int(profile.focusMinutes),
+            breakMinutes: Int(profile.breakMinutes),
+            isStrict: profile.isStrict,
+            blockAllApps: profile.blockAllApps,
+            allowedWebDomains: profile.allowedWebDomains ?? "",
+            block: SelectionCodec.decode(profile.blockSelectionData),
+            allow: SelectionCodec.decode(profile.allowSelectionData)
+        )
+    }
+
+    @discardableResult
+    func create(from draft: ProfileDraft) -> FocusProfile {
+        let profile = FocusProfile(context: context)
+        profile.id = UUID()
+        profile.createdAt = Date()
+        profile.sortIndex = Int16(profiles.count)
+        apply(draft, to: profile)
+        save()
+        fetch()
+        return profile
+    }
+
+    func update(_ profile: FocusProfile, with draft: ProfileDraft) {
+        apply(draft, to: profile)
+        save()
+        fetch()
+    }
+
+    func delete(_ profile: FocusProfile) {
+        let wasActive = profile.id == activeProfileID
+        context.delete(profile)
+        save()
+        fetch()
+        if wasActive { activeProfileID = profiles.first?.id }
+    }
+
+    // MARK: - Reordering
+
+    /// Reorder profiles and persist the new order via `sortIndex`. Both the Home
+    /// pill row and the Profiles list read profiles in `sortIndex` order, so they
+    /// update together after `fetch()`.
+    func move(fromOffsets: IndexSet, toOffset: Int) {
+        var reordered = profiles
+        reordered.move(fromOffsets: fromOffsets, toOffset: toOffset)
+        for (index, profile) in reordered.enumerated() {
+            profile.sortIndex = Int16(index)
+        }
+        save()
+        fetch()
+    }
+
+    /// Drag-to-reorder helper for the Home pills: move `id` to sit just before
+    /// the profile currently at `targetID`.
+    func move(id: UUID, before targetID: UUID) {
+        guard id != targetID,
+              let from = profiles.firstIndex(where: { $0.id == id }),
+              let target = profiles.firstIndex(where: { $0.id == targetID }) else { return }
+        let destination = target > from ? target + 1 : target
+        move(fromOffsets: IndexSet(integer: from), toOffset: destination)
+    }
+
+    // MARK: - Private
+
+    private func apply(_ draft: ProfileDraft, to profile: FocusProfile) {
+        profile.name = draft.name
+        profile.iconName = draft.iconName
+        profile.accentHex = draft.accentHex
+        profile.focusMinutes = Int16(draft.focusMinutes)
+        profile.breakMinutes = Int16(draft.breakMinutes)
+        profile.isStrict = draft.isStrict
+        profile.blockAllApps = draft.blockAllApps
+        profile.allowedWebDomains = draft.allowedWebDomains
+        profile.blockSelectionData = SelectionCodec.encode(draft.block)
+        profile.allowSelectionData = SelectionCodec.encode(draft.allow)
+    }
+
+    private func save() {
+        guard context.hasChanges else { return }
+        do { try context.save() }
+        catch { print("[NoFeed] ProfileStore save failed: \(error)") }
+    }
+
+    private func seedDefaultsIfNeeded() {
+        let request = FocusProfile.fetchRequest()
+        let count = (try? context.count(for: request)) ?? 0
+        guard count == 0 else { return }
+
+        for (index, draft) in Self.defaultProfiles.enumerated() {
+            let profile = FocusProfile(context: context)
+            profile.id = UUID()
+            profile.createdAt = Date()
+            profile.sortIndex = Int16(index)
+            apply(draft, to: profile)
+        }
+        save()
+    }
+
+    /// The four Quiet-spec default profiles (Work periwinkle, Study amber, Gym
+    /// green, Sleep purple) — the profile row on the Focus screen.
+    private static let defaultProfiles: [ProfileDraft] = [
+        ProfileDraft(name: "Work", iconName: "briefcase.fill", accentHex: "7C93E8",
+                     focusMinutes: 25, breakMinutes: 5),
+        ProfileDraft(name: "Study", iconName: "book.fill", accentHex: "D6A85C",
+                     focusMinutes: 50, breakMinutes: 10),
+        ProfileDraft(name: "Gym", iconName: "dumbbell.fill", accentHex: "7FBE9A",
+                     focusMinutes: 60, breakMinutes: 0),
+        ProfileDraft(name: "Sleep", iconName: "moon.fill", accentHex: "9B8AD6",
+                     focusMinutes: 480, breakMinutes: 0)
+    ]
+
+    /// One-time migration for installs seeded before "Sleep" existed: append it
+    /// once (guarded by a flag so it never re-adds if the user deletes it).
+    private func ensureSleepProfileOnce() {
+        let flag = "didAddSleepProfileV3"
+        guard !AppGroup.defaults.bool(forKey: flag) else { return }
+        AppGroup.defaults.set(true, forKey: flag)
+
+        let request = FocusProfile.fetchRequest()
+        let count = (try? context.count(for: request)) ?? 0
+        guard count > 0 else { return }   // fresh installs already seed Sleep
+        if profiles.contains(where: { ($0.name ?? "").caseInsensitiveCompare("Sleep") == .orderedSame }) {
+            return
+        }
+        let sleep = FocusProfile(context: context)
+        sleep.id = UUID()
+        sleep.createdAt = Date()
+        sleep.sortIndex = Int16(profiles.count)
+        apply(Self.defaultProfiles[3], to: sleep)
+        save()
+        fetch()
+    }
+
+}

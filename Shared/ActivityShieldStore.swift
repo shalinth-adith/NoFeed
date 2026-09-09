@@ -1,6 +1,6 @@
 //
 //  ActivityShieldStore.swift
-//  Zenly (shared: app + ZenlyMonitor)
+//  NoFeed (shared: app + NoFeedMonitor)
 //
 //  App-Group-backed map from a DeviceActivityName to the selection it should
 //  shield. The app writes an entry before starting monitoring; the extension

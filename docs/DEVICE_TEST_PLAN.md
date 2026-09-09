@@ -1,10 +1,10 @@
-# Zenly — Device-Only Test Plan
+# NoFeed — Device-Only Test Plan
 
 | | |
 |---|---|
 | **Version** | 2.0 — rewritten 2026-07-27 for the current "Quiet" UI |
 | **Supersedes** | the `[Device]` cases in `TEST_CASES.md` (v1 navigation is stale throughout) |
-| **Scope** | Only what a physical iPhone can verify. Everything runnable on Simulator is already automated in `ZenlyUITests/ZenlyQuietSuite` + `ZenlyTests` and is not repeated here. |
+| **Scope** | Only what a physical iPhone can verify. Everything runnable on Simulator is already automated in `NoFeedUITests/NoFeedQuietSuite` + `NoFeedTests` and is not repeated here. |
 | **Total cases** | 53 across 8 sections |
 
 Every case below has been re-checked against the current source, so the navigation paths and
@@ -22,7 +22,7 @@ that no longer exist. Concretely:
 | "Profiles tab" | No such tab. **Settings → Focus profiles**, or **Schedule → New profile** |
 | "Schedules" tab | Tab is named **Schedule** (singular) |
 | "Start Focus" button | Button reads **Begin focus** |
-| Splash: "Zenly / Find your focus", ~2.2s | **"Zen-ly" / "A calm and simple way to stay focused."**, auto-advances at 3.6s (1.6s Reduce Motion), tap to skip |
+| Splash: "NoFeed / Find your focus", ~2.2s | **"NoFeed" / "A calm and simple way to stay focused."**, auto-advances at 3.6s (1.6s Reduce Motion), tap to skip |
 | Work / Study / Gym seeded | Four profiles — **Work, Study, Gym, Sleep** |
 | "delete the app to re-test onboarding" | **Does not work** — see Prerequisites |
 
@@ -34,7 +34,7 @@ that no longer exist. Concretely:
   Computer** accepted. Verify it appears in Xcode → Window → Devices and Simulators.
 - Paid Apple Developer account. Family Controls Distribution is **already granted** for team
   `649T62WKAQ` — no request needed.
-- Build and run the `Zenly` scheme in **Debug** to the device.
+- Build and run the `NoFeed` scheme in **Debug** to the device.
 
 **Resetting to a true first-run state.** Deleting the app is *not* enough: `hasCompletedOnboarding`
 and the seeded profiles live in the shared App Group container, which survives app deletion on
@@ -68,15 +68,15 @@ first: Settings → Focus profiles → pick one → configure under **Blocking**
 
 | ID | v1 | Case | Steps | Expected | Result |
 |---|---|---|---|---|---|
-| D-B1 | 2.1 | Block specific apps | Profile → Blocking → **Block all apps OFF** → **Blocked apps & sites** → pick one app → Save → Begin focus → open that app | Zenly's custom shield appears instead of the app | |
-| D-B2 | 2.2 | Block all apps | Profile → Blocking → **Block all apps ON** (default) → Begin focus → try several apps and Safari | All non-system apps shielded. **Phone, Messages, Settings and Zenly stay usable** | |
+| D-B1 | 2.1 | Block specific apps | Profile → Blocking → **Block all apps OFF** → **Blocked apps & sites** → pick one app → Save → Begin focus → open that app | NoFeed's custom shield appears instead of the app | |
+| D-B2 | 2.2 | Block all apps | Profile → Blocking → **Block all apps ON** (default) → Begin focus → try several apps and Safari | All non-system apps shielded. **Phone, Messages, Settings and NoFeed stay usable** | |
 | D-B3 | 2.3 | Allowed apps escape hatch | Block-all ON → **Allowed apps** → add one app → Save → Begin focus → open it | It opens normally; everything else stays blocked | |
 | D-B4 | 2.4 | Research mode allowlist | Profile → **Research mode — allowed websites** = `claude.ai, docs.google.com` → Save → Begin focus → Safari → visit an allowed site, then an entertainment site | Allowed sites load; every other site is blocked. Safari itself still opens | |
 | D-B5 | 2.5 | Custom shield message | Settings → **Shield message** = "Future you will thank you" → Begin focus → open a blocked app | Shield shows the custom message. Clearing the field restores the default text | |
 | D-B6 | 2.6 | Strict-mode gate | Profile → Session → **Strict** ON → Begin focus → **End early** | Confirmation appears with a streak-loss warning; primary button counts down **"Wait 5s…"** and is disabled until it becomes **End focus**. **Keep focusing** cancels | |
 | D-B7 | 2.7 | Unblock on end | End the session (normally or early) → reopen the previously blocked apps and sites | Everything opens normally again; no lingering shield | |
 | D-B8 | — | Non-strict end | Strict **OFF** → Begin focus → **End early** | Session ends immediately with no confirmation gate | |
-| D-B9 | — | Shield survives relaunch | During a session, force-quit Zenly → open a blocked app | Still shielded (enforcement lives in ManagedSettings, not the app process) | |
+| D-B9 | — | Shield survives relaunch | During a session, force-quit NoFeed → open a blocked app | Still shielded (enforcement lives in ManagedSettings, not the app process) | |
 
 ---
 
@@ -87,7 +87,7 @@ first: Settings → Focus profiles → pick one → configure under **Blocking**
 | D-C1 | 3.1 | Start a session | Focus tab → set duration with −/+ → **Begin focus** | Full-screen session with countdown ring; blocking engages; start haptic fires | |
 | D-C2 | 3.3 | Minimize & resume | In session tap **▾** (top-left) → browse other tabs → return via the resume banner | Session keeps running; app is navigable; banner reopens the timer. **Begin focus** stays disabled while active | |
 | D-C3 | 3.4 | Natural completion | Start a 5-minute session and wait it out | Celebration summary with confetti + haptic; **"Focus complete"** notification; shields lift | |
-| D-C4 | **3.5** ⚠️ | Recorded after app is killed | Start a session, leave Zenly until iOS terminates it, reopen after the end time | Session is recorded — streak / today's minutes update. **Reported PASS on 2026-07-27 — re-confirm on the current build** | |
+| D-C4 | **3.5** ⚠️ | Recorded after app is killed | Start a session, leave NoFeed until iOS terminates it, reopen after the end time | Session is recorded — streak / today's minutes update. **Reported PASS on 2026-07-27 — re-confirm on the current build** | |
 | D-C5 | 3.5b | Resume mid-session after kill | Start a long session, force-quit, reopen **before** the end time | Timer resumes with the correct remaining time (not restarted, not lost) | |
 | D-C6 | 3.6 | End early excluded | Start a session, end early | Logged as ended early; does **not** add to streak or today's minutes | |
 | D-C7 | 3.7 | Pomodoro break | Profile with a non-zero Break → complete a focus session → **Take a break** | Break timer runs with **no blocking**; **"Break over"** notification at the end | |
@@ -104,11 +104,11 @@ first: Settings → Focus profiles → pick one → configure under **Blocking**
 | D-D1 | 7.2 | Lock Screen activity | Begin focus → lock the phone | Lock Screen banner with profile name and a live countdown, tinted to the profile accent | |
 | D-D2 | 7.3 | Dynamic Island | Begin focus (iPhone 14 Pro+) | Compact pill counts down; long-press expands to profile + progress | |
 | D-D3 | — | Activity appears at all | Begin focus | The Live Activity **appears** — this is the regression risk from the fix; if it never shows, the sweep in `end()` is tearing down the new activity | |
-| D-D4 | **NEW** | **Activity clears after termination** (Finding 6) | Begin focus → leave Zenly until iOS terminates it → reopen → let the session end (or End early) | Dynamic Island **and** Lock Screen timer **disappear**. Previously the countdown was stranded on screen forever | |
+| D-D4 | **NEW** | **Activity clears after termination** (Finding 6) | Begin focus → leave NoFeed until iOS terminates it → reopen → let the session end (or End early) | Dynamic Island **and** Lock Screen timer **disappear**. Previously the countdown was stranded on screen forever | |
 | D-D5 | **NEW** | No duplicate activities | Begin focus → force-quit → reopen mid-session | Exactly **one** Live Activity, not two side by side | |
 | D-D6 | — | Normal end clears it | Begin focus → **End early** without any termination | Activity disappears immediately | |
 | D-D7 | 5.x | Schedule countdown activity | With an upcoming enabled schedule, open the app shortly before its start time | A "starting soon" countdown Live Activity appears and is replaced (not duplicated) by the session activity when the window opens | |
-| D-D8 | 7.1 | Home-screen widget | Add the Zenly widget → configure metric (streak / minutes / attempts) | Shows the chosen stat and updates after a session completes | |
+| D-D8 | 7.1 | Home-screen widget | Add the NoFeed widget → configure metric (streak / minutes / attempts) | Shows the chosen stat and updates after a session completes | |
 
 ---
 
@@ -132,10 +132,10 @@ first: Settings → Focus profiles → pick one → configure under **Blocking**
 
 | ID | v1 | Case | Steps | Expected | Result |
 |---|---|---|---|---|---|
-| D-F1 | 10.1 | Siri / Shortcuts | "Hey Siri, start a focus session in Zenly", and run the action from the Shortcuts app | Zenly opens and starts a session with the active profile | |
-| D-F2 | 10.2 | Control Center | Add the **Start Focus** control (iOS 18+) → tap it | Zenly opens and starts a session | |
-| D-F3 | 9.5 | Focus filter | iOS Settings → Focus → add the Zenly filter → pick a profile → enable that Focus | Zenly switches to that profile on next open | |
-| D-F4 | — | Notification delivery in foreground | Keep Zenly open when a session completes | The completion notification is presented while foregrounded (regression fixed in `47c300f`) | |
+| D-F1 | 10.1 | Siri / Shortcuts | "Hey Siri, start a focus session in NoFeed", and run the action from the Shortcuts app | NoFeed opens and starts a session with the active profile | |
+| D-F2 | 10.2 | Control Center | Add the **Start Focus** control (iOS 18+) → tap it | NoFeed opens and starts a session | |
+| D-F3 | 9.5 | Focus filter | iOS Settings → Focus → add the NoFeed filter → pick a profile → enable that Focus | NoFeed switches to that profile on next open | |
+| D-F4 | — | Notification delivery in foreground | Keep NoFeed open when a session completes | The completion notification is presented while foregrounded (regression fixed in `47c300f`) | |
 | D-F5 | — | Time-sensitive breakthrough | Enable a Focus/Do Not Disturb mode, then let a schedule window open | The schedule-start notification breaks through | |
 
 ---

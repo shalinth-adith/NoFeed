@@ -1,9 +1,9 @@
 # App icon — Eclipse
 
-Source of truth for `Zenly/Assets.xcassets/AppIcon.appiconset`.
+Source of truth for `NoFeed/Assets.xcassets/AppIcon.appiconset`.
 
 The tile is a disc sitting exactly over a ring of light, corona bleeding out
-around it. Ring at 47.7% of the tile, corona spread to 75%. Zenly ships night
+around it. Ring at 47.7% of the tile, corona spread to 75%. NoFeed ships night
 only — there is **no Light appearance**, so a light home screen gets the dark
 tile. Tinted is authored by hand rather than derived, because the corona is
 painted into the artwork.

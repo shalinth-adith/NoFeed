@@ -21,33 +21,91 @@
 //  debugged from.
 //
 
+import DeviceActivity
 import Foundation
 import ManagedSettings
 import ManagedSettingsUI
+
+extension DeviceActivityName {
+    /// The interval whose *end* puts the shields back. Nothing is enforced while
+    /// it runs — it exists purely so the system wakes `NoFeedMonitor` on time.
+    static let unlockWindow = Self("nofeed.unlock.window")
+}
 
 final class ShieldActionExtension: ShieldActionDelegate {
     override func handle(action: ShieldAction,
                          for application: ApplicationToken,
                          completionHandler: @escaping (ShieldActionResponse) -> Void) {
-        close(completionHandler)
+        respond(to: action, completionHandler)
     }
 
     override func handle(action: ShieldAction,
                          for webDomain: WebDomainToken,
                          completionHandler: @escaping (ShieldActionResponse) -> Void) {
-        close(completionHandler)
+        respond(to: action, completionHandler)
     }
 
     override func handle(action: ShieldAction,
                          for category: ActivityCategoryToken,
                          completionHandler: @escaping (ShieldActionResponse) -> Void) {
-        close(completionHandler)
+        respond(to: action, completionHandler)
     }
 
-    /// Reaching the shield at all is the thing worth counting — Insights reports
-    /// it as an attempt — and then the app closes.
-    private func close(_ completionHandler: @escaping (ShieldActionResponse) -> Void) {
+    /// `.primaryButtonPressed` is "Back to focus"; `.secondaryButtonPressed` is
+    /// the timed pass. Any other case closes, because an unrecognised action must
+    /// never be treated as consent to unblock.
+    private func respond(to action: ShieldAction,
+                         _ completionHandler: @escaping (ShieldActionResponse) -> Void) {
         DistractionLog.recordAttempt()
-        completionHandler(.close)
+
+        guard action == .secondaryButtonPressed else {
+            completionHandler(.close)
+            return
+        }
+        grantPass(completionHandler)
+    }
+
+    /// Open a window, drop the shields, and arrange for them to come back.
+    ///
+    /// Order matters. The window is recorded *first*: `ShieldReconciler` treats an
+    /// open window as outranking every enforcer, so any reconcile racing this
+    /// process — the app foregrounding, a schedule tick — sees the pass rather
+    /// than re-applying the shield we are about to clear.
+    ///
+    /// `startMonitoring` is best-effort by design. This process gets a fraction of
+    /// a second, cannot be debugged, and may not be allowed to register an
+    /// activity at all. If it fails the pass still closes itself: `isOpen` is a
+    /// pure function of the clock, so the next reconcile from any source restores
+    /// the shields. The interval only makes that prompt.
+    private func grantPass(_ completionHandler: @escaping (ShieldActionResponse) -> Void) {
+        guard let until = UnlockWindow.open() else {
+            // The setting was switched off between drawing the button and pressing
+            // it. No pass, no pretending there was one.
+            completionHandler(.close)
+            return
+        }
+
+        ShieldApplier.clear(ManagedSettingsStore(named: .noFeed))
+        startCloser(at: until)
+
+        // `.defer` leaves the user in the app they reached for, which is the whole
+        // point — `.close` would grant the pass and then throw them out of it.
+        completionHandler(.defer)
+    }
+
+    private func startCloser(at until: Date) {
+        let calendar = Calendar.current
+        let schedule = DeviceActivitySchedule(
+            intervalStart: calendar.dateComponents([.hour, .minute, .second], from: Date()),
+            intervalEnd: calendar.dateComponents([.hour, .minute, .second], from: until),
+            repeats: false
+        )
+        do {
+            try DeviceActivityCenter().startMonitoring(.unlockWindow, during: schedule)
+        } catch {
+            // Logged rather than surfaced: the fallback above is silent and
+            // correct, and there is no UI in this process to complain to.
+            print("[NoFeed] unlock window monitoring failed: \(error)")
+        }
     }
 }

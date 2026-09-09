@@ -151,6 +151,8 @@ targets:
       - path: Shared/ShieldMessage.swift
       - path: Shared/ActiveSessionInfo.swift
       - path: Shared/PausedApp.swift
+      # Read only to decide whether the block screen draws its second button.
+      - path: Shared/UnlockWindow.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: me.adithyan.shalinth.Zenly.ZenlyShield
@@ -185,12 +187,15 @@ targets:
     platform: iOS
     sources:
       - path: NoFeedShieldAction
-      # All this extension does now is count the attempt and close the app, so
-      # it needs the App Group and the log — nothing else. It used to carry the
-      # whole reconcile stack to recompute shields for the five-minute door,
-      # which no longer exists (see ShieldTheme.configuration).
+      # Counts the attempt, and grants the timed pass when the second button is
+      # pressed. Deliberately still NOT the whole reconcile stack: granting a
+      # pass only ever *clears* shields, and clearing names nothing, so this
+      # needs `ShieldApplier` but not `ShieldReconciler`/`ActivityShieldStore`.
+      # Putting the shields back is `NoFeedMonitor`'s job. See `UnlockWindow`.
       - path: Shared/AppGroup.swift
       - path: Shared/DistractionLog.swift
+      - path: Shared/UnlockWindow.swift
+      - path: Shared/ShieldApplier.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: me.adithyan.shalinth.Zenly.ZenlyShieldAction

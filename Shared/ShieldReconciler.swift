@@ -22,6 +22,22 @@ enum ShieldReconciler {
     /// Recompute the shield state from every activity whose window is open now and
     /// apply exactly that. No active activities → clear.
     static func reconcile(_ store: ManagedSettingsStore, now: Date = Date()) {
+        // A granted pass outranks every enforcer while it lasts.
+        //
+        // Checked here rather than at the call sites because this is the only
+        // function that decides what is shielded — the app, the monitor extension
+        // and the shield-action extension all funnel through it. Putting the test
+        // anywhere else would let one path re-apply shields in the middle of a
+        // window the user was promised.
+        //
+        // It is also what makes the pass self-closing: `isOpen` is a pure function
+        // of the clock, so the first reconcile after expiry restores the shields
+        // whether or not the DeviceActivity interval fired. See `UnlockWindow`.
+        guard !UnlockWindow.isOpen(now: now) else {
+            ShieldApplier.clear(store)
+            return
+        }
+
         let active = ActivityShieldStore.activeActivitiesNow(now)
 
         guard !active.isEmpty else {

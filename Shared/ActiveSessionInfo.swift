@@ -19,11 +19,29 @@ import Foundation
 enum ActiveSessionInfo {
     private static let endsAtKey = "activeSessionEndsAt"
     private static let profileKey = "activeSessionProfile"
+    private static let strictKey = "activeSessionIsStrict"
 
     /// Record the running session. Called on start and on resume.
-    static func set(profileName: String, endsAt: Date) {
+    ///
+    /// `isStrict` is the third value, against this file's own "deliberately tiny"
+    /// rule, and it earns the place: the block screen offers a timed pass out
+    /// (see `UnlockWindow`), and a strict session promised there would be no way
+    /// out. Strictness lives on the session, not in settings, so the shield — a
+    /// separate process with no access to the app's state — can only learn it
+    /// here. Drawing a door on a strict session's shield would break the one
+    /// promise strict mode makes.
+    static func set(profileName: String, endsAt: Date, isStrict: Bool = false) {
         AppGroup.defaults.set(endsAt.timeIntervalSince1970, forKey: endsAtKey)
         AppGroup.defaults.set(profileName, forKey: profileKey)
+        AppGroup.defaults.set(isStrict, forKey: strictKey)
+    }
+
+    /// True while a *strict* session is running. False when nothing is running,
+    /// so a schedule-driven shield (which has no session behind it) still offers
+    /// the pass.
+    static var isStrict: Bool {
+        guard remainingMinutes != nil else { return false }
+        return AppGroup.defaults.bool(forKey: strictKey)
     }
 
     /// Forget it. Called when the session ends, and when it is paused — a held
@@ -31,6 +49,7 @@ enum ActiveSessionInfo {
     static func clear() {
         AppGroup.defaults.removeObject(forKey: endsAtKey)
         AppGroup.defaults.removeObject(forKey: profileKey)
+        AppGroup.defaults.removeObject(forKey: strictKey)
     }
 
     static var profileName: String? {

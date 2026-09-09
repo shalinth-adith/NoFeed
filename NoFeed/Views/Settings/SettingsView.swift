@@ -38,6 +38,10 @@ struct SettingsView: View {
     @AppStorage("weeklyRecapEnabled", store: AppGroup.defaults) private var recapEnabled = true
     @AppStorage("weeklyRecapHour", store: AppGroup.defaults) private var recapHour = 18
     @AppStorage("weeklyRecapMinute", store: AppGroup.defaults) private var recapMinute = 0
+    /// Minutes a block-screen pass lasts; 0 = off, which is the default. Keys
+    /// must match `UnlockWindow` exactly — the shield extensions read this same
+    /// App Group value and have no other way to learn the setting.
+    @AppStorage("unlockWindowMinutes", store: AppGroup.defaults) private var unlockMinutes = 0
 
     /// A source the user picked but hasn't confirmed switching to yet.
     @State private var showProfiles = false
@@ -62,6 +66,7 @@ struct SettingsView: View {
                     goalSection
                     shieldSection
                     breakReminderSection
+                    unlockSection
                     weeklyRecapSection
                     aboutSection
                 }
@@ -226,6 +231,34 @@ struct SettingsView: View {
             Text("A gentle daily nudge to step away and recharge.")
         }
         .listRowBackground(glassRow)
+    }
+
+    private var unlockSection: some View {
+        Section {
+            Picker("Unlock window", selection: $unlockMinutes) {
+                Text("Off").tag(0)
+                ForEach(UnlockWindow.choices.filter { $0 > 0 }, id: \.self) { minutes in
+                    Text("\(minutes) minutes").tag(minutes)
+                }
+            }
+            .accessibilityIdentifier("settings-unlock-window")
+        } header: {
+            Text("Unlock Window")
+        } footer: {
+            // Says why fifteen is the floor, because "why can't I pick 2 minutes"
+            // is the first question this setting raises and the answer is a real
+            // constraint rather than a preference. Also says it lifts everything,
+            // since a pass that only looked like it covered one app would be the
+            // more dangerous misunderstanding.
+            Text("Adds a second button to the block screen that lifts every block for a while, then puts them back. Fifteen minutes is the shortest window iOS can reliably close on its own. Never offered during a strict session.")
+        }
+        .listRowBackground(glassRow)
+        .onChange(of: unlockMinutes) { _, new in
+            // Ending a pass that is already running when the setting is turned
+            // off — otherwise switching it off would leave the phone unshielded
+            // for the rest of a window nobody can see any more.
+            if new == 0 { UnlockWindow.clear() }
+        }
     }
 
     private var weeklyRecapSection: some View {

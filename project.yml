@@ -23,7 +23,7 @@ settings:
     # (errors 90186 "train is closed" + 90062 "must contain a higher version").
     # Xcode's "Manage Version and Build Number" does NOT save you here — it
     # rewrites CFBundleVersion at upload, never CFBundleShortVersionString.
-    MARKETING_VERSION: "2.1"
+    MARKETING_VERSION: "2.2"
     # Deliberately not bumped per release: the same Distribute option rewrites
     # this to a unique value at upload, so the manifest number is not what App
     # Store Connect shows. It only matters if that option is ever switched off.

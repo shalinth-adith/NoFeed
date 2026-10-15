@@ -52,6 +52,11 @@ struct WeeklyRecap: Equatable {
     /// False in the very first week, when there is nothing to compare against and
     /// a "0 minutes less than last week" would be noise rather than information.
     let hadPreviousWeek: Bool
+    /// Consecutive days with a completed session, ending today or yesterday.
+    /// Last on purpose, and defaulted: the memberwise init then keeps every
+    /// existing caller compiling, and a recap built without it simply has no
+    /// streak to mention.
+    var streak: Int = 0
 
     // MARK: - Shape
 
@@ -135,6 +140,26 @@ struct WeeklyRecap: Equatable {
             return "\(best.label) was your strongest day, at \(Self.duration(best.minutes)). Worth repeating."
         }
         return nil
+    }
+
+    /// The day with the most focus minutes, or nil when no day had any.
+    var bestDay: Day? {
+        guard let best = days.max(by: { $0.minutes < $1.minutes }), best.minutes > 0 else { return nil }
+        return best
+    }
+
+    /// "4-day streak · strongest on Tue" — the two facts worth carrying out of
+    /// the app on a card. Either half is dropped when it has nothing to say, and
+    /// the whole line is nil when both do, so the card never prints a zero.
+    var highlightLine: String? {
+        var parts: [String] = []
+        if streak > 0 {
+            parts.append("\(streak)-day streak")
+        }
+        if let best = bestDay {
+            parts.append("strongest on \(best.label)")
+        }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 
     /// The notification body — the recap compressed to one sentence that has to

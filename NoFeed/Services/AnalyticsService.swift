@@ -156,7 +156,8 @@ final class AnalyticsService {
             attempts: stats.reduce(0) { $0 + $1.attempts },
             heldEveryTime: held,
             days: stats.map { WeeklyRecap.Day(label: $0.label, minutes: $0.focusMinutes) },
-            hadPreviousWeek: hadPrevious
+            hadPreviousWeek: hadPrevious,
+            streak: history.currentStreak()
         )
     }
 

@@ -89,6 +89,16 @@ struct WeeklyRecapShareCard: View {
                     .foregroundStyle(ink.opacity(0.42))
                     .padding(.top, 14)
 
+                // Streak and best day, in the same quiet register as the meta
+                // line: facts, not a celebration. Absent entirely on a week
+                // with neither, so the card never carries a zero.
+                if let highlight = recap.highlightLine {
+                    Text(highlight)
+                        .font(ZTheme.Font.body(13))
+                        .foregroundStyle(ink.opacity(0.42))
+                        .padding(.top, 6)
+                }
+
                 Spacer(minLength: 0)
 
                 HStack(spacing: 8) {

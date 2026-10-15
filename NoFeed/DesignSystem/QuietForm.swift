@@ -109,11 +109,15 @@ struct QuietEditorScaffold<Body: View>: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Button(cancelTitle) { Haptics.light(); onCancel() }
-                .font(ZTheme.Font.body(15))
-                .foregroundStyle(ZTheme.Palette.text(0.55))
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("quiet-cancel")
+            Button { Haptics.light(); onCancel() } label: {
+                Text(cancelTitle)
+                    .font(ZTheme.Font.body(15))
+                    .foregroundStyle(ZTheme.Palette.text(0.55))
+                    .frame(minWidth: 44, minHeight: 44, alignment: .leading)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("quiet-cancel")
             Text(title)
                 .font(ZTheme.Font.display(24, weight: .semibold))
                 .foregroundStyle(ZTheme.Palette.textPrimary)

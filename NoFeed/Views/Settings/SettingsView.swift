@@ -7,6 +7,12 @@
 //
 //  Redesign: grouped glass settings over the aurora with the glowing toggle and
 //  brand tint (Claude Design spec, NoFeed.dc.html). Controls and logic unchanged.
+//
+//  This is the one screen built from the system's grouped Form rather than the
+//  Quiet row components, and that is a decision, not an oversight (review 2.3,
+//  M7): steppers, toggles, a time picker and a multiline field are exactly the
+//  controls the system styles better than a hand-drawn row would, and the
+//  Form is also what gives this screen its full Dynamic Type behaviour.
 //  (The mockup's account / "NoFeed Plus" / sign-out card is intentionally omitted
 //  — NoFeed has no user accounts.)
 //
@@ -211,13 +217,12 @@ struct SettingsView: View {
             Stepper(value: $dailySessionsGoal, in: 1...12, step: 1) {
                 LabeledContent("Daily sessions goal", value: "\(dailySessionsGoal)")
             }
-            Stepper(value: $streakGoal, in: 3...60, step: 1) {
-                LabeledContent("Streak goal", value: "\(streakGoal) days")
-            }
+            // The streak-goal stepper is gone: nothing on Insights read it
+            // (review 2.3, M1). Its stored value stays for the day a screen does.
         } header: {
             Text("Daily Goals")
         } footer: {
-            Text("Your daily targets, shown as progress orbs on Insights.")
+            Text("Your daily targets, shown as weekly progress bars on Insights.")
         }
         .listRowBackground(glassRow)
     }
@@ -332,6 +337,12 @@ struct SettingsView: View {
     private var aboutSection: some View {
         Section("About") {
             LabeledContent("Version", value: appVersion)
+            Link(destination: URL(string: "https://shalinth-adith.github.io/NoFeed/privacy-policy.html")!) {
+                settingsLinkLabel("Privacy policy")
+            }
+            Link(destination: URL(string: "https://shalinth-adith.github.io/NoFeed/support.html")!) {
+                settingsLinkLabel("Support")
+            }
             Button(action: sendFeedback) {
                 HStack {
                     Text("Send feedback")
@@ -353,6 +364,17 @@ struct SettingsView: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text("Write to \(FeedbackMail.address) and mention version \(appVersion).")
+        }
+    }
+
+    private func settingsLinkLabel(_ title: String) -> some View {
+        HStack {
+            Text(title)
+                .foregroundStyle(ZTheme.Palette.textPrimary)
+            Spacer()
+            Image(systemName: "arrow.up.right")
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(ZTheme.Palette.text(0.3))
         }
     }
 

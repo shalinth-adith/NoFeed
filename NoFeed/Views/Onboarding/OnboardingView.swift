@@ -19,6 +19,9 @@ struct OnboardingView: View {
 
     @State private var step = 0
     @State private var requesting = false
+    /// Where the flow was left. Backing out of the system passcode sheet
+    /// relaunches the app, and it used to start again from "Welcome".
+    @AppStorage("onboardingStep", store: AppGroup.defaults) private var savedStep = 0
 
     var body: some View {
         ZStack {
@@ -39,7 +42,7 @@ struct OnboardingView: View {
 
                 infoPage(icon: "flame.fill",
                          title: "Build the habit",
-                         message: "Earn streaks, unlock badges, and watch your focused time add up.",
+                         message: "Keep a streak, get a recap of your week, and watch your focused time add up.",
                          button: "Next", advancesTo: 3)
                     .tag(2)
 
@@ -50,6 +53,8 @@ struct OnboardingView: View {
             .indexViewStyle(.page(backgroundDisplayMode: .always))
             .animation(.easeInOut, value: step)
         }
+        .onAppear { step = min(max(savedStep, 0), 4) }
+        .onChange(of: step) { _, new in savedStep = new }
     }
 
     // MARK: - Pages
@@ -77,21 +82,56 @@ struct OnboardingView: View {
                 .disabled(requesting || authorization.isAuthorized)
                 .opacity(requesting || authorization.isAuthorized ? 0.6 : 1)
 
-                Button(authorization.isAuthorized ? "Continue" : "Maybe later") {
+                Button {
                     withAnimation { step = 4 }
+                } label: {
+                    Text(authorization.isAuthorized ? "Continue" : "Maybe later")
+                        .font(ZTheme.Font.display(16, weight: .semibold))
+                        .foregroundStyle(ZTheme.Palette.text(0.55))
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .contentShape(Rectangle())
                 }
-                .font(ZTheme.Font.display(16, weight: .semibold))
-                .foregroundStyle(ZTheme.Palette.text(0.55))
+                .buttonStyle(.plain)
             }
         }
     }
 
+    /// Two endings. "All set" is only true with Screen Time granted; without
+    /// it the app can time a session but block nothing, and saying otherwise
+    /// here was the one dishonest page in the flow (review 2.3, H1).
+    @ViewBuilder
     private var donePage: some View {
-        scaffold(icon: "checkmark.seal.fill",
-                 title: "You're all set",
-                 message: "Pick a profile, set your timer, and start your first focus session.") {
-            Button("Start Focusing", action: onComplete)
-                .buttonStyle(.zenlyPrimary)
+        if authorization.isAuthorized {
+            scaffold(icon: "checkmark.seal.fill",
+                     title: "You're all set",
+                     message: "Pick a profile, set your timer, and start your first focus session.") {
+                Button("Start Focusing", action: onComplete)
+                    .buttonStyle(.zenlyPrimary)
+            }
+        } else {
+            scaffold(icon: "hand.raised.fill",
+                     title: "Almost there",
+                     message: "Without Screen Time access NoFeed can time a session but can\u{2019}t block anything. You can grant it now, or later from Settings.") {
+                VStack(spacing: 12) {
+                    Button(action: requestAccess) {
+                        HStack {
+                            Text("Grant Screen Time Access")
+                            if requesting { ProgressView().tint(.white).padding(.leading, 4) }
+                        }
+                    }
+                    .buttonStyle(.zenlyPrimary)
+                    .disabled(requesting)
+
+                    Button(action: onComplete) {
+                        Text("Continue without blocking")
+                            .font(ZTheme.Font.display(16, weight: .semibold))
+                            .foregroundStyle(ZTheme.Palette.text(0.55))
+                            .frame(maxWidth: .infinity, minHeight: 44)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
         }
     }
 

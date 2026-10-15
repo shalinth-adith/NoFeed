@@ -26,7 +26,8 @@ final class NoFeedQuietSuite: XCTestCase {
                               _ file: StaticString = #filePath,
                               _ line: UInt = #line) throws -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments += arguments
+        // No test here is about onboarding; the audit suite leaves it showing.
+        app.launchArguments += ["NoFeedUITestSkipOnboarding"] + arguments
         app.launch()
 
         let tabBar = app.tabBars.firstMatch

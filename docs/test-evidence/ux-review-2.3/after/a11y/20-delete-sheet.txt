@@ -1,0 +1,18 @@
+[text-clipped] Text clipped — element: 48:Delete “Work”?
+    Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
+[text-clipped] Text clipped — element: 9:Keep it
+    Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
+[text-clipped] Text clipped — element: 48:The profile goes; its 8 sessions stay in your history and your streak isn’t touched.
+    Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
+[text-clipped] Text clipped — element: 9:Delete profile
+    Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
+[contrast] Contrast nearly passed — element: 9:Delete profile
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[element-detection] Potentially inaccessible text — element: -
+    This element appears to display text that should be represented using the accessibility API.
+[element-detection] Potentially inaccessible text — element: -
+    This element appears to display text that should be represented using the accessibility API.
+[element-detection] Potentially inaccessible text — element: -
+    This element appears to display text that should be represented using the accessibility API.
+[element-detection] Potentially inaccessible text — element: -
+    This element appears to display text that should be represented using the accessibility API.

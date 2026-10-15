@@ -384,7 +384,7 @@ struct ProfileEditView: View {
             QuietFieldLabel(text: "Strict mode", topPadding: QuietMetrics.sectionGap)
                 .padding(.bottom, 2)
             QuietToggleRow(title: "Hold me to it",
-                           subtitle: "A short delay before a session can end early",
+                           subtitle: "Ending early takes a full minute\u{2019}s hold",
                            isOn: $draft.isStrict,
                            tone: tone)
         }

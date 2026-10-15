@@ -1,0 +1,6 @@
+[contrast] Contrast failed — element: 48:REMAINING
+    Contrast failed for SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:REMAINING
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:FOCUSING · WORK
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode

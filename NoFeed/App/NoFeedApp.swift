@@ -34,6 +34,8 @@ struct NoFeedApp: App {
         // straight back.
         DebugSeed.clearSessionIfRequested()
         DebugSeed.resetOnboardingIfRequested()
+        DebugSeed.completeOnboardingIfRequested()
+        DebugSeed.skipNotificationRationaleIfTesting()
         MainActor.assumeIsolated {
             DebugSeed.clearHistoryIfRequested()
             DebugSeed.clearSchedulesIfRequested()
@@ -121,6 +123,10 @@ struct NoFeedApp: App {
 
     private var root: some View {
         AppEntryView()
+            // Text follows the user's size up to the first accessibility step,
+            // roughly 1.6× the default. The Focus screen is a fixed composition
+            // and the session orb has one size; past this they would overflow.
+            .dynamicTypeSize(...DynamicTypeSize.accessibility1)
             .environment(authorization)
             .environment(profiles)
             .environment(schedules)

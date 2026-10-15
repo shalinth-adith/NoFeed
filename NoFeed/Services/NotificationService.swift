@@ -234,6 +234,12 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     }
 
     /// Morning nudge that a fresh daily challenge is waiting.
+    /// Removes the daily challenge nudge from devices that still carry it.
+    func cancelDailyChallengeReminder() {
+        center.removePendingNotificationRequests(withIdentifiers: [challengeReminderID])
+        center.removeDeliveredNotifications(withIdentifiers: [challengeReminderID])
+    }
+
     func scheduleDailyChallengeReminder(hour: Int = 9, minute: Int = 0) {
         let content = UNMutableNotificationContent()
         content.title = "New daily challenge"

@@ -69,7 +69,8 @@ final class QuietSessionScreens: XCTestCase {
         // the shipped "Study", which another suite renames.
         let app = launch(["NoFeedUITestBypassScreenTime",
                           "NoFeedUITestResetSession",
-                          "NoFeedUITestResetProfiles"] + extra)
+                          "NoFeedUITestResetProfiles",
+                          "NoFeedUITestSkipOnboarding"] + extra)
         let tabBar = app.tabBars.firstMatch
         if !tabBar.waitForExistence(timeout: 6) {
             app.tap()                       // skip the splash
@@ -316,9 +317,9 @@ final class QuietSessionScreens: XCTestCase {
         capture(app, "05-insights-top")
 
         let versus = app.staticTexts.containing(
-            NSPredicate(format: "label CONTAINS[c] 'vs last week' OR label CONTAINS[c] 'Same as last week'"))
+            NSPredicate(format: "label CONTAINS[c] 'vs last week' OR label CONTAINS[c] 'Same as last week' OR label CONTAINS[c] 'first week'"))
             .firstMatch
-        XCTAssertTrue(versus.exists, "The vs-last-week delta is missing")
+        XCTAssertTrue(versus.exists, "The vs-last-week delta (or the first-week line) is missing")
 
         app.swipeUp()
         capture(app, "05-insights-goals")

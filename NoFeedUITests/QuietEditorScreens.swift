@@ -43,7 +43,7 @@ final class QuietEditorScreens: XCTestCase {
         let app = XCUIApplication()
         // The profile walkthrough adds "Learning"; start from the four defaults
         // so a second run is not refused as a duplicate.
-        app.launchArguments += ["NoFeedUITestResetProfiles"] + arguments
+        app.launchArguments += ["NoFeedUITestResetProfiles", "NoFeedUITestSkipOnboarding"] + arguments
         app.launch()
         let tabBar = app.tabBars.firstMatch
         if !tabBar.waitForExistence(timeout: 6) {
@@ -190,8 +190,10 @@ final class QuietEditorScreens: XCTestCase {
 
         // Complete it: a title of its own, a day, and a profile — so the list
         // row can show the comp's full "Work · Deep focus" form.
+        // The title no longer takes focus on its own (review 2.3, H3), so
+        // tap into it; the return closes the keyboard again.
         titleField.tap()
-        titleField.typeText("Deep focus\n")   // return closes the keyboard
+        titleField.typeText("Deep focus\n")
         XCTAssertTrue(tap(app.buttons["Monday"]), "Day row missing")
         XCTAssertTrue(tap(app.buttons["Work"]), "Profile row missing")
         capture(app, "16b-ready-to-save")
@@ -210,10 +212,6 @@ final class QuietEditorScreens: XCTestCase {
         scrollTo(app, addSchedule)
         XCTAssertTrue(tap(addSchedule), "Add schedule missing the second time")
         XCTAssertTrue(titleField.waitForExistence(timeout: 6), "Second editor did not open")
-        // A new schedule focuses its title, and the keyboard covers the day
-        // and profile rows. The first pass typed a title ending in a return;
-        // this one has nothing to type, so send the return on its own.
-        titleField.typeText("\n")
         XCTAssertTrue(tap(app.buttons["Monday"]), "Day row missing")
         XCTAssertTrue(tap(app.buttons["Work"]), "Profile row missing")
 

@@ -134,20 +134,28 @@ struct EditProfileSheet: View {
                 .foregroundStyle(ZTheme.Palette.textPrimary)
 
             HStack {
-                Button("Cancel") { Haptics.light(); dismiss() }
-                    .font(ZTheme.Font.body(15))
-                    .foregroundStyle(ZTheme.Palette.text(0.55))
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("profile-edit-cancel")
+                Button { Haptics.light(); dismiss() } label: {
+                    Text("Cancel")
+                        .font(ZTheme.Font.body(15))
+                        .foregroundStyle(ZTheme.Palette.text(0.55))
+                        .frame(minWidth: 44, minHeight: 44, alignment: .leading)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("profile-edit-cancel")
 
                 Spacer(minLength: 0)
 
-                Button("Save") { save() }
-                    .font(ZTheme.Font.body(15, weight: .semibold))
-                    .foregroundStyle(canSave ? tone : ZTheme.Palette.text(0.30))
-                    .buttonStyle(.plain)
-                    .disabled(!canSave)
-                    .accessibilityIdentifier("profile-edit-save")
+                Button { save() } label: {
+                    Text("Save")
+                        .font(ZTheme.Font.body(15, weight: .semibold))
+                        .foregroundStyle(canSave ? tone : ZTheme.Palette.text(0.30))
+                        .frame(minWidth: 44, minHeight: 44, alignment: .trailing)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .disabled(!canSave)
+                .accessibilityIdentifier("profile-edit-save")
             }
         }
         .padding(.horizontal, QuietMetrics.gutter)
@@ -394,7 +402,7 @@ struct EditProfileSheet: View {
         VStack(alignment: .leading, spacing: 0) {
             QuietFieldLabel(text: "Strict mode", topPadding: QuietMetrics.sectionGap)
             QuietToggleRow(title: "Hold me to it",
-                           subtitle: "No early exit once a session starts",
+                           subtitle: "Ending early takes a full minute\u{2019}s hold",
                            isOn: $draft.isStrict,
                            tone: tone)
             QuietHairline(color: ZTheme.Palette.glassFill)

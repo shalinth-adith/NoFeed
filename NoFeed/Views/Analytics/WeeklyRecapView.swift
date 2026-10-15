@@ -149,7 +149,7 @@ struct WeeklyRecapView: View {
                 VStack(spacing: 10) {
                     Spacer(minLength: 0)
                     RoundedRectangle(cornerRadius: 6, style: .continuous)
-                        .fill(isBest ? tone : ZTheme.Palette.glassFill)
+                        .fill(isBest ? tone : ZTheme.Palette.chartBar)
                         .frame(width: 20,
                                height: day.minutes == 0
                                    ? 4

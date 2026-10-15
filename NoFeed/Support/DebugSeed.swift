@@ -119,6 +119,23 @@ enum DebugSeed {
         try? context.save()
     }
 
+    /// UI tests that bypass Screen Time are not about the notifications
+    /// prompt either; the rationale alert before it would sit over every
+    /// "Begin focus" tap.
+    static func skipNotificationRationaleIfTesting() {
+        guard ProcessInfo.processInfo.arguments.contains("NoFeedUITestBypassScreenTime")
+        else { return }
+        AppGroup.defaults.set(true, forKey: "didExplainNotifications")
+    }
+
+    /// The opposite: a test that is not about onboarding skips it, whatever
+    /// an earlier test left behind.
+    static func completeOnboardingIfRequested() {
+        guard ProcessInfo.processInfo.arguments.contains("NoFeedUITestSkipOnboarding")
+        else { return }
+        AppGroup.defaults.set(true, forKey: "hasCompletedOnboarding")
+    }
+
     /// Show onboarding again on this launch, so a review can look at it
     /// without erasing the simulator.
     static func resetOnboardingIfRequested() {

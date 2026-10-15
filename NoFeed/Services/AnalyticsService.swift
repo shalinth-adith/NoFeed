@@ -261,6 +261,13 @@ final class AnalyticsService {
         return history.unreflectedSessions(limit: limit, since: since)
     }
 
+    /// True once any completed session predates this calendar week — the
+    /// basis for comparing against "last week" at all.
+    func hasHistoryBeforeThisWeek() -> Bool {
+        let start = Self.startOfWeek(calendar: Calendar.current)
+        return history.completedFocusSessions().contains { ($0.startedAt ?? .distantFuture) < start }
+    }
+
     /// "What works for you", from every completed session with an answer.
     /// Empty until ten have one — see `InsightRules` for the thresholds.
     func insightRules() -> InsightRules {

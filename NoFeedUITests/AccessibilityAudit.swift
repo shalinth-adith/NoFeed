@@ -78,18 +78,11 @@ final class AccessibilityAudit: XCTestCase {
         app.launchArguments += ["NoFeedUITestBypassScreenTime",
                                 "NoFeedUITestResetSession",
                                 "NoFeedUITestResetProfiles",
+                                "NoFeedUITestSkipOnboarding",
                                 "NoFeedSeedDemoHistory"] + extra
         app.launch()
         let tabBar = app.tabBars.firstMatch
-        if !tabBar.waitForExistence(timeout: 6) {
-            app.tap()
-            if !tabBar.waitForExistence(timeout: 4) {
-                for label in ["Get Started", "Next", "Continue", "Maybe later", "Start Focusing"] {
-                    let button = app.buttons[label]
-                    if button.waitForExistence(timeout: 2) { button.tap() }
-                }
-            }
-        }
+        if !tabBar.waitForExistence(timeout: 6) { app.tap() }
         _ = tabBar.waitForExistence(timeout: 8)
         return app
     }
@@ -166,7 +159,6 @@ final class AccessibilityAudit: XCTestCase {
             let add = app.buttons["add-schedule"]
             if tap(add) {
                 _ = app.textFields["schedule-title"].waitForExistence(timeout: 6)
-                app.textFields["schedule-title"].typeText("\n")
                 audit(app, "16-schedule-editor")
                 let cancel = app.buttons.matching(NSPredicate(format: "label ==[c] 'Cancel'")).firstMatch
                 if cancel.exists { cancel.tap() }

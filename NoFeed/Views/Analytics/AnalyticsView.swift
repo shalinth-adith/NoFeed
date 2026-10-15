@@ -26,6 +26,7 @@ struct AnalyticsView: View {
     @State private var previousWeekMinutes = 0
     @State private var weekSessions = 0
     @State private var streak = 0
+    @State private var hadPreviousWeek = true
     @State private var showingRecap = false
     /// Completed sessions nobody has said anything about yet; the card asks
     /// about the first and moves on as each is answered.
@@ -99,6 +100,7 @@ struct AnalyticsView: View {
         previousWeekMinutes = analytics.previousCalendarWeekMinutes()
         weekSessions = analytics.calendarWeekSessionCount()
         streak = analytics.streak()
+        hadPreviousWeek = analytics.hasHistoryBeforeThisWeek()
         unreflected = analytics.unreflectedSessions()
         pendingReflection = .none
         rules = analytics.insightRules()
@@ -166,6 +168,10 @@ struct AnalyticsView: View {
 
     /// "+1.1 h vs last week" / "−0.4 h vs last week" / "Same as last week".
     private var deltaText: String {
+        // Same rule as the recap: a first week has nothing to be compared to,
+        // and "+6.9 h vs last week" against a week that never happened is
+        // noise (review 2.3, L3).
+        guard hadPreviousWeek else { return "Your first week" }
         let delta = Double(weekMinutes - previousWeekMinutes) / 60
         if abs(delta) < 0.05 { return "Same as last week" }
         let sign = delta > 0 ? "+" : "−"
@@ -292,7 +298,7 @@ struct AnalyticsView: View {
                 VStack(spacing: 10) {
                     Spacer(minLength: 0)
                     RoundedRectangle(cornerRadius: 6, style: .continuous)
-                        .fill(isToday ? tone : ZTheme.Palette.glassFill)
+                        .fill(isToday ? tone : ZTheme.Palette.chartBar)
                         .frame(width: 20,
                                height: stat.focusMinutes == 0
                                    ? 4
@@ -326,7 +332,7 @@ struct AnalyticsView: View {
                             .foregroundStyle(ZTheme.Palette.text(0.30))
                     }
                     Spacer()
-                    Text("\(session.completedMinutes) min")
+                    Text(session.completedMinutes == 0 ? "under a minute" : "\(session.completedMinutes) min")
                         .font(ZTheme.Font.numeral(15))
                         .foregroundStyle(ZTheme.Palette.text(0.55))
                 }

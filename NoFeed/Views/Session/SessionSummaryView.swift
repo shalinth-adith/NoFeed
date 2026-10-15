@@ -219,6 +219,9 @@ struct SessionSummaryView: View {
                 Text(summary.clock)
                     .font(ZTheme.Font.numeral(26))
                     .foregroundStyle(ZTheme.Palette.textPrimary)
+                    .minimumScaleFactor(0.6)
+                    .lineLimit(1)
+                    .padding(.horizontal, 12)
                     .accessibilityLabel(clockSpoken(summary))
                     .accessibilityIdentifier("summary-elapsed-clock")
             }
@@ -254,10 +257,13 @@ struct SessionSummaryView: View {
                 .buttonStyle(QuietCTAStyle(tone: tone(summary), isReady: true))
                 .accessibilityIdentifier("summary-try-shorter")
 
-                Button("That\u{2019}s all for now") { session.dismissSummary() }
-                    .font(ZTheme.Font.body(15))
-                    .foregroundStyle(ZTheme.Palette.text(0.55))
-                    .frame(maxWidth: .infinity, minHeight: 44)
+                Button { session.dismissSummary() } label: {
+                    Text("That\u{2019}s all for now")
+                        .font(ZTheme.Font.body(15))
+                        .foregroundStyle(ZTheme.Palette.text(0.55))
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .contentShape(Rectangle())
+                }
                     .buttonStyle(.plain)
             }
         }

@@ -109,6 +109,7 @@ struct ProfileDetailView: View {
                         .font(ZTheme.Font.body(15))
                 }
                 .foregroundStyle(tone)
+                .frame(minHeight: 44)
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
@@ -123,6 +124,7 @@ struct ProfileDetailView: View {
                 Text("Edit")
                     .font(ZTheme.Font.body(15, weight: .semibold))
                     .foregroundStyle(tone)
+                    .frame(minWidth: 44, minHeight: 44)
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
@@ -336,8 +338,10 @@ struct ProfileDetailView: View {
         } label: {
             Text("Delete profile")
                 .font(ZTheme.Font.body(15))
-                .foregroundStyle(ZTheme.Palette.warn)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                // The alert tone, not the warning one: destructive reads as
+                // red on iOS and amber reads as caution (review 2.3, L4).
+                .foregroundStyle(ZTheme.Palette.alert)
+                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
                 .contentShape(Rectangle())
                 .padding(.top, 18)
         }

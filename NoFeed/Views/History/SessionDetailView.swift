@@ -137,6 +137,8 @@ struct SessionDetailView: View {
                 IconTile(systemImage: "hand.tap.fill",
                          color: distractions.isEmpty ? ZTheme.Palette.teal : ZTheme.Palette.streak,
                          size: 42, corner: 13)
+                    // Decorative; the text beside it says what it means.
+                    .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
                     Text("\(distractions.count)")
                         .font(ZTheme.Font.numeral(24, weight: .bold))

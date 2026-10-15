@@ -160,3 +160,52 @@ TEST_RUNNER_QUIET_SHOT_DIR=/tmp/a11y xcodebuild test -project NoFeed.xcodeproj -
 7. Lows as time allows.
 
 Re-run `AccessibilityAudit` and the screenshot tours after 1–2; the counts in the table above are the baseline.
+
+
+---
+
+## After the fixes (2026-10-16, same day)
+
+Every finding above was acted on in the commits that follow this report. Status per item:
+
+| ID | Status | What changed |
+|---|---|---|
+| C1 | Fixed | `ZTheme.Font` now builds every font with `Font.custom(_:size:relativeTo:)` on the system face, so SwiftUI tracks the text size; growth is capped at the first accessibility step on the app root so the fixed compositions still fit. Home, Session and the ended-early screen verified at the largest size (`after/*-xxxl-after.png`). |
+| H1 | Fixed | The last onboarding page branches: "Almost there" with a grant button and "Continue without blocking" when Screen Time was skipped. |
+| H2 | Fixed | `ZTheme.Palette.text` applies a floor: 30% → 66%, 55% → 72%. Hard contrast failures 100 → 36 (the rest are tone-coloured accents and the app-paused screen's preview copy). |
+| H3 | Fixed | The schedule editor no longer focuses the title on open. |
+| H4 | Fixed | Notifications are requested at the first session start, after a one-line alert explaining what they are for. |
+| M1 | Fixed | Onboarding promises streaks and the recap; the Settings footer says "weekly progress bars"; the streak-goal stepper is gone; the daily challenge notification is cancelled on every launch. |
+| M2 | Fixed | New `chartBar` token at 14% white in dark (9% black in light) for the Insights and recap charts. |
+| M3 | Fixed | The Schedule tab's Profiles section gains an "All profiles" row that opens the same list Settings does. |
+| M4 | Fixed | All three strict-mode subtitles read "Ending early takes a full minute's hold". |
+| M5 | Mostly fixed | 44pt targets on Maybe later, That's all for now, Profiles/Settings back, Edit, Reorder, Cancel, Save, Delete profile; the week strip is one element. 29 → 12 remaining, all unlabeled system elements inside the Profiles list. |
+| M6 | Fixed | The delete sheet sizes itself to its content; the ended-early clock scales down before clipping. |
+| M7 | Documented | Settings stays on the system grouped Form on purpose; the reasoning is in the file header. |
+| M8 | Fixed | The session-detail icon is hidden from VoiceOver. |
+| L1 | Fixed | Onboarding remembers its page across a relaunch. |
+| L2 | Fixed | Sessions under a minute read "under a minute". |
+| L3 | Fixed | A first week reads "Your first week" instead of a delta. |
+| L4 | Fixed | Delete profile uses the alert tone, not the warning one. |
+| L5 | Fixed | A profile that blocks nothing says "blocks nothing yet" in the list. |
+| L6 | Fixed | The spacer above the orb is capped so it sits nearer the profile row. |
+| L7 | Fixed | About has Privacy policy and Support links. |
+| L8 | Fixed | A caption under the dimmed Begin focus says why. |
+
+### Audit, before and after
+
+| Finding | Before | After |
+|---|---|---|
+| Dynamic Type unsupported | 250 | 1 |
+| Dynamic Type partially unsupported | 5 | 181 (the deliberate cap; text grows to accessibility 1 and stops) |
+| Contrast failed | 100 | 36 |
+| Contrast nearly passed | 82 | 11 |
+| Hit area too small | 29 | 12 |
+| Text clipped | 5 | 11 (buttons at the capped size; see below) |
+| Potentially inaccessible text | 6 | 5 |
+| Label not human-readable | 1 | 0 |
+| **Total** | **478** | **257** |
+
+What remains, and why: the "partially unsupported" entries are every text that stops growing at the cap, which is a trade the fixed layouts need. The 36 contrast failures are tone-coloured accents (periwinkle on cream) and the app-paused preview copy. The 12 small targets are unlabeled elements the List exposes inside the Profiles screen. The clipped-text entries are CTA labels measured at the capped size ("Try a shorter one — 5 min", the delete sheet's buttons) and would need the buttons to wrap to two lines.
+
+Every UI suite was re-run after the changes. Three tests were updated because they depended on behaviour the fixes removed: two typed into the schedule title without tapping it (the auto-focus is gone), and one asserted a "vs last week" delta on a first week.

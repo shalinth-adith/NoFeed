@@ -156,6 +156,7 @@ struct ProfilesView: View {
                         .font(ZTheme.Font.body(15))
                 }
                 .foregroundStyle(ZTheme.Palette.brandBright)
+                .frame(minHeight: 44)
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
@@ -184,6 +185,8 @@ struct ProfilesView: View {
                         Text(editMode.isEditing ? "Done" : "Reorder")
                             .font(ZTheme.Font.body(15))
                             .foregroundStyle(ZTheme.Palette.brandBright)
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
                 }
@@ -409,7 +412,18 @@ private struct ProfileRow: View {
         let focus = "\(profile.focusMinutes) min focus"
         let brk = profile.breakMinutes > 0 ? " · \(profile.breakMinutes) min break" : ""
         let strict = profile.isStrict ? " · strict" : ""
-        return focus + brk + strict
+        // A profile saved "without blocking" was indistinguishable from the
+        // others in this list (review 2.3, L5).
+        let nothing = blocksNothing ? " · blocks nothing yet" : ""
+        return focus + brk + strict + nothing
+    }
+
+    private var blocksNothing: Bool {
+        guard !profile.blockAllApps else { return false }
+        let selection = SelectionCodec.decode(profile.blockSelectionData)
+        return selection.applicationTokens.isEmpty
+            && selection.categoryTokens.isEmpty
+            && selection.webDomainTokens.isEmpty
     }
 }
 
@@ -423,6 +437,10 @@ struct DeleteProfileSheet: View {
     let sessionCount: Int
     let onDelete: () -> Void
     let onKeep: () -> Void
+
+    /// The sheet is as tall as its words. A fixed 268pt detent clipped the
+    /// title and both buttons at larger text sizes (review 2.3, M6).
+    @State private var contentHeight: CGFloat = 320
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -446,7 +464,7 @@ struct DeleteProfileSheet: View {
                 Button(action: { Haptics.warning(); onDelete() }) {
                     Text("Delete profile")
                         .font(ZTheme.Font.display(16, weight: .semibold))
-                        .foregroundStyle(ZTheme.Palette.warn)
+                        .foregroundStyle(ZTheme.Palette.alert)
                         .frame(maxWidth: .infinity, minHeight: 54)
                         .background {
                             RoundedRectangle(cornerRadius: 16, style: .continuous)
@@ -485,7 +503,8 @@ struct DeleteProfileSheet: View {
                 .frame(height: 1)
         }
         .background(ZTheme.Palette.nightDeep)
-        .presentationDetents([.height(268)])
+        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { contentHeight = $0 }
+        .presentationDetents([.height(contentHeight)])
         .presentationDragIndicator(.hidden)
         .presentationBackground(ZTheme.Palette.nightDeep)
         .presentationCornerRadius(24)

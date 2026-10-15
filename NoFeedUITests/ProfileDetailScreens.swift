@@ -52,7 +52,8 @@ final class ProfileDetailScreens: XCTestCase {
         // the next run must find the four defaults again.
         app.launchArguments += ["NoFeedUITestBypassScreenTime",
                                 "NoFeedUITestResetSession",
-                                "NoFeedUITestResetProfiles"]
+                                "NoFeedUITestResetProfiles",
+                                "NoFeedUITestSkipOnboarding"]
         app.launch()
         let tabBar = app.tabBars.firstMatch
         if !tabBar.waitForExistence(timeout: 6) {

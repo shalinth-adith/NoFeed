@@ -29,6 +29,9 @@ struct SchedulesView: View {
     @State private var toast: ScheduleToast?
     /// Set when arriving here from "Put it on the schedule" on a new profile.
     @State private var prefilledProfileName: String?
+    /// The same Profiles list Settings opens. A profile made here used to land
+    /// in a list reachable only from another tab (review 2.3, M3).
+    @State private var showAllProfiles = false
 
     /// What the editor changed on the user's behalf, and how to put it back.
     struct ScheduleToast: Identifiable {
@@ -76,6 +79,7 @@ struct SchedulesView: View {
                                 .padding(.top, 20)
                                 .padding(.bottom, 2)
                             newProfileButton
+                            allProfilesRow
                         }
                         .padding(.horizontal, 28)
                         .padding(.top, 20)
@@ -86,6 +90,7 @@ struct SchedulesView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
             .safeAreaInset(edge: .bottom) { toastBar }
+            .sheet(isPresented: $showAllProfiles) { ProfilesView() }
             .sheet(item: $editing, onDismiss: { prefilledProfileName = nil }) { target in
                 switch target {
                 case .newSchedule:
@@ -163,11 +168,19 @@ struct SchedulesView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel(day.formatted(date: .abbreviated, time: .omitted)
-                                    + (isToday ? ", today" : ""))
             }
         }
+        // One element for the strip. The dates are not tappable, and seven
+        // separate 20pt elements were seven undersized targets to VoiceOver
+        // (review 2.3, M5).
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(weekStripLabel(monday: monday, today: today, calendar: calendar))
+    }
+
+    private func weekStripLabel(monday: Date, today: Date, calendar: Calendar) -> String {
+        let sunday = calendar.date(byAdding: .day, value: 6, to: monday) ?? monday
+        let range = "\(monday.formatted(date: .abbreviated, time: .omitted)) to \(sunday.formatted(date: .abbreviated, time: .omitted))"
+        return "This week, \(range). Today is \(today.formatted(.dateTime.weekday(.wide)))."
     }
 
     private var todayLabel: String {
@@ -271,7 +284,7 @@ struct SchedulesView: View {
                     Text("Add schedule")
                         .font(ZTheme.Font.display(15, weight: .semibold))
                 }
-                .foregroundStyle(tone)
+                .foregroundStyle(ZTheme.Palette.brandBright)
                 .padding(.vertical, 18)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
@@ -279,6 +292,32 @@ struct SchedulesView: View {
             .buttonStyle(.plain)
             .accessibilityIdentifier("add-schedule")
         }
+    }
+
+    private var allProfilesRow: some View {
+        Button {
+            Haptics.light()
+            showAllProfiles = true
+        } label: {
+            HStack {
+                Text("All profiles")
+                    .font(ZTheme.Font.body(15))
+                    .foregroundStyle(ZTheme.Palette.textPrimary)
+                Text("\(profiles.profiles.count)")
+                    .font(ZTheme.Font.numeral(15))
+                    .foregroundStyle(ZTheme.Palette.text(0.55))
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(ZTheme.Palette.text(0.30))
+            }
+            .padding(.vertical, 14)
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("all-profiles")
+        .accessibilityHint("Opens the list of focus profiles")
     }
 
     private var newProfileButton: some View {
@@ -292,7 +331,7 @@ struct SchedulesView: View {
                 Text("New profile")
                     .font(ZTheme.Font.display(15, weight: .semibold))
             }
-            .foregroundStyle(tone)
+            .foregroundStyle(ZTheme.Palette.brandBright)
             .padding(.vertical, 16)
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())

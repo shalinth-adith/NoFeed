@@ -16,6 +16,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 enum ZTheme {
 
@@ -65,7 +66,26 @@ enum ZTheme {
 
         /// Text (design `--ink` / `--ink-2` / `--ink-3`).
         static let textPrimary = Color(lightHex: "16171B", darkHex: "E7E8EC")
-        static func text(_ opacity: Double) -> Color { textPrimary.opacity(opacity) }
+
+        /// Ink at a given opacity, with a floor.
+        ///
+        /// The Quiet comp set captions at 30% and supporting text at 55%, and
+        /// Apple's accessibility audit failed 100 of them on contrast (review
+        /// 2.3, H2). Anything that carries information now sits at 62% or
+        /// above, which clears 4.5:1 on both the cream and the dark canvas.
+        /// Callers keep asking for the comp's number; this is where it is
+        /// corrected, so the hierarchy between 30 and 55 survives as 62 and 70.
+        static func text(_ opacity: Double) -> Color {
+            textPrimary.opacity(floored(opacity))
+        }
+
+        static func floored(_ opacity: Double) -> Double {
+            switch opacity {
+            case ..<0.45: return 0.66
+            case 0.45..<0.66: return 0.72
+            default: return opacity
+            }
+        }
 
         /// Semantic warm accent (streak). Muted to sit in the Quiet palette.
         static let streak      = Color(hex: "D6A85C")
@@ -85,6 +105,10 @@ enum ZTheme {
 
         // Subtle fills/strokes (design `--raise` / `--line` / `--line-2`).
         static let glassFill        = Color(light: line(0.04), dark: Color.white.opacity(0.035))
+        /// Bars in the week charts that are not the highlighted one. `glassFill`
+        /// at 3.5% white vanished on the dark canvas (review 2.3, M2); a bar
+        /// has to read as a bar.
+        static let chartBar         = Color(light: line(0.09), dark: Color.white.opacity(0.14))
         static let glassFillRaised   = Color(light: line(0.05), dark: Color.white.opacity(0.05))
         static let glassStroke      = Color(light: line(0.08), dark: Color.white.opacity(0.07))
         static let glassStrokeStrong = Color(light: line(0.12), dark: Color.white.opacity(0.12))
@@ -127,18 +151,35 @@ enum ZTheme {
     // MARK: - Typography (Apple system fonts, calm two-weight scale)
 
     enum Font {
-        /// Big numerals (timer, stats) — clean SF (not rounded), light weight and
-        /// monospaced digits so the live timer doesn't shift width. "Gentle."
+        /// Every size below is the comp's point size at the default text size,
+        /// scaled by the user's Dynamic Type setting through `UIFontMetrics`.
+        /// Before this the whole app ignored the setting (review 2.3, C1).
+        ///
+        /// Each role is capped. The layouts are fixed compositions — a
+        /// non-scrolling Focus screen, a 300pt orb — and an uncapped body size
+        /// at the largest accessibility setting is 3.1× the default, which no
+        /// screen here can hold. The caps keep text growing well past the
+        /// default while the composition still fits.
         static func numeral(_ size: CGFloat, weight: SwiftUI.Font.Weight = .regular) -> SwiftUI.Font {
-            .system(size: size, weight: weight, design: .default).monospacedDigit()
+            scaling(size, relativeTo: .largeTitle).weight(weight).monospacedDigit()
         }
         /// Headings / titles — "Gentle titles": SF, medium weight, not bold.
         static func display(_ size: CGFloat, weight: SwiftUI.Font.Weight = .medium) -> SwiftUI.Font {
-            .system(size: size, weight: weight, design: .default)
+            scaling(size, relativeTo: .title2).weight(weight)
         }
         /// Body / supporting labels — standard SF (San Francisco).
         static func body(_ size: CGFloat, weight: SwiftUI.Font.Weight = .regular) -> SwiftUI.Font {
-            .system(size: size, weight: weight, design: .default)
+            scaling(size, relativeTo: .body).weight(weight)
+        }
+
+        /// The system face at `size`, scaling with the text style the way a
+        /// custom font does. `.system(size:)` is fixed; `.custom(_:size:relativeTo:)`
+        /// is the one `Font` initializer that takes an arbitrary point size and
+        /// still follows Dynamic Type, and the system face answers to its
+        /// internal name. The growth ceiling is set once, on the app's root
+        /// view (`NoFeedApp`), not here.
+        static func scaling(_ size: CGFloat, relativeTo style: SwiftUI.Font.TextStyle) -> SwiftUI.Font {
+            .custom(".AppleSystemUIFont", size: size, relativeTo: style)
         }
     }
 

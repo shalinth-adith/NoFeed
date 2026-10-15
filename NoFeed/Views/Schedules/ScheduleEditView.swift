@@ -100,7 +100,9 @@ struct ScheduleEditView: View {
             .familyActivityPicker(isPresented: $showBlockPicker, selection: $draft.block)
             .familyActivityPicker(isPresented: $showAllowPicker, selection: $draft.allow)
         }
-        .onAppear { if schedule == nil { titleFocused = true } }
+        // The title is optional and the keyboard it raises covers Days and
+        // Profile, the two fields a new schedule actually needs (review 2.3,
+        // H3). The user taps into it if they want one.
     }
 
     // MARK: Title
@@ -386,7 +388,7 @@ struct ScheduleEditView: View {
             QuietFieldLabel(text: "Strict mode", topPadding: QuietMetrics.sectionGap)
                 .padding(.bottom, 2)
             QuietToggleRow(title: "Hold me to it",
-                           subtitle: "A short delay before a session can end early",
+                           subtitle: "Ending early takes a full minute\u{2019}s hold",
                            isOn: $draft.isStrict,
                            tone: tone)
         }

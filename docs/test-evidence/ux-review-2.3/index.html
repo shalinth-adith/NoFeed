@@ -72,7 +72,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   <div class="eyebrow">UI/UX · accessibility · acceptance</div>
   <h1>NoFeed 2.3 Review</h1>
   <p class="lede">Every screen walked as three users, audited by Apple's accessibility checker, and captured in light, dark and at the largest text size. No real users took part; this is an expert walkthrough standing in for user testing.</p>
-  <div class="meta"><span>2026-10-16</span><span>Build 2.3 (1)</span><span>24 screens audited</span><span>71 screenshots</span><span>Simulator only: Screen Time itself cannot run there</span></div>
+  <div class="meta"><span>2026-10-16</span><span>Build 2.3 (1)</span><span><a href="#after">Fixes applied, see below</a></span><span>24 screens audited</span><span>71 screenshots</span><span>Simulator only: Screen Time itself cannot run there</span></div>
 </header>
 
 <h2>Scorecard</h2>
@@ -261,6 +261,39 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   <li>M2 dark chart, M3 profile entry points, M4 strict copy.</li>
   <li>Lows as time allows.</li>
 </ol>
+
+<h2 id="after">After the fixes</h2>
+<p class="lede">Every finding was acted on the same day. The audit was re-run on all 24 screens and the largest text size re-captured.</p>
+<div class="score">
+  <div><b>Dynamic Type unsupported</b><span class="ok">250 → 1</span><br>Fonts now scale with the text size, capped at the first accessibility step so the fixed layouts still fit. The 181 "partially unsupported" entries are that cap.</div>
+  <div><b>Contrast failed</b><span class="ok">100 → 36</span><br>Secondary ink floored at 66% / 72%. What remains is tone-coloured accents and the app-paused preview copy.</div>
+  <div><b>Hit area too small</b><span class="ok">29 → 12</span><br>All named buttons are 44pt. The 12 left are unlabeled elements the List exposes on the Profiles screen.</div>
+  <div><b>All findings</b><span class="ok">478 → 257</span><br>Per-screen files in <code>after/a11y/</code>.</div>
+</div>
+<div class="tablewrap"><table>
+<tr><th>ID</th><th>Status</th><th>Change</th></tr>
+<tr><td>C1</td><td>Fixed</td><td>System face via <code>Font.custom(_:size:relativeTo:)</code>; growth capped on the app root</td></tr>
+<tr><td>H1</td><td>Fixed</td><td>Last onboarding page: "Almost there" with grant and "Continue without blocking" when permission was skipped</td></tr>
+<tr><td>H2</td><td>Fixed</td><td>Ink floor 30% → 66%, 55% → 72%</td></tr>
+<tr><td>H3</td><td>Fixed</td><td>Schedule editor no longer focuses the title on open</td></tr>
+<tr><td>H4</td><td>Fixed</td><td>Notifications asked at the first session start, after a one-line alert</td></tr>
+<tr><td>M1</td><td>Fixed</td><td>Badges line and "progress orbs" footer rewritten; streak-goal stepper and challenge notification gone</td></tr>
+<tr><td>M2</td><td>Fixed</td><td>New <code>chartBar</code> token, 14% white in dark</td></tr>
+<tr><td>M3</td><td>Fixed</td><td>"All profiles" row on the Schedule tab opens the same list as Settings</td></tr>
+<tr><td>M4</td><td>Fixed</td><td>"Ending early takes a full minute's hold" in all three editors</td></tr>
+<tr><td>M5</td><td>Mostly fixed</td><td>44pt on every named text button; week strip is one element</td></tr>
+<tr><td>M6</td><td>Fixed</td><td>Delete sheet sizes to its content; ended-early clock scales before clipping</td></tr>
+<tr><td>M7</td><td>Documented</td><td>Settings stays on the system Form by decision, recorded in the file</td></tr>
+<tr><td>M8</td><td>Fixed</td><td>Icon hidden from VoiceOver</td></tr>
+<tr><td>L1–L8</td><td>Fixed</td><td>Onboarding page remembered; "under a minute"; "Your first week"; alert tone on delete; "blocks nothing yet"; orb spacer capped; policy and support links; caption under the dimmed button</td></tr>
+</table></div>
+<div class="gallery" style="margin-top:18px">
+  <figure><img src="thumbs/after_01-home-after.png" alt=""><figcaption>Home after: brighter secondary ink, orb higher</figcaption></figure>
+  <figure><img src="thumbs/after_01-home-xxxl-after.png" alt=""><figcaption>Home at accessibility XXXL: now scales</figcaption></figure>
+  <figure><img src="thumbs/after_02-session-xxxl-after.png" alt=""><figcaption>Session at XXXL</figcaption></figure>
+  <figure><img src="thumbs/after_04b-ended-early-xxxl-after.png" alt=""><figcaption>Ended early at XXXL</figcaption></figure>
+  <figure><img src="thumbs/after_20-delete-sheet-after.png" alt=""><figcaption>Delete sheet: nothing clipped, alert tone</figcaption></figure>
+</div>
 
 <h2>Every screen</h2>
 <p class="lede">Onboarding and first-run states in dark; the automated tours in light (iPhone 17 Pro) and dark (iPhone 17 Pro Max); the text-size pass on iPhone Air.</p>

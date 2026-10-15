@@ -1,0 +1,8 @@
+[contrast] Contrast failed — element: 48:HELD
+    Contrast failed for SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:HELD
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:HELD · WORK
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[text-clipped] Text clipped — element: 48:Held for you. Nothing is blocked while you’re away.
+    Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.

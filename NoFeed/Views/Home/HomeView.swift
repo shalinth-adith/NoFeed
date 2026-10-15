@@ -22,6 +22,11 @@ struct HomeView: View {
     @AppStorage("userDisplayName", store: AppGroup.defaults) private var userName = ""
 
     @State private var selectedMinutes = 25
+    /// One line of rationale before the system's notifications prompt. Asked
+    /// at the first session start, not on first landing (review 2.3, H4):
+    /// the end-of-session alert is the first real reason to want one.
+    @State private var showNotificationRationale = false
+    @AppStorage("didExplainNotifications", store: AppGroup.defaults) private var didExplainNotifications = false
     /// Width of the profile switcher's scroll viewport, so the row inside can be
     /// told how much space it has to spread into. See `profilePicker`.
     @State private var viewportWidth: CGFloat = 0
@@ -51,7 +56,10 @@ struct HomeView: View {
                             Spacer(minLength: 0)
                         } else {
                             profilePicker
-                            Spacer(minLength: 0)
+                            // Capped so the orb sits nearer the profile row on
+                            // tall phones instead of in the middle of a void
+                            // (review 2.3, L6); the lower spacer takes the rest.
+                            Spacer(minLength: 0).frame(maxHeight: 56)
                             orbSection(diameter: orbDiameter(for: proxy.size.height))
                             Spacer(minLength: 0)
                             beginSection
@@ -67,6 +75,17 @@ struct HomeView: View {
             .toolbar(.hidden, for: .navigationBar)
             .task { await prepare() }
             .onChange(of: profiles.activeProfileID) { _, _ in syncDuration() }
+            .alert("NoFeed will ask to send notifications", isPresented: $showNotificationRationale) {
+                Button("Continue") {
+                    didExplainNotifications = true
+                    Task {
+                        await NotificationService.shared.requestAuthorization()
+                        beginSession()
+                    }
+                }
+            } message: {
+                Text("One when a session ends, and one before a scheduled session starts. Nothing else.")
+            }
         }
     }
 
@@ -261,12 +280,22 @@ struct HomeView: View {
 
     /// The one bright action, pinned near the bottom of the screen.
     private var beginSection: some View {
-        Button(action: startFocus) {
-            Text("Begin focus")
+        VStack(spacing: 8) {
+            Button(action: startFocus) {
+                Text("Begin focus")
+            }
+            .buttonStyle(.zenlyPrimary(tint: tint, height: 56))
+            .disabled(activeProfile == nil || !authorization.isAuthorized || session.isActive)
+            .opacity(activeProfile == nil || !authorization.isAuthorized || session.isActive ? 0.45 : 1)
+
+            // Why the button is dimmed, next to the button rather than only in
+            // the card at the top of the screen (review 2.3, L8).
+            if !authorization.isAuthorized {
+                Text("Grant Screen Time access to begin")
+                    .font(ZTheme.Font.body(13))
+                    .foregroundStyle(ZTheme.Palette.text(0.55))
+            }
         }
-        .buttonStyle(.zenlyPrimary(tint: tint, height: 56))
-        .disabled(activeProfile == nil || !authorization.isAuthorized || session.isActive)
-        .opacity(activeProfile == nil || !authorization.isAuthorized || session.isActive ? 0.45 : 1)
     }
 
     /// "N-day streak · M min today" — the quiet stat line beneath the CTA.
@@ -301,8 +330,10 @@ struct HomeView: View {
 
     private func prepare() async {
         authorization.refresh() // pick up persisted Screen Time approval
-        await NotificationService.shared.requestAuthorization()
-        NotificationService.shared.scheduleDailyChallengeReminder()
+        // The 9am "open NoFeed to see today's challenge" nudge pointed at a
+        // screen that does not exist (review 2.3, M1). Installed devices still
+        // carry the repeating request, so it is cancelled here, every launch.
+        NotificationService.shared.cancelDailyChallengeReminder()
         syncDuration()
     }
 
@@ -318,6 +349,15 @@ struct HomeView: View {
     }
 
     private func startFocus() {
+        guard activeProfile != nil else { return }
+        if !didExplainNotifications {
+            showNotificationRationale = true
+            return
+        }
+        beginSession()
+    }
+
+    private func beginSession() {
         guard let profile = activeProfile else { return }
         session.startFocus(
             profileName: profile.name ?? "Focus",

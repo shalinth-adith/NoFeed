@@ -280,6 +280,10 @@ targets:
       - path: Shared/FocusLaunchRequest.swift
       - path: Shared/SessionControlIntents.swift
       - path: Shared/SessionControlRequest.swift
+      # For the countdown, the "Start <profile>" pill and the profile picker.
+      - path: Shared/ActiveSessionInfo.swift
+      - path: Shared/ProfileDirectory.swift
+      - path: Shared/FocusProfileEntity.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: me.adithyan.shalinth.Zenly.ZenlyWidget

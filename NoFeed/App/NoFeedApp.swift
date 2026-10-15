@@ -124,14 +124,26 @@ struct NoFeedApp: App {
             .environment(achievements)
             .environment(challenges)
             .environment(accountability)
+            // The widget's "Start Work" tap. A widget cannot run an intent that
+            // opens the app, so it sends a URL instead; this turns it into the
+            // same request the intents make and starts straight away — the
+            // `.active` handler may already have run by the time the URL lands.
+            .onOpenURL { url in
+                guard let pending = FocusLaunchRequest.pending(from: url) else { return }
+                FocusLaunchRequest.request(profileID: pending.profileID)
+                startPendingFocusIfNeeded()
+            }
     }
 
     /// Start a session requested from outside the app (App Intent / Control
-    /// Center / Siri), using the active profile.
+    /// Center / Siri / widget), using the profile it named or else the active one.
     private func startPendingFocusIfNeeded() {
-        guard FocusLaunchRequest.consume(),
-              session.phase == .idle,
-              let profile = profiles.activeProfile else { return }
+        guard let pending = FocusLaunchRequest.consume(),
+              session.phase == .idle else { return }
+        if let id = pending.profileID, profiles.profiles.contains(where: { $0.id == id }) {
+            profiles.activeProfileID = id
+        }
+        guard let profile = profiles.activeProfile else { return }
         session.startFocus(
             profileName: profile.name ?? "Focus",
             accentHex: profile.accentHex ?? "1A3FA8",

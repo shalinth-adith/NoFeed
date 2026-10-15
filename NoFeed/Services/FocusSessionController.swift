@@ -165,7 +165,9 @@ final class FocusSessionController {
         // much quiet is left.
         ActiveSessionInfo.set(profileName: profileName,
                               endsAt: focusStartedAt.addingTimeInterval(TimeInterval(focusMinutes * 60)),
-                              isStrict: isStrict)
+                              isStrict: isStrict,
+                              accentHex: accentHex)
+        WidgetRefresh.sessionChanged(history: history)
 
         // Persist so the session is recorded even if iOS kills the app while
         // it's backgrounded during the session.
@@ -250,7 +252,9 @@ final class FocusSessionController {
                                phase: .focus)
             ActiveSessionInfo.set(profileName: profileName,
                                   endsAt: phaseStart.addingTimeInterval(TimeInterval(totalSeconds)),
-                                  isStrict: isStrict)
+                                  isStrict: isStrict,
+                                  accentHex: accentHex)
+            WidgetRefresh.sessionChanged(history: history)
             startTicker()
         }
     }
@@ -297,6 +301,7 @@ final class FocusSessionController {
         // A held session has no shields up, so nothing should be quoting a
         // countdown on a block screen that can no longer appear.
         ActiveSessionInfo.clear()
+        WidgetRefresh.sessionChanged(history: history)
         persistSnapshot()
         Haptics.light()
     }
@@ -333,7 +338,9 @@ final class FocusSessionController {
                            phase: .focus)
         ActiveSessionInfo.set(profileName: profileName,
                               endsAt: phaseStart.addingTimeInterval(TimeInterval(totalSeconds)),
-                              isStrict: isStrict)
+                              isStrict: isStrict,
+                              accentHex: accentHex)
+        WidgetRefresh.sessionChanged(history: history)
         persistSnapshot()
         startTicker()
         Haptics.light()
@@ -466,6 +473,9 @@ final class FocusSessionController {
             lastSession?.reflection = pending
             history.save()
         }
+        // Again, now that the row is in: the streak and today's minutes the
+        // widget shows include this session.
+        WidgetRefresh.sessionChanged(history: history)
 
         // A session just finished → re-arm the daily reminder to the "break" nudge.
         notifications.refreshDailyReminderAfterSession()
@@ -558,6 +568,7 @@ final class FocusSessionController {
         notifications.cancelSession()
         liveActivity.end()
         ActiveSessionInfo.clear()
+        WidgetRefresh.sessionChanged(history: history)
         FocusSessionStore.clear()
     }
 }

@@ -58,6 +58,15 @@ final class ProfileStore {
         request.sortDescriptors = [NSSortDescriptor(keyPath: \FocusProfile.sortIndex, ascending: true)]
         profiles = (try? context.fetch(request)) ?? []
         if activeProfileID == nil { activeProfileID = profiles.first?.id }
+        // The widget's copy. Every mutation ends in `fetch()`, so this is the
+        // one place it needs writing.
+        ProfileDirectory.save(profiles.compactMap { profile in
+            guard let id = profile.id else { return nil }
+            return ProfileSummary(id: id,
+                                  name: profile.name ?? "Focus",
+                                  accentHex: profile.accentHex ?? "7C93E8",
+                                  focusMinutes: Int(profile.focusMinutes))
+        })
     }
 
     func setActive(_ profile: FocusProfile) {

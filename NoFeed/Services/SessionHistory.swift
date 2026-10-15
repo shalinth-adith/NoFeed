@@ -44,6 +44,16 @@ final class SessionHistory {
         try? context.save()
     }
 
+    /// The three numbers the Home Screen widget shows, written to the App
+    /// Group. One builder, called from every session change and from Insights,
+    /// so the widget and the app can never disagree about the streak.
+    func writeStatsSnapshot() {
+        StatsStore.save(StatsSnapshot(streak: currentStreak(),
+                                      todayMinutes: todayFocusMinutes(),
+                                      todayAttempts: DistractionLog.today(),
+                                      updatedAt: Date()))
+    }
+
     /// Attaches a parked notification answer to the session it names, if that
     /// session has been recorded. An answer whose session cannot be found after
     /// a day is dropped: it would otherwise sit there until a session happened

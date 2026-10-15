@@ -20,6 +20,7 @@ enum ActiveSessionInfo {
     private static let endsAtKey = "activeSessionEndsAt"
     private static let profileKey = "activeSessionProfile"
     private static let strictKey = "activeSessionIsStrict"
+    private static let accentKey = "activeSessionAccent"
 
     /// Record the running session. Called on start and on resume.
     ///
@@ -30,10 +31,26 @@ enum ActiveSessionInfo {
     /// separate process with no access to the app's state — can only learn it
     /// here. Drawing a door on a strict session's shield would break the one
     /// promise strict mode makes.
-    static func set(profileName: String, endsAt: Date, isStrict: Bool = false) {
+    ///
+    /// `accentHex` is the fourth, for the Home Screen widget: its countdown is
+    /// drawn in the running profile's tone, and the widget has no other way to
+    /// learn which profile that is.
+    static func set(profileName: String, endsAt: Date, isStrict: Bool = false,
+                    accentHex: String? = nil) {
         AppGroup.defaults.set(endsAt.timeIntervalSince1970, forKey: endsAtKey)
         AppGroup.defaults.set(profileName, forKey: profileKey)
         AppGroup.defaults.set(isStrict, forKey: strictKey)
+        if let accentHex {
+            AppGroup.defaults.set(accentHex, forKey: accentKey)
+        } else {
+            AppGroup.defaults.removeObject(forKey: accentKey)
+        }
+    }
+
+    /// The running profile's tone, or nil when nothing is running.
+    static var accentHex: String? {
+        guard remainingMinutes != nil else { return nil }
+        return AppGroup.defaults.string(forKey: accentKey)
     }
 
     /// True while a *strict* session is running. False when nothing is running,
@@ -50,6 +67,7 @@ enum ActiveSessionInfo {
         AppGroup.defaults.removeObject(forKey: endsAtKey)
         AppGroup.defaults.removeObject(forKey: profileKey)
         AppGroup.defaults.removeObject(forKey: strictKey)
+        AppGroup.defaults.removeObject(forKey: accentKey)
     }
 
     static var profileName: String? {

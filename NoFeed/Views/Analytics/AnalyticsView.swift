@@ -31,6 +31,7 @@ struct AnalyticsView: View {
     /// about the first and moves on as each is answered.
     @State private var unreflected: [FocusSession] = []
     @State private var pendingReflection: SessionReflection = .none
+    @State private var rules: InsightRules = .empty
 
     /// The single accent — the active profile's Quiet tone.
     private var tone: Color { ZTheme.tone(forHex: profiles.activeProfile?.accentHex) }
@@ -65,6 +66,13 @@ struct AnalyticsView: View {
                             hairline()
                             recapLink
 
+                            if !rules.isEmpty {
+                                sectionLabel("What works for you")
+                                    .padding(.top, 34)
+                                    .padding(.bottom, 14)
+                                insightLines
+                            }
+
                             sectionLabel("Goals")
                                 .padding(.top, 34)
                                 .padding(.bottom, 18)
@@ -93,7 +101,26 @@ struct AnalyticsView: View {
         streak = analytics.streak()
         unreflected = analytics.unreflectedSessions()
         pendingReflection = .none
+        rules = analytics.insightRules()
         analytics.updateSnapshot()
+    }
+
+    // MARK: - What works for you
+
+    /// Up to three plain sentences, each a fact about this person's own
+    /// sessions. No chart: the point is that it can be read in one glance.
+    private var insightLines: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ForEach(Array(rules.lines.enumerated()), id: \.offset) { index, line in
+                if index > 0 { hairline() }
+                Text(line)
+                    .font(ZTheme.Font.body(15))
+                    .foregroundStyle(ZTheme.Palette.textPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.vertical, 12)
+            }
+        }
+        .accessibilityIdentifier("insights-rules")
     }
 
     // MARK: - Reflect

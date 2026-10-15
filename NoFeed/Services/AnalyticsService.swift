@@ -261,6 +261,19 @@ final class AnalyticsService {
         return history.unreflectedSessions(limit: limit, since: since)
     }
 
+    /// "What works for you", from every completed session with an answer.
+    /// Empty until ten have one — see `InsightRules` for the thresholds.
+    func insightRules() -> InsightRules {
+        let calendar = Calendar.current
+        let samples = history.completedFocusSessions().map { session in
+            ReflectedSample(plannedMinutes: Int(session.plannedMinutes),
+                            startHour: calendar.component(.hour, from: session.startedAt ?? Date()),
+                            profileName: session.profileName ?? "Focus",
+                            reflection: session.reflection)
+        }
+        return InsightRules.compute(samples)
+    }
+
     /// Store the answer for a session asked about on Insights.
     func saveReflection(_ reflection: SessionReflection, for session: FocusSession) {
         guard reflection != .none else { return }
@@ -270,13 +283,6 @@ final class AnalyticsService {
 
     /// Refresh the widget snapshot and reload timelines.
     func updateSnapshot() {
-        let snapshot = StatsSnapshot(
-            streak: streak(),
-            todayMinutes: todayMinutes(),
-            todayAttempts: DistractionLog.today(),
-            updatedAt: Date()
-        )
-        StatsStore.save(snapshot)
-        WidgetCenter.shared.reloadAllTimelines()
+        WidgetRefresh.sessionChanged(history: history)
     }
 }

@@ -18,6 +18,7 @@ struct SettingsView: View {
     @Environment(ProfileStore.self) private var profiles
     @Environment(AnalyticsService.self) private var analytics
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.openURL) private var openURL
 
     /// The name shown in the Focus greeting ("Good evening, <name>"). Empty by
     /// default → a plain greeting; the user types their own name here.
@@ -45,6 +46,9 @@ struct SettingsView: View {
 
     /// A source the user picked but hasn't confirmed switching to yet.
     @State private var showProfiles = false
+    /// Shown when nothing on the device will take a `mailto:` link — a phone
+    /// with no mail account set up, or the Simulator.
+    @State private var showMailFallback = false
 
     /// Drives the keyboard's Done button for the multiline shield-message field.
     @FocusState private var shieldFieldFocused: Bool
@@ -328,8 +332,41 @@ struct SettingsView: View {
     private var aboutSection: some View {
         Section("About") {
             LabeledContent("Version", value: appVersion)
+            Button(action: sendFeedback) {
+                HStack {
+                    Text("Send feedback")
+                        .foregroundStyle(ZTheme.Palette.textPrimary)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(ZTheme.Palette.text(0.3))
+                }
+            }
+            .accessibilityIdentifier("settings-send-feedback")
+            .accessibilityHint("Opens a new email with your app and device details filled in")
         }
         .listRowBackground(glassRow)
+        .alert("No mail app is set up", isPresented: $showMailFallback) {
+            Button("Copy address") {
+                UIPasteboard.general.string = FeedbackMail.address
+            }
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Write to \(FeedbackMail.address) and mention version \(appVersion).")
+        }
+    }
+
+    /// Hands the pre-filled link to whatever mail client the system has. If
+    /// nothing claims it, fall back to showing the address rather than silently
+    /// doing nothing — a dead tap on "Send feedback" is itself feedback-worthy.
+    private func sendFeedback() {
+        guard let url = FeedbackMail.current() else {
+            showMailFallback = true
+            return
+        }
+        openURL(url) { accepted in
+            if !accepted { showMailFallback = true }
+        }
     }
 
     // There was a "Phase — 2 · Sessions & Scheduling" row here. It is gone, and
@@ -361,8 +398,13 @@ struct SettingsView: View {
         )
     }
 
+    /// "2.3 (1)" — the build in brackets is what tells two uploads of the same
+    /// version apart when someone reports something odd.
     private var appVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let info = Bundle.main.infoDictionary
+        let version = info?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let build = info?["CFBundleVersion"] as? String ?? "1"
+        return "\(version) (\(build))"
     }
 
     private func updateReminder() {

@@ -13,11 +13,13 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct SessionSummaryView: View {
     @Environment(FocusSessionController.self) private var session
     @Environment(AchievementService.self) private var achievements
     @Environment(AnalyticsService.self) private var analytics
+    @Environment(\.requestReview) private var requestReview
 
     @State private var newBadges: [BadgeDefinition] = []
     @State private var rating = 0
@@ -58,6 +60,16 @@ struct SessionSummaryView: View {
             // until the app happened to be backgrounded and reopened, and every
             // later session would leave its numbers stale.
             analytics.armWeeklyRecap()
+
+            // One rating request per install, on the third completed session.
+            // Delayed so it lands after the summary has settled rather than
+            // over its entrance; StoreKit may still decline to show it.
+            if ReviewPrompt.recordCompletedSession() {
+                Task {
+                    try? await Task.sleep(for: .seconds(1.5))
+                    requestReview()
+                }
+            }
         }
     }
 

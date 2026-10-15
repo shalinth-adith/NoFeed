@@ -22,7 +22,7 @@ struct SessionSummaryView: View {
     @Environment(\.requestReview) private var requestReview
 
     @State private var newBadges: [BadgeDefinition] = []
-    @State private var rating = 0
+    @State private var reflection: SessionReflection = .none
     /// Rendered once when the screen appears rather than when the button is
     /// tapped — ImageRenderer is synchronous, and doing it on tap puts a hitch
     /// between the tap and the share sheet.
@@ -49,6 +49,9 @@ struct SessionSummaryView: View {
         }
         .onAppear {
             guard let summary = session.summary, summary.wasCompleted else { return }
+            // An answer may already be in: tapped on the Lock Screen before the
+            // app was opened. Show it rather than asking twice.
+            reflection = session.lastSessionReflection
             newBadges = achievements.evaluate()
             if let image = SessionShareCardRenderer.image(for: summary) {
                 shareCard = SharedSessionCard(image: image,
@@ -150,7 +153,7 @@ struct SessionSummaryView: View {
                 .frame(maxWidth: 260)
                 .padding(.top, 6)
 
-            ratingDots(tone: tone(summary))
+            ReflectionChips(selection: $reflection, tone: tone(summary), idPrefix: "summary")
                 .padding(.top, 30)
 
             Text("How did it feel?")
@@ -171,14 +174,14 @@ struct SessionSummaryView: View {
 
             VStack(spacing: 6) {
                 Button("Done") {
-                    session.saveReview(rating: rating, note: "")
+                    session.saveReflection(reflection)
                     session.dismissSummary()
                 }
                 .buttonStyle(QuietCTAStyle(tone: tone(summary), isReady: true))
                 .accessibilityIdentifier("summary-done")
 
                 Button(session.canTakeBreak ? "Take a break" : "Start another") {
-                    session.saveReview(rating: rating, note: "")
+                    session.saveReflection(reflection)
                     if session.canTakeBreak {
                         session.startBreak()
                     } else {
@@ -264,35 +267,6 @@ struct SessionSummaryView: View {
     }
 
     // MARK: - Pieces
-
-    /// The comp draws five 12pt dots 28pt apart. It does not draw the thing you
-    /// actually have to hit.
-    ///
-    /// A `Shape.fill()` hit-tests against the path, so the old version — a 12pt
-    /// circle with 6pt of padding — offered a 12pt target where Apple's minimum
-    /// is 44. Taps on it missed often enough that the row read as decoration.
-    /// The dot keeps the comp's size and spacing; only the invisible target
-    /// under it grows, to 40 × 44 (40 being the pitch the comp's own spacing
-    /// works out to, so the dots do not move).
-    private func ratingDots(tone: Color) -> some View {
-        HStack(spacing: 0) {
-            ForEach(1...5, id: \.self) { value in
-                Button { Haptics.light(); rating = value } label: {
-                    Circle()
-                        .fill(value <= rating ? tone : .clear)
-                        .frame(width: 12, height: 12)
-                        .overlay(Circle().strokeBorder(ZTheme.Palette.glassStroke, lineWidth: 1))
-                        .frame(width: 40, height: 44)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("summary-rating-\(value)")
-                .accessibilityLabel(value == 1 ? "1 out of 5" : "\(value) out of 5")
-                .accessibilityAddTraits(value == rating ? [.isButton, .isSelected] : .isButton)
-            }
-        }
-        .animation(ZTheme.Motion.smooth, value: rating)
-    }
 
     private func badgeLine(_ badge: BadgeDefinition, tone: Color) -> some View {
         HStack(spacing: 9) {

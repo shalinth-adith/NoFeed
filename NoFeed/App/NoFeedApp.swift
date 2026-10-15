@@ -83,6 +83,8 @@ struct NoFeedApp: App {
             case .active:
                 authorization.refresh()
                 session.restoreIfNeeded()
+                // After restore, so a session that just finished has its row.
+                session.applyPendingReflection()
                 session.applyPendingControlRequest()
                 session.refresh()
                 // Recompute the shields from what is true right now.

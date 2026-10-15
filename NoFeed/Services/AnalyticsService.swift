@@ -254,6 +254,20 @@ final class AnalyticsService {
             .count
     }
 
+    /// Recent completed sessions still waiting for "how did it feel?" — the
+    /// Insights card asks about them one at a time. Two weeks back at most.
+    func unreflectedSessions(limit: Int = 10) -> [FocusSession] {
+        let since = Calendar.current.date(byAdding: .day, value: -14, to: Date()) ?? Date()
+        return history.unreflectedSessions(limit: limit, since: since)
+    }
+
+    /// Store the answer for a session asked about on Insights.
+    func saveReflection(_ reflection: SessionReflection, for session: FocusSession) {
+        guard reflection != .none else { return }
+        session.reflection = reflection
+        history.save()
+    }
+
     /// Refresh the widget snapshot and reload timelines.
     func updateSnapshot() {
         let snapshot = StatsSnapshot(

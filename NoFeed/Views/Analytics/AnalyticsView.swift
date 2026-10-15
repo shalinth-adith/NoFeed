@@ -27,6 +27,10 @@ struct AnalyticsView: View {
     @State private var weekSessions = 0
     @State private var streak = 0
     @State private var showingRecap = false
+    /// Completed sessions nobody has said anything about yet; the card asks
+    /// about the first and moves on as each is answered.
+    @State private var unreflected: [FocusSession] = []
+    @State private var pendingReflection: SessionReflection = .none
 
     /// The single accent — the active profile's Quiet tone.
     private var tone: Color { ZTheme.tone(forHex: profiles.activeProfile?.accentHex) }
@@ -53,6 +57,10 @@ struct AnalyticsView: View {
                             hairline(strong: true)
                                 .padding(.top, 28)
                             sessionRows
+                            if let asking = unreflected.first {
+                                hairline()
+                                reflectCard(asking)
+                            }
                             historyLink
                             hairline()
                             recapLink
@@ -83,7 +91,41 @@ struct AnalyticsView: View {
         previousWeekMinutes = analytics.previousCalendarWeekMinutes()
         weekSessions = analytics.calendarWeekSessionCount()
         streak = analytics.streak()
+        unreflected = analytics.unreflectedSessions()
+        pendingReflection = .none
         analytics.updateSnapshot()
+    }
+
+    // MARK: - Reflect
+
+    /// "How did Tue · Work, 25 min feel?" with the three chips. Choosing one
+    /// saves it and the card asks about the next session, or disappears. Lives
+    /// here rather than as a notification follow-up because a session finished
+    /// with the phone in a pocket never shows its summary screen.
+    private func reflectCard(_ session: FocusSession) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("How did \(reflectSubject(session)) feel?")
+                .font(ZTheme.Font.body(15))
+                .foregroundStyle(ZTheme.Palette.textPrimary)
+            ReflectionChips(selection: $pendingReflection, tone: tone, idPrefix: "insights")
+                .onChange(of: pendingReflection) { _, choice in
+                    guard choice != .none else { return }
+                    analytics.saveReflection(choice, for: session)
+                    withAnimation(ZTheme.Motion.smooth) {
+                        unreflected.removeAll { $0.objectID == session.objectID }
+                        pendingReflection = .none
+                    }
+                }
+        }
+        .padding(.vertical, 16)
+        .accessibilityIdentifier("insights-reflect-card")
+    }
+
+    /// "Tue · Work, 25 min" — enough to place the session, nothing more.
+    private func reflectSubject(_ session: FocusSession) -> String {
+        let day = dayLabel(session.startedAt)
+        let name = session.profileName ?? "Focus"
+        return "\(day) · \(name), \(session.completedMinutes) min"
     }
 
     private var weekMinutes: Int { stats.reduce(0) { $0 + $1.focusMinutes } }

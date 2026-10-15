@@ -35,7 +35,7 @@ struct SessionDetailView: View {
                     header
                     timeCard
                     distractionCard
-                    if Int(session.rating) > 0 || (session.note?.isEmpty == false) {
+                    if session.reflection != .none || (session.note?.isEmpty == false) {
                         reviewCard
                     }
                 }
@@ -198,15 +198,16 @@ struct SessionDetailView: View {
 
     private var reviewCard: some View {
         VStack(alignment: .leading, spacing: ZTheme.Spacing.sm) {
-            if Int(session.rating) > 0 {
-                HStack(spacing: 4) {
-                    ForEach(1...5, id: \.self) { i in
-                        Image(systemName: i <= Int(session.rating) ? "star.fill" : "star")
-                            .font(.system(size: 15))
-                            .foregroundStyle(i <= Int(session.rating)
-                                             ? ZTheme.Palette.streakWarm : ZTheme.Palette.text(0.3))
-                    }
+            if session.reflection != .none {
+                HStack(spacing: 8) {
+                    Image(systemName: session.reflection.symbol)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(ZTheme.Palette.streakWarm)
+                    Text(session.reflection.feltLabel)
+                        .font(ZTheme.Font.body(15, weight: .medium))
+                        .foregroundStyle(ZTheme.Palette.textPrimary)
                 }
+                .accessibilityElement(children: .combine)
             }
             if let note = session.note, !note.isEmpty {
                 Text(note)

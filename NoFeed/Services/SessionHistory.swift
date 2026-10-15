@@ -44,6 +44,43 @@ final class SessionHistory {
         try? context.save()
     }
 
+    /// Attaches a parked notification answer to the session it names, if that
+    /// session has been recorded. An answer whose session cannot be found after
+    /// a day is dropped: it would otherwise sit there until a session happened
+    /// to start at the same second, which is never.
+    func applyPendingReflection() {
+        guard let pending = ReflectionInbox.peek() else { return }
+        let tolerance = ReflectionInbox.matchTolerance
+        let request = FocusSession.fetchRequest()
+        request.predicate = NSPredicate(format: "startedAt >= %@ AND startedAt <= %@",
+                                        pending.startedAt.addingTimeInterval(-tolerance) as NSDate,
+                                        pending.startedAt.addingTimeInterval(tolerance) as NSDate)
+        request.fetchLimit = 1
+        if let session = try? context.fetch(request).first {
+            if session.reflection == .none {
+                session.reflection = pending.reflection
+                try? context.save()
+            }
+            ReflectionInbox.clear()
+        } else if Date().timeIntervalSince(pending.startedAt) > 86_400 {
+            ReflectionInbox.clear()
+        }
+    }
+
+    /// Completed focus sessions nobody has said anything about yet, newest
+    /// first. Checked in the store against both columns so a legacy-rated
+    /// session does not count as unanswered. `since` keeps the question to
+    /// recent sessions: nobody remembers how a session three weeks ago felt.
+    func unreflectedSessions(limit: Int, since: Date) -> [FocusSession] {
+        let request = FocusSession.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "kind == %@ AND wasCompleted == YES AND reflectionRaw == 0 AND rating == 0 AND startedAt >= %@",
+            "focus", since as NSDate)
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \FocusSession.startedAt, ascending: false)]
+        request.fetchLimit = limit
+        return (try? context.fetch(request)) ?? []
+    }
+
     /// Recent focus sessions (completed + ended-early), newest first.
     func recentFocusSessions(limit: Int = 100) -> [FocusSession] {
         let request = FocusSession.fetchRequest()

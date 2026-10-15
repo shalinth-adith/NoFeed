@@ -187,7 +187,7 @@ struct HistoryView: View {
                     .foregroundStyle(ZTheme.Palette.text(0.5))
             }
             Spacer()
-            ratingDots(Int(session.rating))
+            reflectionMark(session.reflection)
             Image(systemName: "chevron.right")
                 .font(.system(size: 12, weight: .semibold))
                 .foregroundStyle(ZTheme.Palette.text(0.3))
@@ -195,18 +195,21 @@ struct HistoryView: View {
         .glassCard(radius: 18, padding: 13)
     }
 
-    private func ratingDots(_ rating: Int) -> some View {
-        HStack(spacing: 3) {
-            ForEach(0..<5, id: \.self) { i in
-                Circle()
-                    .fill(i < rating ? ZTheme.Palette.brandBright
-                          : Color(light: Color(hex: "1C2644").opacity(0.18), dark: Color.white.opacity(0.18)))
-                    .frame(width: 7, height: 7)
-                    .shadow(color: i < rating ? ZTheme.Palette.brandBright : .clear, radius: 4)
+    /// One word on how the session felt, or nothing when it was never said.
+    /// Quiet about it on purpose: this is a list, and the mark is for scanning.
+    @ViewBuilder
+    private func reflectionMark(_ reflection: SessionReflection) -> some View {
+        if reflection != .none {
+            HStack(spacing: 4) {
+                Image(systemName: reflection.symbol)
+                    .font(.system(size: 10, weight: .semibold))
+                Text(reflection.title)
+                    .font(ZTheme.Font.body(12))
             }
+            .foregroundStyle(ZTheme.Palette.text(0.5))
+            .accessibilityElement()
+            .accessibilityLabel(reflection.feltLabel)
         }
-        .accessibilityElement()
-        .accessibilityLabel(rating > 0 ? "\(rating) of 5" : "unrated")
     }
 
     // MARK: - Formatting

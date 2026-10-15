@@ -28,12 +28,31 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     /// inconsistency by changing the ones above.
     private let weeklyRecapID = "nofeed.weekly.recap"
 
+    /// The focus-end notification's category, which carries the three
+    /// reflection actions. Same `nofeed.` reasoning as the recap id above.
+    static let focusEndCategory = "nofeed.focus.end"
+    private static let reflectActionPrefix = "nofeed.reflect."
+    static let sessionStartedAtKey = "sessionStartedAt"
+
     /// Install as the notification-center delegate. Without a delegate, iOS
     /// silently drops any notification that arrives while the app is in the
     /// foreground — schedule start reminders/alerts included. Call once at
     /// app startup (NoFeedApp.init).
     func activate() {
         center.delegate = self
+        // The three answers to "how did it feel?", offered on the Lock Screen
+        // without opening the app. No `.foreground` option: the answer is parked
+        // in `ReflectionInbox` and applied whenever the session is recorded.
+        let actions = SessionReflection.choices.map { choice in
+            UNNotificationAction(identifier: Self.reflectActionPrefix + String(choice.rawValue),
+                                 title: choice.title,
+                                 options: [])
+        }
+        let category = UNNotificationCategory(identifier: Self.focusEndCategory,
+                                              actions: actions,
+                                              intentIdentifiers: [],
+                                              options: [])
+        center.setNotificationCategories([category])
     }
 
     /// Present notifications while the app is foregrounded. Session-end and
@@ -53,6 +72,17 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse) async {
         let info = response.notification.request.content.userInfo
+
+        // A reflection tapped on the focus-end notification. The session row
+        // may not exist yet (see `ReflectionInbox`), so park it by start time.
+        if response.actionIdentifier.hasPrefix(Self.reflectActionPrefix),
+           let raw = Int16(response.actionIdentifier.dropFirst(Self.reflectActionPrefix.count)),
+           let reflection = SessionReflection(rawValue: raw),
+           let epoch = info[Self.sessionStartedAtKey] as? Double {
+            ReflectionInbox.store(reflection, startedAt: Date(timeIntervalSince1970: epoch))
+            return
+        }
+
         guard info["kind"] as? String == Self.weeklyRecapKind else { return }
         // Posted rather than presented directly: only `RootView` knows whether a
         // session cover is already up, and it owns the presentation either way.
@@ -65,11 +95,16 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         _ = try? await center.requestAuthorization(options: [.alert, .sound, .badge])
     }
 
-    func scheduleFocusEnd(after seconds: TimeInterval, profileName: String) {
+    func scheduleFocusEnd(after seconds: TimeInterval, profileName: String, startedAt: Date) {
         let content = UNMutableNotificationContent()
         content.title = "Focus complete"
-        content.body = "Your \(profileName) session is done — nice work."
+        content.body = "Your \(profileName) session is done — how did it feel?"
         content.sound = .default
+        content.categoryIdentifier = Self.focusEndCategory
+        // The start time is the session's identity across processes: the row
+        // recorded later carries the same `startedAt`, so an answer given from
+        // this notification can find its session.
+        content.userInfo = [Self.sessionStartedAtKey: startedAt.timeIntervalSince1970]
         add(focusEndID, content, after: seconds)
     }
 

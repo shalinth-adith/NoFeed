@@ -155,7 +155,8 @@ final class FocusSessionController {
                              durationMinutes: focusMinutes,
                              isStrict: isStrict)
         notifications.scheduleFocusEnd(after: TimeInterval(focusMinutes * 60),
-                                       profileName: profileName)
+                                       profileName: profileName,
+                                       startedAt: focusStartedAt)
         liveActivity.start(profileName: profileName, accentHex: accentHex,
                            startsAt: focusStartedAt,
                            endsAt: focusStartedAt.addingTimeInterval(TimeInterval(focusMinutes * 60)),
@@ -321,7 +322,8 @@ final class FocusSessionController {
                              allowedWebDomains: currentAllowedWebDomains,
                              durationMinutes: max(1, Int(ceil(secondsLeft / 60))),
                              isStrict: isStrict)
-        notifications.scheduleFocusEnd(after: secondsLeft, profileName: profileName)
+        notifications.scheduleFocusEnd(after: secondsLeft, profileName: profileName,
+                                       startedAt: focusStartedAt)
         // Anchor the card to the (shifted) phase start, not to now — otherwise
         // the progress rule snaps back to empty every time you resume, and a
         // session paused near the end looks like it just began.
@@ -366,13 +368,29 @@ final class FocusSessionController {
         phase = .idle
     }
 
-    /// Attach the post-session review to the session just recorded.
-    func saveReview(rating: Int, note: String) {
+    /// How the session just recorded felt, if that has been answered — either
+    /// on the summary or from the notification before the app was opened. The
+    /// summary seeds its chips from this so a Lock Screen answer shows up.
+    var lastSessionReflection: SessionReflection {
+        lastSession?.reflection ?? .none
+    }
+
+    /// Attach the reflection to the session just recorded. Passing `.none`
+    /// never erases an answer already stored: the summary's "Done" is pressed
+    /// with whatever its chips show, and when nothing was tapped there that is
+    /// no answer at all, not a retraction of the one given from the Lock Screen.
+    func saveReflection(_ reflection: SessionReflection) {
         guard let lastSession else { return }
-        lastSession.rating = Int16(rating)
-        let trimmed = note.trimmingCharacters(in: .whitespacesAndNewlines)
-        lastSession.note = trimmed.isEmpty ? nil : trimmed
+        if reflection == .none, lastSession.reflection != .none { return }
+        lastSession.reflection = reflection
         history.save()
+    }
+
+    /// Apply an answer given from the focus-end notification to a session that
+    /// was recorded without it — the safety net for the one timing where
+    /// `finishFocus` did not see the inbox. Call after `restoreIfNeeded`.
+    func applyPendingReflection() {
+        history.applyPendingReflection()
     }
 
     /// Re-sync the countdown after returning from the background.
@@ -441,6 +459,13 @@ final class FocusSessionController {
                                      endedEarly: !completed,
                                      startedAt: focusStartedAt,
                                      endedAt: Date())
+
+        // An answer given from the Lock Screen while this session was still a
+        // countdown: the row exists now, so it can finally be attached.
+        if let pending = ReflectionInbox.take(for: focusStartedAt) {
+            lastSession?.reflection = pending
+            history.save()
+        }
 
         // A session just finished → re-arm the daily reminder to the "break" nudge.
         notifications.refreshDailyReminderAfterSession()

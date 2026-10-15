@@ -262,19 +262,19 @@ final class QuietSessionScreens: XCTestCase {
                       "The rating prompt is missing")
         capture(app, "04-complete")
 
-        // Rate it, so the shot shows the filled dots the comp draws. Badges
-        // unlocked on this session are inserted above the dots after `onAppear`,
-        // which moves them mid-tap, so tap until the dot actually reports
-        // selected rather than assuming the first one landed.
-        let fourth = app.buttons["summary-rating-4"]
-        XCTAssertTrue(fourth.waitForExistence(timeout: 5), "The 5-dot rating row is missing")
-        var rated = false
+        // Answer it, so the shot shows a filled chip. Badges unlocked on this
+        // session are inserted above the chips after `onAppear`, which moves
+        // them mid-tap, so tap until the chip actually reports selected rather
+        // than assuming the first one landed.
+        let focused = app.buttons["summary-reflection-focused"]
+        XCTAssertTrue(focused.waitForExistence(timeout: 5), "The reflection chips are missing")
+        var answered = false
         for _ in 0..<4 {
-            if fourth.isHittable { fourth.tap() }
+            if focused.isHittable { focused.tap() }
             usleep(600_000)
-            if app.buttons["summary-rating-4"].isSelected { rated = true; break }
+            if app.buttons["summary-reflection-focused"].isSelected { answered = true; break }
         }
-        XCTAssertTrue(rated, "Tapping a rating dot never selected it — the target is too small")
+        XCTAssertTrue(answered, "Tapping a reflection chip never selected it")
         capture(app, "04-complete-rated")
 
         done.tap()

@@ -185,6 +185,11 @@ enum DebugSeed {
             session.startedAt = started
             session.endedAt = ended
             session.note = "\(demoMarker) · \(what)"
+            // Mostly focused, so "What works for you" has something to say,
+            // with a couple of the other answers so the rows are not uniform.
+            session.reflection = offset % 4 == 3 ? .distracted
+                               : offset % 5 == 2 ? .interrupted
+                               : .focused
         }
 
         // Blocked-attempt counts, so a demo week can actually show the sentence

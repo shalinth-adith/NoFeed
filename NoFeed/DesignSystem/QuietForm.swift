@@ -559,29 +559,58 @@ struct QuietFlowLayout: Layout {
 // MARK: - Hold to end
 
 /// The comp's "Hold to end early" (screen 02): a quiet label with a hairline
-/// under it that fills with the tone while you hold, and fires at three seconds.
+/// under it that fills with the tone while you hold, and fires when `duration`
+/// elapses — three seconds by default, sixty for a strict session.
 ///
 /// Why a hold and not a tap: ending a session is the one destructive thing on
 /// this screen, and it sits under your thumb for the whole session. A hold
 /// cannot be done by accident, and — unlike a confirmation dialog — it doesn't
 /// interrupt the screen to ask a question.
+///
+/// The press is tracked with `@GestureState`, not `onEnded`. A gesture that the
+/// system cancels (an incoming call, a Control Center pull) never reaches
+/// `onEnded`, but `GestureState` resets regardless — so the timer stops the
+/// moment the finger is gone for any reason. With a sixty-second hold that is
+/// the difference between a gate and a trap.
 struct QuietHoldToEnd: View {
     var tone: Color = ZTheme.Palette.tone
     var idleLabel: String = "Hold to end early"
     var holdingLabel: String = "Keep holding…"
     /// Seconds of continuous hold required.
     var duration: TimeInterval = 3
+    /// VoiceOver cannot express a hold, so by default a direct activation ends
+    /// the session. Strict sessions turn this off: there, the hold *is* the gate,
+    /// and VoiceOver users double-tap and hold like everyone else.
+    var allowsAccessibilityShortcut: Bool = true
     let action: () -> Void
 
+    @Environment(\.scenePhase) private var scenePhase
+    @GestureState private var pressing = false
     @State private var progress: Double = 0
     @State private var timer: Timer?
+    @State private var hapticTicks = 0
 
-    private var label: String { progress > 0 ? holdingLabel : idleLabel }
+    /// Short holds show a plain "keep holding"; long ones count down so the
+    /// user knows the hold is working and how much is left.
+    private var showsCountdown: Bool { duration >= 10 }
+    private var remainingSeconds: Int {
+        max(0, Int((duration * (1 - progress)).rounded(.up)))
+    }
+    private var label: String {
+        guard progress > 0 else { return idleLabel }
+        return showsCountdown ? "\(holdingLabel) · \(remainingSeconds) s" : holdingLabel
+    }
+    private var hint: String {
+        allowsAccessibilityShortcut
+            ? "Press and hold for \(Int(duration)) seconds"
+            : "Double-tap and hold for \(Int(duration)) seconds"
+    }
 
     var body: some View {
-        Text(label)
+        let base = Text(label)
             .font(ZTheme.Font.body(14))
             .foregroundStyle(ZTheme.Palette.text(0.30))
+            .monospacedDigit()
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
             .overlay(alignment: .bottom) {
@@ -600,24 +629,43 @@ struct QuietHoldToEnd: View {
             .contentShape(Rectangle())
             .gesture(
                 DragGesture(minimumDistance: 0)
-                    .onChanged { _ in start() }
-                    .onEnded { _ in cancel() }
+                    .updating($pressing) { _, state, _ in state = true }
             )
+            .onChange(of: pressing) { _, isPressing in
+                isPressing ? start() : cancel()
+            }
+            .onChange(of: scenePhase) { _, phase in
+                if phase != .active { cancel() }
+            }
             .onDisappear(perform: cancel)
             .accessibilityLabel(idleLabel)
-            .accessibilityHint("Press and hold for \(Int(duration)) seconds")
+            .accessibilityHint(hint)
             .accessibilityAddTraits(.isButton)
-            // VoiceOver cannot express a hold, so a direct activation ends it.
-            .accessibilityAction { action() }
             .accessibilityIdentifier("session-hold-to-end")
+
+        if allowsAccessibilityShortcut {
+            base.accessibilityAction { action() }
+        } else {
+            base
+        }
     }
 
     private func start() {
         guard timer == nil else { return }
         Haptics.light()
+        hapticTicks = 0
         let step = 0.05
         timer = Timer.scheduledTimer(withTimeInterval: step, repeats: true) { t in
             progress += step / duration
+            // A long hold gets a light tap every fifteen seconds, so the user
+            // knows it is still counting without looking down.
+            if showsCountdown {
+                let ticks = Int(progress * duration / 15)
+                if ticks > hapticTicks {
+                    hapticTicks = ticks
+                    Haptics.light()
+                }
+            }
             if progress >= 1 {
                 t.invalidate()
                 timer = nil

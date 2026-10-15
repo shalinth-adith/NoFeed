@@ -51,24 +51,14 @@ final class NoFeedQuietSuite: XCTestCase {
     /// A schedule whose window covers "now" auto-starts a focus session, whose
     /// full-screen cover hides the whole tab UI. Dismiss it so the suite can run.
     private func endAnyRunningSession(_ app: XCUIApplication) {
-        // A non-strict session ends by holding for three seconds (Quiet spec
-        // screen 02); strict keeps the old button plus its confirmation gate.
+        // Every session ends by holding (Quiet spec screen 02): three seconds
+        // normally, a full minute when strict. Try the short hold first; if the
+        // control is still there the session was strict, so hold for the minute.
         let hold = app.descendants(matching: .any)["session-hold-to-end"].firstMatch
-        if hold.waitForExistence(timeout: 3) {
-            hold.press(forDuration: 3.8)
-        } else {
-            let endEarly = app.buttons.matching(
-                NSPredicate(format: "label == 'End early' OR label == 'End break'")).firstMatch
-            guard endEarly.waitForExistence(timeout: 3) else { return }
-            robustTap(app, endEarly)
-
-            // Strict mode routes through a 5s-gated confirmation.
-            let confirm = app.buttons.matching(
-                NSPredicate(format: "label == 'End focus'")).firstMatch
-            if confirm.waitForExistence(timeout: 2) {
-                waitUntilHittable(confirm, timeout: 8)
-                if confirm.isEnabled { robustTap(app, confirm) }
-            }
+        guard hold.waitForExistence(timeout: 3) else { return }
+        hold.press(forDuration: 3.8)
+        if hold.waitForExistence(timeout: 1) {
+            hold.press(forDuration: 61)
         }
 
         // Both endings land on a summary that must be dismissed to get back.

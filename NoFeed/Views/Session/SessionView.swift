@@ -2,8 +2,9 @@
 //  SessionView.swift
 //  NoFeed
 //
-//  Full-screen, immersive session timer with a single end action. During focus,
-//  strict mode routes "End early" through the 5-second confirmation gate.
+//  Full-screen, immersive session timer with a single end action: a hold.
+//  Three seconds normally; a full minute during a strict focus, where the
+//  length of the hold is the whole gate.
 //
 //  Redesign: the breathing Focus Orb with a progress ring of light on the warmer
 //  session aurora (Claude Design spec, NoFeed.dc.html). Logic unchanged.
@@ -13,7 +14,6 @@ import SwiftUI
 
 struct SessionView: View {
     @Environment(FocusSessionController.self) private var session
-    @State private var showStopConfirmation = false
     /// The app a shield stood in front of in the last few minutes, if any.
     @State private var paused: (name: String, at: Date)?
 
@@ -92,31 +92,19 @@ struct SessionView: View {
                         .accessibilityIdentifier("session-pause")
                     }
 
-                    if session.strictLockActive {
-                        // Strict keeps its own gate: a deliberate confirmation
-                        // rather than a hold anyone could complete distractedly.
-                        Button("End early", action: endTapped)
-                            .font(ZTheme.Font.body(14))
-                            .foregroundStyle(ZTheme.Palette.text(0.30))
-                            .buttonStyle(.plain)
-                            .padding(10)
-                    } else {
-                        QuietHoldToEnd(tone: tint,
-                                       idleLabel: isBreak ? "Hold to end the break" : "Hold to end early",
-                                       action: endTapped)
-                    }
+                    // Strict mode makes the hold long rather than adding a
+                    // dialog: a minute with a thumb on the screen is deliberate
+                    // in a way a tap on "Confirm" never is, and it asks nothing.
+                    // The VoiceOver shortcut is off for strict for the same
+                    // reason — an instant activation would be a side door.
+                    QuietHoldToEnd(tone: tint,
+                                   idleLabel: holdLabel,
+                                   duration: session.strictLockActive ? 60 : 3,
+                                   allowsAccessibilityShortcut: !session.strictLockActive,
+                                   action: endTapped)
                 }
                 .padding(.bottom, 40)
             }
-        }
-        .sheet(isPresented: $showStopConfirmation) {
-            StopBlockingConfirmation(
-                onConfirm: {
-                    showStopConfirmation = false
-                    session.endEarly()
-                },
-                onCancel: { showStopConfirmation = false }
-            )
         }
         // Quiet spec screen 03b — what the app says when you come back from the
         // block screen having tapped "Back to focus". See `AppPausedView`.
@@ -157,11 +145,13 @@ struct SessionView: View {
         return isBreak ? "Take a breath." : "Stay with it."
     }
 
+    private var holdLabel: String {
+        if isBreak { return "Hold to end the break" }
+        if session.strictLockActive { return "Hold for a minute to end early — it won\u{2019}t count" }
+        return "Hold to end early"
+    }
+
     private func endTapped() {
-        if session.strictLockActive {
-            showStopConfirmation = true
-        } else {
-            session.endEarly()
-        }
+        session.endEarly()
     }
 }

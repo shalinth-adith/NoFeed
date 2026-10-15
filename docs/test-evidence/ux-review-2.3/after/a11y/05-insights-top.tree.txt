@@ -1,0 +1,123 @@
+Attributes: Application, 0x104365d50, pid: 49194, label: 'NoFeed'
+Element subtree:
+ →Application, 0x104365d50, pid: 49194, label: 'NoFeed'
+    Window (Main), 0x104366af0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x104367c50, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x104367fb0, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x104366e50, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x1043671c0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x1043678d0, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x104367550, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x104368340, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x104368690, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x104368a00, {{0.0, 0.0}, {402.0, 874.0}}
+                        Other, 0x104368d70, {{0.0, 0.0}, {402.0, 874.0}}
+                          Other, 0x1043690e0, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x104363700, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x1043633a0, {{0.0, 0.0}, {402.0, 874.0}}
+                                Other, 0x104363030, {{0.0, 0.0}, {402.0, 874.0}}
+                                  Other, 0x104359cd0, {{0.0, 0.0}, {402.0, 874.0}}
+                                    ScrollView, 0x10435efb0, {{0.0, 0.0}, {402.0, 874.0}}
+                                      Other, 0x10435ae50, {{0.0, 62.0}, {402.0, 1110.7}}
+                                        StaticText, 0x10435f310, {{28.0, 70.0}, {79.7, 26.3}}, label: 'Insights'
+                                        StaticText, 0x10435f6a0, {{28.0, 130.3}, {60.7, 13.3}}, label: 'HISTORY'
+                                        Other, 0x1043644f0, {{28.0, 157.7}, {189.0, 83.3}}, label: '6.9 hours focused this week. Your first week'
+                                          StaticText, 0x104366780, {{28.0, 157.7}, {73.7, 61.0}}, label: '6.9'
+                                          StaticText, 0x10435fa00, {{109.7, 192.0}, {107.3, 18.0}}, label: 'hours this week'
+                                          StaticText, 0x1043600e0, {{28.0, 226.7}, {84.0, 14.3}}, label: 'Your first week'
+                                        Other, 0x1043652f0, {{38.3, 340.7}, {20.0, 74.3}}, label: 'Sun: 56 minutes'
+                                          StaticText, 0x1043611b0, {{44.8, 401.7}, {7.3, 13.3}}, label: 'S'
+                                        Other, 0x104361870, {{89.3, 319.0}, {20.0, 96.0}}, label: 'Mon: 80 minutes'
+                                          StaticText, 0x104362270, {{94.3, 401.7}, {10.0, 13.3}}, label: 'M'
+                                        Other, 0x104361bc0, {{140.0, 352.7}, {20.0, 62.3}}, label: 'Tue: 43 minutes'
+                                          StaticText, 0x104362960, {{146.5, 401.7}, {7.3, 13.3}}, label: 'T'
+                                        Other, 0x104362cd0, {{191.0, 291.7}, {20.0, 123.3}}, label: 'Wed: 110 minutes'
+                                          StaticText, 0x104369460, {{195.5, 401.7}, {11.0, 13.3}}, label: 'W'
+                                        Other, 0x1043697a0, {{242.0, 307.0}, {20.0, 108.0}}, label: 'Thu: 93 minutes'
+                                          StaticText, 0x104369af0, {{248.2, 401.7}, {7.3, 13.3}}, label: 'T'
+                                        Other, 0x104369e60, {{292.7, 361.7}, {20.0, 53.3}}, label: 'Fri: 33 minutes, today'
+                                          StaticText, 0x10436a1c0, {{299.4, 401.7}, {6.7, 13.3}}, label: 'F'
+                                        Other, 0x10436a540, {{343.7, 387.7}, {20.0, 27.3}}, label: 'Sat: 0 minutes'
+                                          StaticText, 0x10436a8c0, {{349.9, 401.7}, {7.3, 13.3}}, label: 'S'
+                                        Other, 0x10436ac20, {{28.0, 445.0}, {209.7, 34.7}}, label: '0 distractions blocked this week'
+                                          StaticText, 0x10436af80, {{28.0, 445.0}, {18.0, 34.7}}, label: '0'
+                                          StaticText, 0x10436b2e0, {{54.0, 460.3}, {183.7, 15.7}}, label: 'distractions blocked this week'
+                                        StaticText, 0x10436b630, {{28.0, 523.7}, {88.0, 17.0}}, label: 'Today · Study'
+                                        StaticText, 0x10436b9d0, {{326.7, 522.7}, {47.3, 18.0}}, label: '33 min'
+                                        StaticText, 0x10436bd50, {{28.0, 542.7}, {71.3, 13.3}}, label: 'Demo · Notes'
+                                        StaticText, 0x10436c0a0, {{28.0, 586.0}, {84.0, 17.0}}, label: 'Today · Work'
+                                        StaticText, 0x10436c400, {{271.3, 585.0}, {102.7, 18.0}}, label: 'under a minute'
+                                        StaticText, 0x10436c750, {{28.0, 605.0}, {62.0, 13.3}}, label: 'Ended early'
+                                        StaticText, 0x10436cac0, {{28.0, 648.3}, {84.0, 17.0}}, label: 'Today · Work'
+                                        StaticText, 0x10436ce10, {{271.3, 647.3}, {102.7, 18.0}}, label: 'under a minute'
+                                        StaticText, 0x10436d160, {{28.0, 667.3}, {62.0, 13.3}}, label: 'Ended early'
+                                        StaticText, 0x10436d4b0, {{28.0, 710.7}, {84.0, 17.0}}, label: 'Today · Work'
+                                        StaticText, 0x10436d820, {{271.3, 709.7}, {102.7, 18.0}}, label: 'under a minute'
+                                        StaticText, 0x10436dba0, {{28.0, 729.7}, {62.0, 13.3}}, label: 'Ended early'
+                                        StaticText, 0x10436df30, {{28.0, 773.0}, {84.0, 17.0}}, label: 'Today · Work'
+                                        StaticText, 0x10436e290, {{271.3, 772.0}, {102.7, 18.0}}, label: 'under a minute'
+                                        StaticText, 0x10436eda0, {{28.0, 792.0}, {62.0, 13.3}}, label: 'Ended early'
+                                        Button, 0x10436f130, {{28.0, 819.3}, {346.0, 45.0}}, label: 'See all sessions'
+                                          StaticText, 0x10436f4b0, {{28.0, 833.3}, {102.3, 17.0}}, label: 'See all sessions'
+                                          Image, 0x10436f820, {{367.0, 836.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x10436ff00, {{28.0, 865.3}, {346.0, 45.0}}, identifier: 'insights-weekly-recap', label: 'Your week in review'
+                                          StaticText, 0x104370280, {{28.0, 879.3}, {127.7, 17.0}}, label: 'Your week in review'
+                                          Image, 0x104370600, {{367.0, 882.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        StaticText, 0x104370960, {{28.0, 944.3}, {46.3, 13.3}}, label: 'GOALS'
+                                        Other, 0x104370ce0, {{28.0, 975.7}, {346.0, 32.0}}, label: 'Weekly focus: 6.9 / 14 h'
+                                          StaticText, 0x104371030, {{28.0, 975.7}, {86.3, 17.0}}, label: 'Weekly focus'
+                                          StaticText, 0x1043713d0, {{311.7, 975.7}, {62.3, 17.0}}, label: '6.9 / 14 h'
+                                        Other, 0x104371720, {{28.0, 1046.7}, {346.0, 32.0}}, label: 'Sessions: 6 / 21'
+                                          StaticText, 0x104371a70, {{28.0, 1046.7}, {57.7, 17.0}}, label: 'Sessions'
+                                          StaticText, 0x104371dd0, {{336.0, 1046.7}, {38.0, 17.0}}, label: '6 / 21'
+                                        StaticText, 0x104372130, {{28.0, 1115.7}, {93.0, 17.0}}, label: 'Current streak'
+                                        StaticText, 0x1043724a0, {{331.0, 1115.7}, {43.0, 17.0}}, label: '6 days'
+                                      Other, 0x1043727f0, {{0.0, 726.2}, {402.0, 147.8}}
+                                      Other, 0x104372b50, {{0.0, 726.2}, {402.0, 147.8}}
+                                        Image, 0x104372ef0, {{-120.0, 731.0}, {642.0, 286.0}}, identifier: 'AdditionalDimmingOverlay'
+                                        Other, 0x104373260, {{0.0, 726.2}, {402.0, 147.8}}
+                                          Other, 0x1043735b0, {{0.0, 726.2}, {402.0, 147.8}}
+                                        Other, 0x104373940, {{0.0, 726.2}, {402.0, 147.8}}
+                                          Other, 0x104373cb0, {{0.0, 726.2}, {402.0, 147.8}}
+                                          Other, 0x104374010, {{0.0, 726.2}, {402.0, 147.8}}
+                            Other, 0x104374390, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x104374700, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x104375750, {{0.0, 791.0}, {402.0, 83.0}}
+                  Other, 0x104375ac0, {{0.0, 0.0}, {402.0, 874.0}}
+                    TabBar, 0x104375e30, {{0.0, 791.0}, {402.0, 83.0}}, label: 'Tab Bar'
+                      Other, 0x1043761b0, {{21.0, 791.0}, {360.0, 62.0}}
+                        Other, 0x104377400, {{21.0, 791.0}, {95.0, 54.0}}
+                        Other, 0x104377790, {{21.0, 791.0}, {360.0, 62.0}}
+                          Button, 0x104377b10, {{25.0, 795.0}, {95.0, 54.0}}, label: 'Focus'
+                            Image, 0x104377ea0, {{59.0, 801.3}, {27.3, 27.3}}, identifier: 'circle.circle.fill', label: 'circle.circle.fill'
+                          Button, 0x104378240, {{110.7, 795.0}, {95.0, 54.0}}, label: 'Insights', Selected
+                            Image, 0x1043785c0, {{140.7, 802.3}, {35.0, 25.3}}, identifier: 'chart.bar.fill', label: 'chart column'
+                          Button, 0x104378930, {{196.3, 795.0}, {95.0, 54.0}}, label: 'Schedule'
+                            Image, 0x104378ca0, {{229.3, 802.3}, {29.0, 25.0}}, identifier: 'calendar', label: 'calendar'
+                          Button, 0x104379700, {{282.0, 795.0}, {95.0, 54.0}}, label: 'Settings'
+                            Image, 0x104379aa0, {{315.0, 800.0}, {29.0, 29.3}}, identifier: 'sun.max.fill', label: 'brightness higher'
+                        Other, 0x104379e10, {{110.7, 795.0}, {95.0, 54.0}}
+                          Other, 0x10437a900, {{110.7, 795.0}, {95.0, 54.0}}
+                            Other, 0x10437ac80, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x10437afe0, {{110.7, 795.0}, {95.0, 54.0}}
+                            Other, 0x10437b330, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x10437b690, {{110.7, 795.0}, {95.0, 54.0}}
+                                Other, 0x10437ba10, {{110.7, 795.0}, {95.0, 54.0}}
+                                  Other, 0x10437bd80, {{110.7, 795.0}, {95.0, 54.0}}
+                                Other, 0x10437c0f0, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x10437c480, {{110.7, 795.0}, {95.0, 54.0}}
+                  Other, 0x10437c7f0, {{0.0, 791.0}, {402.0, 83.0}}
+                    Other, 0x10437cb50, {{0.0, 791.0}, {402.0, 83.0}}
+                      Other, 0x10437ceb0, {{0.0, 791.0}, {402.0, 83.0}}
+                        Other, 0x10437d9d0, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x10437e2b0, {{0.0, 791.0}, {402.0, 83.0}}
+                            Other, 0x10437e640, {{0.0, 791.0}, {402.0, 83.0}}
+                        Other, 0x10437e9c0, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x10437ed50, {{0.0, 791.0}, {402.0, 83.0}}
+Path to element:
+ →Application, 0x104365d50, pid: 49194, label: 'NoFeed'
+Query chain:
+ →Find: Target Application 'me.adithyan.shalinth.Zenly'
+  Output: {
+    Application, 0x10437f0d0, pid: 49194, label: 'NoFeed'
+  }

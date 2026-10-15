@@ -1,8 +1,11 @@
-[contrast] Contrast failed — element: 48:HELD
-    Contrast failed for SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:HELD
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:HELD · WORK frame: (147,195 106×13)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:HELD · WORK
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:HELD frame: (180,436 40×13)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[text-clipped] Text clipped — element: 48:Held for you. Nothing is blocked while you’re away.
+[text-clipped] Text clipped — element: 48:Held for you. Nothing is blocked while you’re away. frame: (37,596 327×17)
     Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
+
+# Flagged by the audit, passing on the rendered pixels (not counted)
+[contrast] Contrast failed — element: 48:HELD frame: (180,436 40×13)
+    Contrast failed for SwiftUI.AccessibilityNode
+    measured 9.9:1 on the rendered pixels (needs 4.5:1)

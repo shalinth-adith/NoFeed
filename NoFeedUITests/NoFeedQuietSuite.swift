@@ -360,8 +360,7 @@ final class NoFeedQuietSuite: XCTestCase {
     /// Removes a profile by name through the detail screen (Quiet 20b) and its
     /// confirmation sheet. A no-op when no such profile is listed.
     private func deleteProfile(_ app: XCUIApplication, named name: String) {
-        let row = app.staticTexts.matching(
-            NSPredicate(format: "label == %@", name)).firstMatch
+        let row = app.descendants(matching: .any)["profile-row-\(name)"].firstMatch
         guard row.waitForExistence(timeout: 4) else { return }
         robustTap(app, row)
 
@@ -387,7 +386,7 @@ final class NoFeedQuietSuite: XCTestCase {
         XCTAssertTrue(profilesRow.waitForExistence(timeout: 15), "'Focus profiles' row missing")
         robustTap(app, profilesRow)
 
-        let work = app.staticTexts["Work"].firstMatch
+        let work = app.descendants(matching: .any)["profile-row-Work"].firstMatch
         XCTAssertTrue(work.waitForExistence(timeout: 8), "No 'Work' profile row")
         robustTap(app, work)
 
@@ -419,9 +418,8 @@ final class NoFeedQuietSuite: XCTestCase {
         robustTap(app, profilesRow)
 
         // Swipe the row (the cell), not the label inside it.
-        let row = app.cells.containing(
-            NSPredicate(format: "label CONTAINS 'Gym'")).firstMatch
-        let target = row.exists ? row : app.staticTexts["Gym"]
+        // Swipe the row (the cell), not a label inside it.
+        let target = app.cells.containing(.any, identifier: "profile-row-Gym").firstMatch
         XCTAssertTrue(target.waitForExistence(timeout: 8), "No 'Gym' profile row to delete")
         target.swipeLeft()
 
@@ -442,7 +440,7 @@ final class NoFeedQuietSuite: XCTestCase {
         let keep = app.buttons["keep-profile"]
         XCTAssertTrue(keep.waitForExistence(timeout: 3), "The confirmation has no way to keep the profile")
         robustTap(app, keep)
-        XCTAssertTrue(app.staticTexts["Gym"].waitForExistence(timeout: 4),
+        XCTAssertTrue(app.descendants(matching: .any)["profile-row-Gym"].waitForExistence(timeout: 4),
                       "Keep did not keep the profile")
     }
 

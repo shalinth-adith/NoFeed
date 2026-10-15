@@ -278,7 +278,7 @@ struct SessionSummaryView: View {
         HStack(spacing: 9) {
             Image(systemName: badge.systemImage)
                 .font(.system(size: 13))
-                .foregroundStyle(tone)
+                .foregroundStyle(tone.readable)
             Text(badge.title)
                 .font(ZTheme.Font.body(13))
                 .foregroundStyle(ZTheme.Palette.text(0.55))

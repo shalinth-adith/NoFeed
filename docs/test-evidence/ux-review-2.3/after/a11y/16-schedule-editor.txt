@@ -1,16 +1,18 @@
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:DAYS
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:9:00 AM frame: (301,337 72×23)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:PROFILE
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:DAYS frame: (28,482 35×13)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:TITLE
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:5:00 PM frame: (302,391 72×23)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:9:00 AM
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:TIME frame: (28,306 33×13)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:5:00 PM
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:TITLE frame: (28,194 39×13)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:TIME
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:PROFILE frame: (28,606 57×13)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: 48:BLOCKING
+
+# Under the tab bar or off screen (not counted)
+[contrast] Contrast failed — element: 48:BLOCKING frame: (28,721 71×13)
     Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: 48:Allowed apps
+[contrast] Contrast failed — element: 48:Allowed apps frame: (28,815 86×17)
     Contrast failed for SwiftUI.AccessibilityNode

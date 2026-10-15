@@ -1,0 +1,89 @@
+Attributes: Application, 0x104e04460, pid: 49194, label: 'NoFeed'
+Element subtree:
+ →Application, 0x104e04460, pid: 49194, label: 'NoFeed'
+    Window (Main), 0x104e04580, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x104e04a80, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x1044994b0, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x10448afe0, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x10449a120, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x1044707a0, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x1045a66d0, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x1045b00c0, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x1045b1e40, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x1045b1f60, {{0.0, 0.0}, {402.0, 874.0}}
+                        Other, 0x1045b22c0, {{0.0, 0.0}, {402.0, 874.0}}
+                          Other, 0x1045b23e0, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x1045b2500, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x1045b2620, {{0.0, 0.0}, {402.0, 874.0}}
+                                Other, 0x1045b2740, {{0.0, 0.0}, {402.0, 874.0}}
+                                  Other, 0x1045b2860, {{0.0, 0.0}, {402.0, 874.0}}
+                                    StaticText, 0x1045b2980, {{165.2, 78.0}, {71.7, 17.0}}, label: 'Good night'
+                                    ScrollView, 0x1045b2aa0, {{18.0, 113.0}, {366.0, 37.0}}
+                                      Other, 0x1045b2bc0, {{18.0, 113.0}, {366.0, 37.0}}
+                                        Button, 0x1045b2ce0, {{35.7, 115.0}, {34.7, 33.0}}, label: 'Work', Selected
+                                        Button, 0x1045b2e00, {{134.3, 115.0}, {37.7, 33.0}}, label: 'Study'
+                                        Button, 0x1045b2f20, {{236.0, 115.0}, {30.0, 33.0}}, label: 'Gym'
+                                        Button, 0x1045b3040, {{330.0, 115.0}, {36.3, 33.0}}, label: 'Sleep'
+                                    Other, 0x1045b3160, {{106.2, 249.2}, {189.6, 189.6}}, label: 'Focus duration', value: 25 minutes
+                                      StaticText, 0x1045b3280, {{106.2, 249.2}, {189.6, 189.6}}, label: '25, MINUTES'
+                                        StaticText, 0x1045b33a0, {{152.5, 285.5}, {97.0, 95.7}}, label: '25'
+                                        StaticText, 0x1045b34c0, {{165.0, 389.2}, {72.0, 13.3}}, label: 'MINUTES'
+                                    Button, 0x1045b35e0, {{92.0, 464.0}, {46.0, 46.0}}, identifier: 'minus', label: 'Decrease focus duration', value: 25 minutes
+                                    StaticText, 0x1045b3700, {{178.2, 471.5}, {45.7, 31.3}}, label: 'session
+length'
+                                    Button, 0x1045b3820, {{264.0, 464.0}, {46.0, 46.0}}, identifier: 'plus', label: 'Increase focus duration', value: 25 minutes
+                                    Button, 0x1045b3940, {{18.0, 680.7}, {366.0, 56.0}}, label: 'Begin focus', Disabled
+                                    StaticText, 0x1045b3a60, {{122.8, 768.7}, {156.3, 14.3}}, label: '6 day streak, 33 minutes today'
+                            Other, 0x1045b3b80, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x1045b3ca0, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x1045b3dc0, {{0.0, 791.0}, {402.0, 83.0}}
+                  Other, 0x1045b3ee0, {{0.0, 0.0}, {402.0, 874.0}}
+                    TabBar, 0x1045b4000, {{0.0, 791.0}, {402.0, 83.0}}, label: 'Tab Bar'
+                      Other, 0x1045b4120, {{21.0, 791.0}, {360.0, 62.0}}
+                        Other, 0x1045b4240, {{21.0, 791.0}, {95.0, 54.0}}
+                        Other, 0x1045b4360, {{21.0, 791.0}, {360.0, 62.0}}
+                          Button, 0x1045b4480, {{25.0, 795.0}, {95.0, 54.0}}, label: 'Focus', Selected
+                            Image, 0x1045b45a0, {{59.0, 801.3}, {27.3, 27.3}}, identifier: 'circle.circle.fill', label: 'circle.circle.fill'
+                          Button, 0x1045b46c0, {{110.7, 795.0}, {95.0, 54.0}}, label: 'Insights'
+                            Image, 0x1045b47e0, {{140.7, 802.3}, {35.0, 25.3}}, identifier: 'chart.bar.fill', label: 'chart column'
+                          Button, 0x1045b4900, {{196.3, 795.0}, {95.0, 54.0}}, label: 'Schedule'
+                            Image, 0x1045b4a20, {{229.3, 802.3}, {29.0, 25.0}}, identifier: 'calendar', label: 'calendar'
+                          Button, 0x1045b4b40, {{282.0, 795.0}, {95.0, 54.0}}, label: 'Settings'
+                            Image, 0x1045b4c60, {{315.0, 800.0}, {29.0, 29.3}}, identifier: 'sun.max.fill', label: 'brightness higher'
+                        Other, 0x1045b4d80, {{25.0, 795.0}, {95.0, 54.0}}
+                          Other, 0x1045b4ea0, {{25.0, 795.0}, {95.0, 54.0}}
+                            Other, 0x1045b4fc0, {{25.0, 795.0}, {95.0, 54.0}}
+                              Other, 0x1045b50e0, {{25.0, 795.0}, {95.0, 54.0}}
+                            Other, 0x1045b5200, {{25.0, 795.0}, {95.0, 54.0}}
+                              Other, 0x1045b5320, {{25.0, 795.0}, {95.0, 54.0}}
+                                Other, 0x1045b5440, {{25.0, 795.0}, {95.0, 54.0}}
+                                  Other, 0x1045b5560, {{25.0, 795.0}, {95.0, 54.0}}
+                                Other, 0x1045b5680, {{25.0, 795.0}, {95.0, 54.0}}
+                              Other, 0x1045b57a0, {{25.0, 795.0}, {95.0, 54.0}}
+                  Other, 0x1045b58c0, {{0.0, 791.0}, {402.0, 83.0}}
+                    Other, 0x1045b59e0, {{0.0, 791.0}, {402.0, 83.0}}
+                      Other, 0x1045b5b00, {{0.0, 791.0}, {402.0, 83.0}}
+                        Other, 0x1045b5c20, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x1045b5d40, {{0.0, 791.0}, {402.0, 83.0}}
+                            Other, 0x1045b5e60, {{0.0, 791.0}, {402.0, 83.0}}
+                        Other, 0x1045b5f80, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x1045b60a0, {{0.0, 791.0}, {402.0, 83.0}}
+      Other, 0x1045b61c0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x1045b62e0, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x1045b6400, {{0.0, 0.0}, {402.0, 874.0}}
+            Button, 0x1045b6520, {{24.0, 74.0}, {44.0, 44.0}}, identifier: 'chevron.down', label: 'Minimize timer'
+            StaticText, 0x1045b6640, {{147.8, 195.0}, {106.3, 13.3}}, label: 'HELD · WORK'
+            Other, 0x1045b6760, {{59.0, 260.1}, {284.0, 284.2}}, label: 'Focus time remaining', value: 24:53
+              StaticText, 0x1045b6880, {{59.0, 260.1}, {284.0, 284.2}}, label: '24:53, HELD'
+                StaticText, 0x1045b69a0, {{121.3, 354.8}, {159.3, 71.7}}, label: '24:53'
+                StaticText, 0x1045b6ac0, {{180.8, 436.5}, {40.3, 13.3}}, label: 'HELD'
+            StaticText, 0x1045b6be0, {{37.3, 596.3}, {327.3, 17.0}}, label: 'Held for you. Nothing is blocked while you’re away.'
+            Button, 0x1045b6d00, {{169.0, 690.3}, {64.0, 64.0}}, identifier: 'session-pause', label: 'Resume session'
+            Button, 0x1045b6e20, {{133.3, 764.3}, {135.7, 35.7}}, identifier: 'session-hold-to-end', label: 'Hold to end early'
+Path to element:
+ →Application, 0x104e04460, pid: 49194, label: 'NoFeed'
+Query chain:
+ →Find: Target Application 'me.adithyan.shalinth.Zenly'
+  Output: {
+    Application, 0x1046939b0, pid: 49194, label: 'NoFeed'
+  }

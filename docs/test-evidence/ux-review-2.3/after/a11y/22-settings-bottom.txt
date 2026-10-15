@@ -1,26 +1,14 @@
-[contrast] Contrast failed — element: -
-    Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: -
-    Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast nearly passed — element: -
-    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
-[contrast] Contrast nearly passed — element: -
-    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
-[contrast] Contrast nearly passed — element: -
-    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
-[contrast] Contrast nearly passed — element: -
-    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
-[contrast] Contrast nearly passed — element: -
-    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
-[contrast] Contrast nearly passed — element: -
-    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
-[contrast] Contrast failed — element: -
-    Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: -
-    Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: -
-    Contrast failed for SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Send it at
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are unsupported — element: -
+[dynamic-type] Dynamic Type font sizes are unsupported — element: - frame: (0,0 0×0)
     User will not be able to change the font size of this element
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Send it at frame: (32,543 69×23)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[text-clipped] Text clipped — element: - frame: (0,0 0×0)
+    Text of this element may be clipped at larger Dynamic Type sizes.
+
+# Under the tab bar or off screen (not counted)
+[contrast] Contrast failed — element: 48:Shown on the block screen when you open a distracting app during focus. Leave empty for the default. frame: (16,110 370×51)
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:About frame: (16,743 370×43)
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:Privacy policy frame: (32,857 100×23)
+    Contrast failed for SwiftUI.AccessibilityNode

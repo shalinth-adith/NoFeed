@@ -1,8 +1,8 @@
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Without Screen Time access NoFeed can time a session but can’t block anything. You can grant it now, or later from Settings.
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Without Screen Time access NoFeed can time a session but can’t block anything. You can grant it now, or later from Settings. frame: (48,434 304×54)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Almost there
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:Continue without blocking frame: (56,696 290×44)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:Continue without blocking
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Almost there frame: (119,377 162×33)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:Grant Screen Time Access
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:Grant Screen Time Access frame: (56,628 290×56)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode

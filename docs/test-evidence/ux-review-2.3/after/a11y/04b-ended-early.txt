@@ -1,4 +1,4 @@
-[text-clipped] Text clipped — element: 48:Some days that’s what there is. Starting at all does still count — nothing about today is broken.
+[text-clipped] Text clipped — element: 9:Try a shorter one — 5 min frame: (34,710 334×56)
     Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
-[text-clipped] Text clipped — element: 9:Try a shorter one — 5 min
+[text-clipped] Text clipped — element: 48:Some days that’s what there is. Starting at all does still count — nothing about today is broken. frame: (69,473 264×52)
     Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.

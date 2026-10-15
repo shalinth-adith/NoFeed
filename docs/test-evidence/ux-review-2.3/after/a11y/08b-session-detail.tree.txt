@@ -1,0 +1,88 @@
+Attributes: Application, 0x11f770810, pid: 49194, label: 'NoFeed'
+Element subtree:
+ →Application, 0x11f770810, pid: 49194, label: 'NoFeed'
+    Window (Main), 0x11f770360, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11f772660, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x11f772780, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x11f772510, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x11f766400, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x11f7728a0, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x11f7729c0, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x11f772ae0, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x11f772c00, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x11f772d20, {{0.0, 0.0}, {402.0, 874.0}}
+                        Other, 0x11f772e40, {{0.0, 0.0}, {402.0, 874.0}}
+                          Other, 0x11f772f60, {{0.0, 0.0}, {402.0, 874.0}}
+                            NavigationBar, 0x11f773080, {{0.0, 62.0}, {402.0, 54.0}}, identifier: 'Session'
+                              Button, 0x11f7731a0, {{16.0, 62.0}, {44.0, 44.0}}, identifier: 'BackButton', label: 'History'
+                              StaticText, 0x11f7732c0, {{169.8, 71.8}, {62.3, 24.3}}, label: 'Session'
+                            Other, 0x11f7733e0, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x11f773500, {{0.0, 0.0}, {402.0, 874.0}}
+                                Other, 0x11f773620, {{0.0, 0.0}, {402.0, 874.0}}
+                                  Other, 0x11f773740, {{0.0, 0.0}, {402.0, 874.0}}
+                                    ScrollView, 0x11f773860, {{0.0, 0.0}, {402.0, 874.0}}
+                                      Other, 0x11f773980, {{0.0, 0.0}, {402.0, 170.8}}
+                                      Other, 0x11f773aa0, {{0.0, 116.0}, {402.0, 606.0}}
+                                        Image, 0x11f773bc0, {{186.7, 146.7}, {29.0, 23.0}}, identifier: 'book.fill', label: 'Bookmark'
+                                        StaticText, 0x11f773ce0, {{173.0, 198.0}, {56.0, 24.0}}, label: 'Study'
+                                        StaticText, 0x11f773e00, {{149.2, 232.0}, {103.7, 14.3}}, label: 'Friday, 16 October'
+                                        StaticText, 0x11f773f20, {{158.7, 263.4}, {85.8, 14.3}}, label: 'Completed'
+                                        StaticText, 0x11f774040, {{117.0, 320.7}, {59.0, 54.0}}, label: '33'
+                                        StaticText, 0x11f774160, {{182.0, 346.7}, {103.0, 21.7}}, label: 'min focused'
+                                        StaticText, 0x11f774280, {{45.2, 403.1}, {44.7, 13.3}}, label: 'Started'
+                                        StaticText, 0x11f7743a0, {{316.2, 403.1}, {37.0, 13.3}}, label: 'Ended'
+                                        StaticText, 0x11f7744c0, {{36.0, 419.4}, {63.0, 19.3}}, label: '9:00 AM'
+                                        Image, 0x11f7745e0, {{195.0, 416.0}, {12.3, 10.0}}, identifier: 'arrow.right', label: 'Right'
+                                        StaticText, 0x11f774700, {{303.3, 419.4}, {62.7, 19.3}}, label: '9:33 AM'
+                                        StaticText, 0x11f774820, {{89.0, 492.7}, {15.0, 27.7}}, label: '0'
+                                        StaticText, 0x11f774940, {{89.0, 522.4}, {66.7, 14.3}}, label: 'distractions'
+                                        StaticText, 0x11f774a60, {{36.0, 550.7}, {309.7, 28.7}}, label: 'You stayed in the zone — no blocked apps reached for during this session.'
+                                        StaticText, 0x11f774b80, {{37.7, 633.4}, {103.3, 17.0}}, label: 'Felt focused', Selected
+                                          Image, 0x11f774ca0, {{37.7, 636.3}, {11.7, 11.3}}, identifier: 'checkmark', label: 'Selected', Selected
+                                          StaticText, 0x11f774dc0, {{59.0, 633.4}, {82.0, 17.0}}, label: 'Felt focused'
+                                        StaticText, 0x11f774ee0, {{36.0, 660.4}, {82.3, 15.7}}, label: 'Demo · Notes'
+                                      Other, 0x11f775000, {{0.0, 726.2}, {402.0, 147.8}}
+                            Other, 0x11f775120, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x11f775240, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x11f775360, {{0.0, 791.0}, {402.0, 83.0}}
+                  Other, 0x11f775480, {{0.0, 0.0}, {402.0, 874.0}}
+                    TabBar, 0x11f7755a0, {{0.0, 791.0}, {402.0, 83.0}}, label: 'Tab Bar'
+                      Other, 0x11f7756c0, {{21.0, 791.0}, {360.0, 62.0}}
+                        Other, 0x11f7757e0, {{21.0, 791.0}, {95.0, 54.0}}
+                        Other, 0x11f775900, {{21.0, 791.0}, {360.0, 62.0}}
+                          Button, 0x11f775a20, {{25.0, 795.0}, {95.0, 54.0}}, label: 'Focus'
+                            Image, 0x11f775b40, {{59.0, 801.3}, {27.3, 27.3}}, identifier: 'circle.circle.fill', label: 'circle.circle.fill'
+                          Button, 0x11f775c60, {{110.7, 795.0}, {95.0, 54.0}}, label: 'Insights', Selected
+                            Image, 0x11f775d80, {{140.7, 802.3}, {35.0, 25.3}}, identifier: 'chart.bar.fill', label: 'chart column'
+                          Button, 0x11f775ea0, {{196.3, 795.0}, {95.0, 54.0}}, label: 'Schedule'
+                            Image, 0x11f775fc0, {{229.3, 802.3}, {29.0, 25.0}}, identifier: 'calendar', label: 'calendar'
+                          Button, 0x11f7760e0, {{282.0, 795.0}, {95.0, 54.0}}, label: 'Settings'
+                            Image, 0x11f776200, {{315.0, 800.0}, {29.0, 29.3}}, identifier: 'sun.max.fill', label: 'brightness higher'
+                        Other, 0x11f776320, {{110.7, 795.0}, {95.0, 54.0}}
+                          Other, 0x11f776440, {{110.7, 795.0}, {95.0, 54.0}}
+                            Other, 0x11f776560, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x11f776680, {{110.7, 795.0}, {95.0, 54.0}}
+                            Other, 0x11f7767a0, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x11f7768c0, {{110.7, 795.0}, {95.0, 54.0}}
+                                Other, 0x11f7769e0, {{110.7, 795.0}, {95.0, 54.0}}
+                                  Other, 0x11f776b00, {{110.7, 795.0}, {95.0, 54.0}}
+                                Other, 0x11f776c20, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x11f776d40, {{110.7, 795.0}, {95.0, 54.0}}
+                  Other, 0x11f776e60, {{0.0, 791.0}, {402.0, 83.0}}
+                    Other, 0x11f776f80, {{0.0, 791.0}, {402.0, 83.0}}
+                      Other, 0x11f7770a0, {{0.0, 791.0}, {402.0, 83.0}}
+                        Other, 0x11f7771c0, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x11f7772e0, {{0.0, 791.0}, {402.0, 83.0}}
+                            Other, 0x11f777400, {{0.0, 791.0}, {402.0, 83.0}}
+                        Other, 0x11f777520, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x11f777640, {{0.0, 791.0}, {402.0, 83.0}}
+    Window, 0x11f777760, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11f777880, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x11f7779a0, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x11f770810, pid: 49194, label: 'NoFeed'
+Query chain:
+ →Find: Target Application 'me.adithyan.shalinth.Zenly'
+  Output: {
+    Application, 0x11fa24820, pid: 49194, label: 'NoFeed'
+  }

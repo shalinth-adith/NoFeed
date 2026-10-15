@@ -90,6 +90,10 @@ struct AppPausedView: View {
             }
             .padding(.horizontal, 40)
         }
+        // Always a dark screen, whatever the system appearance: its ground is a
+        // fixed near-black, so its ink must be the dark-mode ink. In light mode
+        // it was dark text on black (review 2.3, follow-up).
+        .environment(\.colorScheme, .dark)
         .contentShape(Rectangle())
         // Tapping should not be required, but waiting should not be either.
         .onTapGesture { onDismiss() }

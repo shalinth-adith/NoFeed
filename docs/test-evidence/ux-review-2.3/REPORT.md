@@ -209,3 +209,20 @@ Every finding above was acted on in the commits that follow this report. Status 
 What remains, and why: the "partially unsupported" entries are every text that stops growing at the cap, which is a trade the fixed layouts need. The 36 contrast failures are tone-coloured accents (periwinkle on cream) and the app-paused preview copy. The 12 small targets are unlabeled elements the List exposes inside the Profiles screen. The clipped-text entries are CTA labels measured at the capped size ("Try a shorter one — 5 min", the delete sheet's buttons) and would need the buttons to wrap to two lines.
 
 Every UI suite was re-run after the changes. Three tests were updated because they depended on behaviour the fixes removed: two typed into the schedule title without tapping it (the auto-focus is gone), and one asserted a "vs last week" delta on a first week.
+
+## Follow-up: the last contrast failures and small targets (2026-10-16)
+
+Visible contrast failures 36 → **0**. Small targets 12 → **0**. Visible findings overall 257 → 187, nearly all of them the deliberate Dynamic Type cap.
+
+Each remaining item had a different cause.
+
+| Cause | Items | Fix |
+|---|---|---|
+| Profile tone used as text (periwinkle, amber, green on cream, ~2.5:1) | 13 | `Color.readable` moves a tone toward ink per appearance until it clears 5:1, applied to every place a tone colours text or a meaningful icon. Fills keep the raw tone. |
+| App-paused screen: fixed black ground, but theme ink, so dark-on-black in light mode | 4 | The view pins `colorScheme` to dark. A real bug, not an audit artefact. |
+| Settings row values, headers, footers and placeholders in the system grey (~3:1) | 9 | Hierarchical secondary and tertiary styles pinned to the Quiet ink on the Form; explicit header, footer and prompt colours. |
+| Profile rows tapped through a gesture, so name, summary and chevron each counted as a tiny target | 12 | Each row is one 44pt button element (`children: .combine`), except while it shows the inline refusal, whose own button must stay separate. The redundant swipe Edit and idle reorder handles are gone. |
+| Home audited mid splash cross-fade (text measured 2.4:1 against the fading overlay) | 3 | The tour waits for Home to settle. Only the halo breathes now, not the numerals. |
+| Text under the tab bar, the navigation bar's scroll-edge blur, or the editor's pinned footer fade | 7 | Recorded separately by the audit as not visible at rest. |
+
+Two audit flags remain on the session's REMAINING and HELD labels. Measured on the rendered pixels they read 10.3:1 and 9.9:1. Apple's heuristic misreads small text over the tone gradient. The audit now checks every contrast flag against the screenshot and lists measured passes apart, with their numbers, under "Flagged by the audit, passing on the rendered pixels".

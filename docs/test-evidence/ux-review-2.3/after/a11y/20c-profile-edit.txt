@@ -1,12 +1,12 @@
-[contrast] Contrast failed — element: 9:Save
-    Contrast failed for SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:NAME
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:STRICT MODE frame: (28,672 94×13)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:LENGTH
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:SCHEDULE frame: (28,588 73×13)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:STRICT MODE
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:LENGTH frame: (28,241 55×13)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:BLOCKED APPS
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:BLOCKED APPS frame: (28,380 105×13)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:SCHEDULE
+
+# Under the tab bar or off screen (not counted)
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:NAME frame: (28,148 39×13)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode

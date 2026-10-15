@@ -71,7 +71,7 @@ struct HistoryView: View {
         VStack(spacing: 2) {
             Text(value)
                 .font(ZTheme.Font.numeral(26, weight: .bold))
-                .foregroundStyle(color)
+                .foregroundStyle(color.readable)
             Text(label)
                 .font(ZTheme.Font.body(12))
                 .foregroundStyle(ZTheme.Palette.text(0.55))
@@ -125,7 +125,7 @@ struct HistoryView: View {
                 )
                 .background(RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(ZTheme.Palette.brand.opacity(isOn ? 0.16 : 0)))
-                .shadow(color: isOn ? ZTheme.Palette.brand.opacity(0.4) : .clear, radius: 12)
+
         }
         .buttonStyle(.plain)
         .animation(ZTheme.Motion.smooth, value: isOn)

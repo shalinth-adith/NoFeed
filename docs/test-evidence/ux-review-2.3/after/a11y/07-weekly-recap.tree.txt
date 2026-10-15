@@ -1,0 +1,172 @@
+Attributes: Application, 0x11817cc60, pid: 49194, label: 'NoFeed'
+Element subtree:
+ →Application, 0x11817cc60, pid: 49194, label: 'NoFeed'
+    Window (Main), 0x11818dc50, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11818d1d0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x11819af40, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x118199d70, {{-402.0, -874.0}, {1206.0, 2622.0}}
+          Other, 0x11818f810, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x11819bbe0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x1181a89e0, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x1181a8b00, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x1181a8c20, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x1181a8d40, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x1181a8e60, {{0.0, 0.0}, {402.0, 874.0}}
+                        Other, 0x1181a8f80, {{0.0, 0.0}, {402.0, 874.0}}
+                          Other, 0x1181a90a0, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x1181a91c0, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x1181a92e0, {{0.0, 0.0}, {402.0, 874.0}}
+                                Other, 0x1181a9400, {{0.0, 0.0}, {402.0, 874.0}}
+                                  Other, 0x1181a9520, {{0.0, 0.0}, {402.0, 874.0}}
+                                    ScrollView, 0x1181a9640, {{0.0, 0.0}, {402.0, 874.0}}
+                                      Other, 0x1181a9760, {{0.0, -290.3}, {402.0, 1110.7}}
+                                        StaticText, 0x1181a9880, {{28.0, -282.3}, {79.7, 26.3}}, label: 'Insights'
+                                        StaticText, 0x1181a99a0, {{28.0, -222.0}, {60.7, 13.3}}, label: 'HISTORY'
+                                        Other, 0x1181a9ac0, {{28.0, -194.7}, {189.0, 83.3}}, label: '6.9 hours focused this week. Your first week'
+                                          StaticText, 0x1181a9be0, {{28.0, -194.7}, {73.7, 61.0}}, label: '6.9'
+                                          StaticText, 0x1181a9d00, {{109.7, -160.3}, {107.3, 18.0}}, label: 'hours this week'
+                                          StaticText, 0x1181a9e20, {{28.0, -125.7}, {84.0, 14.3}}, label: 'Your first week'
+                                        Other, 0x1181a9f40, {{38.3, -11.7}, {20.0, 74.3}}, label: 'Sun: 56 minutes'
+                                          StaticText, 0x1181aa060, {{44.8, 49.3}, {7.3, 13.3}}, label: 'S'
+                                        Other, 0x1181aa180, {{89.3, -33.3}, {20.0, 96.0}}, label: 'Mon: 80 minutes'
+                                          StaticText, 0x1181aa2a0, {{94.3, 49.3}, {10.0, 13.3}}, label: 'M'
+                                        Other, 0x1181aa3c0, {{140.0, 0.3}, {20.0, 62.3}}, label: 'Tue: 43 minutes'
+                                          StaticText, 0x1181aa4e0, {{146.5, 49.3}, {7.3, 13.3}}, label: 'T'
+                                        Other, 0x1181aa600, {{191.0, -60.7}, {20.0, 123.3}}, label: 'Wed: 110 minutes'
+                                          StaticText, 0x1181aa720, {{195.5, 49.3}, {11.0, 13.3}}, label: 'W'
+                                        Other, 0x1181aa840, {{242.0, -45.3}, {20.0, 108.0}}, label: 'Thu: 93 minutes'
+                                          StaticText, 0x1181aa960, {{248.2, 49.3}, {7.3, 13.3}}, label: 'T'
+                                        Other, 0x1181aaa80, {{292.7, 9.3}, {20.0, 53.3}}, label: 'Fri: 33 minutes, today'
+                                          StaticText, 0x1181aaba0, {{299.4, 49.3}, {6.7, 13.3}}, label: 'F'
+                                        Other, 0x1181aacc0, {{343.7, 35.3}, {20.0, 27.3}}, label: 'Sat: 0 minutes'
+                                          StaticText, 0x1181aade0, {{349.9, 49.3}, {7.3, 13.3}}, label: 'S'
+                                        Other, 0x1181aaf00, {{28.0, 92.7}, {209.7, 34.7}}, label: '0 distractions blocked this week'
+                                          StaticText, 0x1181ab020, {{28.0, 92.7}, {18.0, 34.7}}, label: '0'
+                                          StaticText, 0x1181ab140, {{54.0, 108.0}, {183.7, 15.7}}, label: 'distractions blocked this week'
+                                        StaticText, 0x1181ab260, {{28.0, 171.3}, {88.0, 17.0}}, label: 'Today · Study'
+                                        StaticText, 0x1181ab380, {{326.7, 170.3}, {47.3, 18.0}}, label: '33 min'
+                                        StaticText, 0x1181ab4a0, {{28.0, 190.3}, {71.3, 13.3}}, label: 'Demo · Notes'
+                                        StaticText, 0x1181ab5c0, {{28.0, 233.7}, {84.0, 17.0}}, label: 'Today · Work'
+                                        StaticText, 0x1181ab6e0, {{271.3, 232.7}, {102.7, 18.0}}, label: 'under a minute'
+                                        StaticText, 0x1181ab800, {{28.0, 252.7}, {62.0, 13.3}}, label: 'Ended early'
+                                        StaticText, 0x1181ab920, {{28.0, 296.0}, {84.0, 17.0}}, label: 'Today · Work'
+                                        StaticText, 0x1181aba40, {{271.3, 295.0}, {102.7, 18.0}}, label: 'under a minute'
+                                        StaticText, 0x1181abb60, {{28.0, 315.0}, {62.0, 13.3}}, label: 'Ended early'
+                                        StaticText, 0x1181abc80, {{28.0, 358.3}, {84.0, 17.0}}, label: 'Today · Work'
+                                        StaticText, 0x1181abda0, {{271.3, 357.3}, {102.7, 18.0}}, label: 'under a minute'
+                                        StaticText, 0x1181abec0, {{28.0, 377.3}, {62.0, 13.3}}, label: 'Ended early'
+                                        StaticText, 0x1181abfe0, {{28.0, 420.7}, {84.0, 17.0}}, label: 'Today · Work'
+                                        StaticText, 0x1181ac100, {{271.3, 419.7}, {102.7, 18.0}}, label: 'under a minute'
+                                        StaticText, 0x1181ac220, {{28.0, 439.7}, {62.0, 13.3}}, label: 'Ended early'
+                                        Button, 0x1181ac340, {{28.0, 467.0}, {346.0, 45.0}}, label: 'See all sessions'
+                                          StaticText, 0x1181ac460, {{28.0, 481.0}, {102.3, 17.0}}, label: 'See all sessions'
+                                          Image, 0x1181ac580, {{367.0, 484.3}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1181ac7f0, {{28.0, 513.0}, {346.0, 45.0}}, identifier: 'insights-weekly-recap', label: 'Your week in review'
+                                          StaticText, 0x1181ac910, {{28.0, 527.0}, {127.7, 17.0}}, label: 'Your week in review'
+                                          Image, 0x1181aca30, {{367.0, 530.3}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        StaticText, 0x1181acb50, {{28.0, 592.0}, {46.3, 13.3}}, label: 'GOALS'
+                                        Other, 0x1181acc70, {{28.0, 623.3}, {346.0, 32.0}}, label: 'Weekly focus: 6.9 / 14 h'
+                                          StaticText, 0x1181acd90, {{28.0, 623.3}, {86.3, 17.0}}, label: 'Weekly focus'
+                                          StaticText, 0x1181aceb0, {{311.7, 623.3}, {62.3, 17.0}}, label: '6.9 / 14 h'
+                                        Other, 0x1181acfd0, {{28.0, 694.3}, {346.0, 32.0}}, label: 'Sessions: 6 / 21'
+                                          StaticText, 0x1181ad0f0, {{28.0, 694.3}, {57.7, 17.0}}, label: 'Sessions'
+                                          StaticText, 0x1181ad210, {{336.0, 694.3}, {38.0, 17.0}}, label: '6 / 21'
+                                        StaticText, 0x1181ad330, {{28.0, 763.3}, {93.0, 17.0}}, label: 'Current streak'
+                                        StaticText, 0x1181ad450, {{331.0, 763.3}, {43.0, 17.0}}, label: '6 days'
+                                      Other, 0x1181ad770, {{0.0, 726.2}, {402.0, 147.8}}
+                                      Other, 0x1181ad890, {{0.0, 726.2}, {402.0, 147.8}}
+                                        Image, 0x1181ad9b0, {{-120.0, 731.0}, {642.0, 286.0}}, identifier: 'AdditionalDimmingOverlay'
+                                        Other, 0x1181adad0, {{0.0, 726.2}, {402.0, 147.8}}
+                                          Other, 0x1181adbf0, {{0.0, 726.2}, {402.0, 147.8}}
+                                        Other, 0x1181add10, {{0.0, 726.2}, {402.0, 147.8}}
+                                          Other, 0x1181ade30, {{0.0, 726.2}, {402.0, 147.8}}
+                                          Other, 0x1181adf50, {{0.0, 726.2}, {402.0, 147.8}}
+                            Other, 0x1181ae070, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x1181ae190, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x1181ae2b0, {{0.0, 791.0}, {402.0, 83.0}}
+                  Other, 0x1181ae3d0, {{0.0, 0.0}, {402.0, 874.0}}
+                    TabBar, 0x1181ae4f0, {{0.0, 791.0}, {402.0, 83.0}}, label: 'Tab Bar'
+                      Other, 0x1181ae610, {{21.0, 791.0}, {360.0, 62.0}}
+                        Other, 0x1181ae730, {{21.0, 791.0}, {95.0, 54.0}}
+                        Other, 0x1181ae850, {{21.0, 791.0}, {360.0, 62.0}}
+                          Button, 0x1181ae970, {{25.0, 795.0}, {95.0, 54.0}}, label: 'Focus'
+                            Image, 0x1181aea90, {{59.0, 801.3}, {27.3, 27.3}}, identifier: 'circle.circle.fill', label: 'circle.circle.fill'
+                          Button, 0x1181aebb0, {{110.7, 795.0}, {95.0, 54.0}}, label: 'Insights', Selected
+                            Image, 0x1181aecd0, {{140.7, 802.3}, {35.0, 25.3}}, identifier: 'chart.bar.fill', label: 'chart column'
+                          Button, 0x1181aedf0, {{196.3, 795.0}, {95.0, 54.0}}, label: 'Schedule'
+                            Image, 0x1181aef10, {{229.3, 802.3}, {29.0, 25.0}}, identifier: 'calendar', label: 'calendar'
+                          Button, 0x1181af030, {{282.0, 795.0}, {95.0, 54.0}}, label: 'Settings'
+                            Image, 0x1181af150, {{315.0, 800.0}, {29.0, 29.3}}, identifier: 'sun.max.fill', label: 'brightness higher'
+                        Other, 0x1181af270, {{110.7, 795.0}, {95.0, 54.0}}
+                          Other, 0x1181af390, {{110.7, 795.0}, {95.0, 54.0}}
+                            Other, 0x1181af4b0, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x1181af5d0, {{110.7, 795.0}, {95.0, 54.0}}
+                            Other, 0x1181af6f0, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x1181af810, {{110.7, 795.0}, {95.0, 54.0}}
+                                Other, 0x1181af930, {{110.7, 795.0}, {95.0, 54.0}}
+                                  Other, 0x1181afa50, {{110.7, 795.0}, {95.0, 54.0}}
+                                Other, 0x1181afb70, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x1181afc90, {{110.7, 795.0}, {95.0, 54.0}}
+                  Other, 0x1181afdb0, {{0.0, 791.0}, {402.0, 83.0}}
+                    Other, 0x1181afed0, {{0.0, 791.0}, {402.0, 83.0}}
+                      Other, 0x1181afff0, {{0.0, 791.0}, {402.0, 83.0}}
+                        Other, 0x1181b0110, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x1181b0230, {{0.0, 791.0}, {402.0, 83.0}}
+                            Other, 0x1181b0350, {{0.0, 791.0}, {402.0, 83.0}}
+      Other, 0x1181b0470, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x1181b0590, {{-402.0, -874.0}, {1206.0, 2622.0}}
+        Other, 0x1181b06b0, {{0.0, 62.0}, {402.0, 812.0}}
+          Other, 0x1181b07d0, {{0.0, 62.0}, {402.0, 812.0}}
+            Other, 0x1181b08f0, {{0.0, 62.0}, {402.0, 812.0}}
+              Other, 0x1181b0a10, {{0.0, 62.0}, {402.0, 812.0}}
+                Other, 0x1181b0b30, {{0.0, 62.0}, {402.0, 812.0}}
+                  Other, 0x1181b0c50, {{0.0, 62.0}, {402.0, 812.0}}
+                    NavigationBar, 0x1181b0d70, {{0.0, 78.0}, {402.0, 54.0}}, identifier: '_TtGC7SwiftUI32NavigationStackHosting'
+                      Other, 0x1181b0e90, {{20.0, 82.0}, {52.3, 36.0}}, identifier: 'recap-done', label: 'Done'
+                        Other, 0x1181b0fb0, {{20.0, 82.0}, {52.3, 36.0}}
+                          Button, 0x1181b10d0, {{20.0, 82.0}, {52.3, 36.0}}, identifier: 'recap-done', label: 'Done'
+                      Other, 0x1181b11f0, {{346.0, 82.0}, {36.0, 36.0}}, identifier: 'recap-share', label: 'Share this week'
+                        Other, 0x1181b1310, {{346.0, 82.0}, {36.0, 36.0}}
+                          Button, 0x1181b1430, {{349.7, 82.0}, {28.7, 36.0}}, identifier: 'recap-share', label: 'Share this week'
+                    Other, 0x1181b1550, {{0.0, 62.0}, {402.0, 812.0}}
+                      Other, 0x1181b1670, {{0.0, 62.0}, {402.0, 812.0}}
+                        Other, 0x1181b1790, {{0.0, 62.0}, {402.0, 812.0}}
+                          Other, 0x1181b18b0, {{0.0, 62.0}, {402.0, 812.0}}
+                            ScrollView, 0x1181b19d0, {{0.0, 62.0}, {402.0, 812.0}}
+                              Other, 0x1181b1af0, {{0.0, 62.0}, {402.0, 124.8}}
+                              Other, 0x1181b1c10, {{0.0, 132.0}, {402.0, 568.3}}
+                                StaticText, 0x1181b1d30, {{28.0, 140.0}, {121.7, 31.3}}, label: 'Your week'
+                                StaticText, 0x1181b1e50, {{28.0, 175.3}, {54.7, 14.3}}, label: '11–17 Oct'
+                                Other, 0x1181b1f70, {{28.0, 213.7}, {248.0, 65.7}}, label: '6h 55m of quiet this week'
+                                  StaticText, 0x1181b2090, {{28.0, 213.7}, {186.7, 65.7}}, label: '6h 55m'
+                                  StaticText, 0x1181b21b0, {{220.7, 250.7}, {55.3, 19.3}}, label: 'of quiet'
+                                StaticText, 0x1181b22d0, {{28.0, 281.3}, {64.3, 15.7}}, label: '6 sessions'
+                                Other, 0x1181b23f0, {{38.3, 386.7}, {20.0, 70.3}}, label: 'Sun: 56 minutes'
+                                  StaticText, 0x1181b2510, {{44.8, 443.7}, {7.3, 13.3}}, label: 'S'
+                                Other, 0x1181b2630, {{89.3, 366.7}, {20.0, 90.3}}, label: 'Mon: 80 minutes'
+                                  StaticText, 0x1181b2750, {{94.3, 443.7}, {10.0, 13.3}}, label: 'M'
+                                Other, 0x1181b2870, {{140.0, 397.7}, {20.0, 59.3}}, label: 'Tue: 43 minutes'
+                                  StaticText, 0x1181b2990, {{146.5, 443.7}, {7.3, 13.3}}, label: 'T'
+                                Other, 0x1181b2ab0, {{191.0, 341.7}, {20.0, 115.3}}, label: 'Wed: 110 minutes'
+                                  StaticText, 0x1181b2bd0, {{195.5, 443.7}, {11.0, 13.3}}, label: 'W'
+                                Other, 0x1181b2cf0, {{242.0, 356.0}, {20.0, 101.0}}, label: 'Thu: 93 minutes'
+                                  StaticText, 0x1181b2e10, {{248.2, 443.7}, {7.3, 13.3}}, label: 'T'
+                                Other, 0x1181b2f30, {{292.7, 406.0}, {20.0, 51.0}}, label: 'Fri: 33 minutes'
+                                  StaticText, 0x1181b3050, {{299.4, 443.7}, {6.7, 13.3}}, label: 'F'
+                                Other, 0x1181b3170, {{343.7, 429.7}, {20.0, 27.3}}, label: 'Sat: 0 minutes'
+                                  StaticText, 0x1181b3290, {{349.9, 443.7}, {7.3, 13.3}}, label: 'S'
+                                StaticText, 0x1181b33b0, {{28.0, 514.0}, {267.7, 47.3}}, label: 'Nothing pulled at you this week., Your first week of this. The rest builds on it.'
+                                  StaticText, 0x1181b34d0, {{28.0, 514.0}, {267.7, 21.7}}, label: 'Nothing pulled at you this week.'
+                                  StaticText, 0x1181b35f0, {{28.0, 545.7}, {262.7, 15.7}}, label: 'Your first week of this. The rest builds on it.'
+                                StaticText, 0x1181b3710, {{28.0, 612.3}, {327.3, 58.0}}, label: 'NEXT WEEK, Sat had none. One short session there would even out the week.'
+                                  StaticText, 0x1181b3830, {{28.0, 612.3}, {80.3, 13.3}}, label: 'NEXT WEEK'
+                                  StaticText, 0x1181b3950, {{28.0, 633.7}, {327.3, 36.7}}, label: 'Sat had none. One short session there would even out the week.'
+                    Other, 0x1181b3a70, {{0.0, 62.0}, {402.0, 812.0}}
+                      Other, 0x1181b3b90, {{0.0, 62.0}, {402.0, 812.0}}
+Path to element:
+ →Application, 0x11817cc60, pid: 49194, label: 'NoFeed'
+Query chain:
+ →Find: Target Application 'me.adithyan.shalinth.Zenly'
+  Output: {
+    Application, 0x11854a9d0, pid: 49194, label: 'NoFeed'
+  }

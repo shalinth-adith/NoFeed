@@ -1,0 +1,21 @@
+Attributes: Application, 0x104355440, pid: 49370, label: 'NoFeed'
+Element subtree:
+ →Application, 0x104355440, pid: 49370, label: 'NoFeed'
+    Window (Main), 0x1043549c0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x104343d70, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x1043542f0, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x104353180, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x10434d4d0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x104336a00, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'block-screen-preview'
+                StaticText, 0x104354660, {{96.2, 338.3}, {209.7, 59.0}}, label: 'Instagram is behind this door.'
+                StaticText, 0x10433b5f0, {{63.5, 409.3}, {275.0, 74.3}}, label: 'It opens on its own in 16 minutes. Nothing inside will have moved.
+
+Opens at 3:10 AM'
+                StaticText, 0x104336d50, {{152.5, 779.0}, {97.0, 18.0}}, label: 'Back to focus'
+Path to element:
+ →Application, 0x104355440, pid: 49370, label: 'NoFeed'
+Query chain:
+ →Find: Target Application 'me.adithyan.shalinth.Zenly'
+  Output: {
+    Application, 0x104350830, pid: 49370, label: 'NoFeed'
+  }

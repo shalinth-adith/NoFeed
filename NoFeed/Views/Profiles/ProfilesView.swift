@@ -219,6 +219,16 @@ struct ProfilesView: View {
                     }
                 )
                 .contentShape(Rectangle())
+                .frame(minHeight: 44)
+                // One target for the whole row. Its name, summary and chevron
+                // stay readable on their own, but the row is the button
+                // (review 2.3 follow-up: each part counted as a tiny target).
+                // Combined while the row is a plain link; contained while it
+                // shows the inline refusal, whose "Go to session" must stay a
+                // separate button.
+                .accessibilityElement(children: blockedDelete == profile.objectID ? .contain : .combine)
+                .accessibilityAddTraits(.isButton)
+                .accessibilityIdentifier("profile-row-\(profile.name ?? "")")
                 // The row draws a chevron, so the tap must navigate. Switching
                 // the running profile happens on the Focus screen's row; this
                 // list is for managing them, and its chevron promises 20b.
@@ -240,13 +250,9 @@ struct ProfilesView: View {
                 Button(role: .destructive) { requestDelete(profile) } label: {
                     Label("Delete", systemImage: "trash")
                 }
-                Button { detail = ProfileRef(objectID: profile.objectID) } label: {
-                    Label("Edit", systemImage: "pencil")
-                }
-                .tint(ZTheme.Palette.tone)
             }
         }
-        .onMove { store.move(fromOffsets: $0, toOffset: $1) }
+        .onMove(perform: editMode.isEditing ? { store.move(fromOffsets: $0, toOffset: $1) } : nil)
     }
 
     private var newProfileButton: some View {
@@ -257,7 +263,7 @@ struct ProfilesView: View {
                 Text("New profile")
                     .font(ZTheme.Font.body(15))
             }
-            .foregroundStyle(ZTheme.Palette.tone)
+            .foregroundStyle(ZTheme.Palette.tone.readable)
             .frame(maxWidth: .infinity, minHeight: 54, alignment: .leading)
             .contentShape(Rectangle())
         }
@@ -349,7 +355,7 @@ private struct ProfileRow: View {
                 Text("ACTIVE")
                     .font(ZTheme.Font.body(11))
                     .tracking(1.76)                       // .16em at 11pt
-                    .foregroundStyle(accent)
+                    .foregroundStyle(accent.readable)
             } else {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 13, weight: .semibold))
@@ -382,7 +388,7 @@ private struct ProfileRow: View {
                 Button(action: { Haptics.light(); onGoToSession() }) {
                     Text("Go to session")
                         .font(ZTheme.Font.body(13, weight: .semibold))
-                        .foregroundStyle(ZTheme.Palette.tone)
+                        .foregroundStyle(ZTheme.Palette.tone.readable)
                         .padding(.top, 8)
                         .contentShape(Rectangle())
                 }
@@ -464,7 +470,7 @@ struct DeleteProfileSheet: View {
                 Button(action: { Haptics.warning(); onDelete() }) {
                     Text("Delete profile")
                         .font(ZTheme.Font.display(16, weight: .semibold))
-                        .foregroundStyle(ZTheme.Palette.alert)
+                        .foregroundStyle(ZTheme.Palette.alert.readable)
                         .frame(maxWidth: .infinity, minHeight: 54)
                         .background {
                             RoundedRectangle(cornerRadius: 16, style: .continuous)

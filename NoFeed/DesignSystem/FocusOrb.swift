@@ -42,6 +42,10 @@ struct FocusOrb<Center: View>: View {
             Circle()
                 .fill(ZTheme.orbHalo(tone: ringTint, diameter: haloInset))
                 .frame(width: haloInset, height: haloInset)
+                // Only the glow breathes. The numerals used to scale with it,
+                // which is harder to read and which the accessibility audit
+                // failed on contrast mid-animation (review 2.3 follow-up).
+                .scaleEffect(haloScale)
 
             // Complete: a filled tone disc for the celebratory checkmark.
             if isComplete {
@@ -66,7 +70,7 @@ struct FocusOrb<Center: View>: View {
             center()
         }
         .frame(width: diameter, height: diameter)
-        .scaleEffect(scale)
+        .scaleEffect(popScale)
         .onAppear { startAnimations() }
         .onChange(of: isComplete) { _, complete in if complete { pop() } }
         .accessibilityElement(children: .combine)
@@ -88,8 +92,14 @@ struct FocusOrb<Center: View>: View {
         return false
     }
 
-    private var scale: CGFloat {
+    /// The completion pop scales the whole orb, checkmark included.
+    private var popScale: CGFloat {
         if case .complete = state { return popped ? 1 : 0.6 }
+        return 1
+    }
+
+    /// The idle breath scales the halo alone.
+    private var haloScale: CGFloat {
         guard !reduceMotion else { return 1 }
         // A gentler breath than the old sphere (the halo is soft to begin with).
         if case .idle = state { return (breathes && breathing) ? 1.035 : 1 }

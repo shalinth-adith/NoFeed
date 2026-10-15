@@ -1,16 +1,8 @@
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:IN SESSION · 16:12 LEFT
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:IN SESSION · 16:12 LEFT frame: (106,510 188×13)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[text-clipped] Text clipped — element: 48:You’ll come back to exactly this spot when the session ends.
+[text-clipped] Text clipped — element: 48:Returning to your session… frame: (124,769 153×14)
     Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
-[text-clipped] Text clipped — element: 48:Returning to your session…
+[text-clipped] Text clipped — element: 48:You’ll come back to exactly this spot when the session ends. frame: (70,573 260×35)
     Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
-[text-clipped] Text clipped — element: 48:Instagram is bookmarked.
+[text-clipped] Text clipped — element: 48:Instagram is bookmarked. frame: (66,534 269×27)
     Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
-[contrast] Contrast failed — element: 48:IN SESSION · 16:12 LEFT
-    Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: 48:Instagram is bookmarked.
-    Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: 48:You’ll come back to exactly this spot when the session ends.
-    Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: 48:Returning to your session…
-    Contrast failed for SwiftUI.AccessibilityNode

@@ -1,0 +1,284 @@
+Attributes: Application, 0x11bbba8a0, pid: 49194, label: 'NoFeed'
+Element subtree:
+ →Application, 0x11bbba8a0, pid: 49194, label: 'NoFeed'
+    Window (Main), 0x11bbb11e0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11bbbddf0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x11bbbdf10, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x11bbbdb50, {{-402.0, -874.0}, {1206.0, 2622.0}}
+          Other, 0x11bbbdc70, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x11bbbe030, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x11bbbe150, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x11bbbe270, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x11bbbe390, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x11bbbe4b0, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x11bbbe5d0, {{0.0, 0.0}, {402.0, 874.0}}
+                        Other, 0x11bbbe6f0, {{0.0, 0.0}, {402.0, 874.0}}
+                          Other, 0x11bbbe810, {{0.0, 0.0}, {402.0, 874.0}}
+                            NavigationBar, 0x11bbbe930, {{0.0, 62.0}, {402.0, 106.0}}, identifier: 'Settings'
+                              StaticText, 0x11bbbea50, {{16.0, 116.3}, {129.3, 47.3}}, label: 'Settings'
+                            Other, 0x11bbbeb70, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x11bbbec90, {{0.0, 0.0}, {402.0, 874.0}}
+                                Other, 0x11bbbedb0, {{0.0, 0.0}, {402.0, 874.0}}
+                                  Other, 0x11bbbeed0, {{0.0, 0.0}, {402.0, 874.0}}
+                                    CollectionView, 0x11bbbeff0, {{0.0, 0.0}, {402.0, 874.0}}
+                                      Other, 0x11bbbf110, {{-16.0, -1580.0}, {434.0, 1918.7}}
+                                      Other, 0x11bbbf230, {{0.0, 0.0}, {402.0, 170.8}}
+                                      Cell, 0x11bbbf350, {{16.0, 168.0}, {370.0, 43.0}}
+                                        Other, 0x11bbbf470, {{16.0, 168.0}, {370.0, 43.0}}
+                                        Other, 0x11bbbf590, {{16.0, 168.0}, {370.0, 43.0}}
+                                          Other, 0x11bbbf6b0, {{16.0, 168.0}, {370.0, 43.0}}
+                                            Other, 0x11bbbf7d0, {{16.0, 168.0}, {370.0, 43.0}}
+                                              StaticText, 0x11bbbf8f0, {{16.0, 168.0}, {370.0, 43.0}}, label: 'You'
+                                      Cell, 0x11bbbfa10, {{16.0, 211.0}, {370.0, 55.0}}
+                                        Other, 0x11bbbfb30, {{16.0, 211.0}, {370.0, 55.0}}
+                                          Other, 0x11bbbfc50, {{16.0, 211.0}, {370.0, 55.0}}
+                                        Other, 0x11bbbfd70, {{16.0, 211.0}, {370.0, 55.0}}
+                                          Other, 0x11bbbfe90, {{16.0, 211.0}, {370.0, 55.0}}
+                                            Other, 0x11bbbffb0, {{16.0, 211.0}, {370.0, 55.0}}
+                                              StaticText, 0x11bbc00d0, {{32.0, 227.0}, {77.0, 23.0}}, label: 'Your name'
+                                              TextField, 0x11bbc01f0, {{117.0, 226.0}, {253.0, 24.7}}, placeholderValue: 'Add your name'
+                                      Cell, 0x11bbc0310, {{16.0, 266.0}, {370.0, 55.0}}
+                                        Other, 0x11bbc0430, {{16.0, 266.0}, {370.0, 55.0}}
+                                          Other, 0x11bbc0550, {{16.0, 266.0}, {370.0, 55.0}}
+                                        Other, 0x11bbc0670, {{16.0, 266.0}, {370.0, 55.0}}
+                                          Other, 0x11bbc0790, {{16.0, 266.0}, {370.0, 55.0}}
+                                            Other, 0x11bbc08b0, {{16.0, 266.0}, {370.0, 55.0}}
+                                              Button, 0x11bbc09d0, {{16.0, 266.0}, {370.0, 55.0}}, label: 'Focus profiles, 4'
+                                                StaticText, 0x11bbc0af0, {{32.0, 282.0}, {102.0, 23.0}}, label: 'Focus profiles'
+                                                StaticText, 0x11bbc0c10, {{342.7, 282.0}, {10.0, 23.0}}, label: '4'
+                                                Image, 0x11bbc0d30, {{363.0, 288.3}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                      Other, 0x11bbc0e50, {{32.0, 265.0}, {338.0, 1.0}}
+                                      Other, 0x11bbc0f70, {{-16.0, 338.7}, {434.0, 115.7}}
+                                      Cell, 0x11bbc1090, {{16.0, 338.7}, {370.0, 43.0}}
+                                        Other, 0x11bbc11b0, {{16.0, 338.7}, {370.0, 43.0}}
+                                        Other, 0x11bbc12d0, {{16.0, 338.7}, {370.0, 43.0}}
+                                          Other, 0x11bbc13f0, {{16.0, 338.7}, {370.0, 43.0}}
+                                            Other, 0x11bbc1510, {{16.0, 338.7}, {370.0, 43.0}}
+                                              StaticText, 0x11bbc1630, {{16.0, 338.7}, {370.0, 43.0}}, label: 'Screen Time'
+                                      Cell, 0x11bbc1750, {{16.0, 381.7}, {370.0, 55.0}}
+                                        Other, 0x11bbc1870, {{16.0, 381.7}, {370.0, 55.0}}
+                                          Other, 0x11bbc1990, {{16.0, 381.7}, {370.0, 55.0}}
+                                            Other, 0x11bbc1ab0, {{16.0, 381.7}, {370.0, 55.0}}
+                                        Other, 0x11bbc1bd0, {{16.0, 381.7}, {370.0, 55.0}}
+                                          Other, 0x11bbc1cf0, {{16.0, 381.7}, {370.0, 55.0}}
+                                            Other, 0x11bbc1e10, {{16.0, 381.7}, {370.0, 55.0}}
+                                              Button, 0x11bbc1f30, {{16.0, 381.7}, {370.0, 55.0}}, label: 'Grant Screen Time Access'
+                                      Other, 0x11bbc2050, {{-16.0, 454.0}, {434.0, 204.3}}
+                                      Cell, 0x11bbc2170, {{16.0, 454.0}, {370.0, 43.0}}
+                                        Other, 0x11bbc2290, {{16.0, 454.0}, {370.0, 43.0}}
+                                        Other, 0x11bbc23b0, {{16.0, 454.0}, {370.0, 43.0}}
+                                          Other, 0x11bbc24d0, {{16.0, 454.0}, {370.0, 43.0}}
+                                            Other, 0x11bbc25f0, {{16.0, 454.0}, {370.0, 43.0}}
+                                              StaticText, 0x11bbc2710, {{16.0, 454.0}, {370.0, 43.0}}, label: 'Daily Goals'
+                                      Cell, 0x11bbc2830, {{16.0, 497.0}, {370.0, 55.0}}
+                                        Other, 0x11bbc2950, {{16.0, 497.0}, {370.0, 55.0}}
+                                          Other, 0x11bbc2a70, {{16.0, 497.0}, {370.0, 55.0}}
+                                            Other, 0x11bbc2b90, {{16.0, 497.0}, {370.0, 55.0}}
+                                        Other, 0x11bbc2cb0, {{16.0, 497.0}, {370.0, 55.0}}
+                                          Other, 0x11bbc2dd0, {{16.0, 497.0}, {370.0, 55.0}}
+                                            Other, 0x11bbc2ef0, {{16.0, 497.0}, {370.0, 55.0}}
+                                              StaticText, 0x11bbc3010, {{32.0, 513.0}, {115.0, 23.0}}, label: 'Daily focus goal'
+                                              StaticText, 0x11bbc3130, {{32.0, 513.0}, {236.0, 23.0}}, label: 'Daily focus goal, 120 min'
+                                              Stepper, 0x11bbc3250, {{32.0, 508.7}, {338.0, 32.0}}, label: 'Daily focus goal, 120 min', value: 120
+                                                Button, 0x11bbc3370, {{276.0, 508.7}, {47.0, 32.0}}, identifier: 'Decrement', label: 'Daily focus goal, 120 min, Decrement', value: 120
+                                                Button, 0x11bbc3490, {{323.0, 508.7}, {47.0, 32.0}}, identifier: 'Increment', label: 'Daily focus goal, 120 min, Increment', value: 120
+                                      Cell, 0x11bbc35b0, {{16.0, 552.0}, {370.0, 55.0}}
+                                        Other, 0x11bbc36d0, {{16.0, 552.0}, {370.0, 55.0}}
+                                          Other, 0x11bbc37f0, {{16.0, 552.0}, {370.0, 55.0}}
+                                            Other, 0x11bbc3910, {{16.0, 552.0}, {370.0, 55.0}}
+                                        Other, 0x11bbc3a30, {{16.0, 552.0}, {370.0, 55.0}}
+                                          Other, 0x11bbc3b50, {{16.0, 552.0}, {370.0, 55.0}}
+                                            Other, 0x11bbc3c70, {{16.0, 552.0}, {370.0, 55.0}}
+                                              StaticText, 0x11bbc3d90, {{32.0, 568.0}, {137.7, 23.0}}, label: 'Daily sessions goal'
+                                              StaticText, 0x11bbc3eb0, {{32.0, 568.0}, {236.0, 23.0}}, label: 'Daily sessions goal, 3'
+                                              Stepper, 0x11bbc3fd0, {{32.0, 563.7}, {338.0, 32.0}}, label: 'Daily sessions goal, 3', value: 3
+                                                Button, 0x11bbc40f0, {{276.0, 563.7}, {47.0, 32.0}}, identifier: 'Decrement', label: 'Daily sessions goal, 3, Decrement', value: 3
+                                                Button, 0x11bbc4210, {{323.0, 563.7}, {47.0, 32.0}}, identifier: 'Increment', label: 'Daily sessions goal, 3, Increment', value: 3
+                                      Other, 0x11bbc4330, {{32.0, 551.0}, {338.0, 1.0}}
+                                      Cell, 0x11bbc4450, {{16.0, 607.0}, {370.0, 51.3}}
+                                        Other, 0x11bbc4570, {{16.0, 607.0}, {370.0, 51.3}}
+                                        Other, 0x11bbc4690, {{16.0, 607.0}, {370.0, 51.3}}
+                                          Other, 0x11bbc47b0, {{16.0, 607.0}, {370.0, 51.3}}
+                                            Other, 0x11bbc48d0, {{16.0, 607.0}, {370.0, 51.3}}
+                                              StaticText, 0x11bbc49f0, {{16.0, 607.0}, {370.0, 51.3}}, label: 'Your daily targets, shown as weekly progress bars on Insights.'
+                                      Other, 0x11bbc4b10, {{-16.0, 658.3}, {434.0, 165.0}}
+                                      Cell, 0x11bbc4c30, {{16.0, 658.3}, {370.0, 43.0}}
+                                        Other, 0x11bbc4d50, {{16.0, 658.3}, {370.0, 43.0}}
+                                        Other, 0x11bbc4e70, {{16.0, 658.3}, {370.0, 43.0}}
+                                          Other, 0x11bbc4f90, {{16.0, 658.3}, {370.0, 43.0}}
+                                            Other, 0x11bbc50b0, {{16.0, 658.3}, {370.0, 43.0}}
+                                              StaticText, 0x11bbc51d0, {{16.0, 658.3}, {370.0, 43.0}}, label: 'Shield message'
+                                      Cell, 0x11bbc52f0, {{16.0, 701.3}, {370.0, 70.7}}
+                                        Other, 0x11bbc5410, {{16.0, 701.3}, {370.0, 70.7}}
+                                          Other, 0x11bbc5530, {{16.0, 701.3}, {370.0, 70.7}}
+                                            Other, 0x11bbc5650, {{16.0, 701.3}, {370.0, 70.7}}
+                                        Other, 0x11bbc5770, {{16.0, 701.3}, {370.0, 70.7}}
+                                          Other, 0x11bbc5890, {{16.0, 701.3}, {370.0, 70.7}}
+                                            Other, 0x11bbc59b0, {{16.0, 701.3}, {370.0, 70.7}}
+                                              TextField, 0x11bbc5ad0, {{32.0, 716.3}, {338.0, 40.3}}, placeholderValue: 'e.g. Future you will thank you.'
+                                                Other, 0x11bbc5bf0, {{32.0, 733.5}, {338.0, 20.2}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                                  Other, 0x11bbc5d10, {{35.0, 750.7}, {332.0, 3.0}}
+                                      Other, 0x11bbc5e30, {{0.0, 726.2}, {402.0, 147.8}}
+                                      Other, 0x11bbc5f50, {{0.0, 726.2}, {402.0, 147.8}}
+                                        Image, 0x11bbc6070, {{-120.0, 731.0}, {642.0, 286.0}}, identifier: 'AdditionalDimmingOverlay'
+                                        Other, 0x11bbc6190, {{0.0, 726.2}, {402.0, 147.8}}
+                                          Other, 0x11bbc62b0, {{0.0, 726.2}, {402.0, 147.8}}
+                                        Other, 0x11bbc63d0, {{0.0, 726.2}, {402.0, 147.8}}
+                                          Other, 0x11bbc64f0, {{0.0, 726.2}, {402.0, 147.8}}
+                                          Other, 0x11bbc6610, {{0.0, 726.2}, {402.0, 147.8}}
+                                      Cell, 0x11bbc6730, {{16.0, 772.0}, {370.0, 51.3}}
+                                        Other, 0x11bbc6850, {{16.0, 772.0}, {370.0, 51.3}}
+                                        Other, 0x11bbc6970, {{16.0, 772.0}, {370.0, 51.3}}
+                                          Other, 0x11bbc6a90, {{16.0, 772.0}, {370.0, 51.3}}
+                                            Other, 0x11bbc6bb0, {{16.0, 772.0}, {370.0, 51.3}}
+                                              StaticText, 0x11bbc6cd0, {{16.0, 772.0}, {370.0, 51.3}}, label: 'Shown on the block screen when you open a distracting app during focus. Leave empty for the default.'
+                                      Other, 0x11bbc6df0, {{-16.0, 823.3}, {434.0, 136.0}}
+                                      Cell, 0x11bbc6f10, {{16.0, 823.3}, {370.0, 43.0}}
+                                        Other, 0x11bbc7030, {{16.0, 823.3}, {370.0, 43.0}}
+                                        Other, 0x11bbc7150, {{16.0, 823.3}, {370.0, 43.0}}
+                                          Other, 0x11bbc7270, {{16.0, 823.3}, {370.0, 43.0}}
+                                            Other, 0x11bbc7390, {{16.0, 823.3}, {370.0, 43.0}}
+                                              StaticText, 0x11bbc74b0, {{16.0, 823.3}, {370.0, 43.0}}, label: 'Break Reminders'
+                                      Cell, 0x11bbc75d0, {{16.0, 866.3}, {370.0, 60.0}}
+                                        Other, 0x11bbc76f0, {{16.0, 866.3}, {370.0, 60.0}}
+                                          Other, 0x11bbc7810, {{16.0, 866.3}, {370.0, 60.0}}
+                                            Other, 0x11bbc7930, {{16.0, 866.3}, {370.0, 60.0}}
+                                        Other, 0x11bbc7a50, {{16.0, 866.3}, {370.0, 60.0}}
+                                          Other, 0x11bbc7b70, {{16.0, 866.3}, {370.0, 60.0}}
+                                            Other, 0x11bbc7c90, {{16.0, 866.3}, {370.0, 60.0}}
+                                              Switch, 0x11bbc7db0, {{16.0, 866.3}, {370.0, 60.0}}, label: 'Daily break reminder', value: 0
+                                                StaticText, 0x11bbc7ed0, {{32.0, 884.8}, {149.7, 23.0}}, label: 'Daily break reminder'
+                                                Button, 0x11bbc7ff0, {{320.0, 881.3}, {50.0, 30.0}}, value: Off
+                                      Other, 0x11bbc8110, {{369.0, 116.0}, {30.0, 675.0}}, label: 'Vertical scroll bar, 3 pages', value: 0%
+                                        Other, 0x11bbc8230, {{396.0, 119.0}, {3.0, 286.0}}
+                                      Other, 0x11bbc8350, {{369.0, 116.0}, {30.0, 675.0}}, label: 'Vertical scroll bar, 3 pages', value: 0%
+                                        Other, 0x11bbc8470, {{396.0, 119.0}, {3.0, 286.0}}
+                            Other, 0x11bbc8790, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x11bbc88b0, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x11bbc89d0, {{0.0, 791.0}, {402.0, 83.0}}
+                  Other, 0x11bbc8af0, {{0.0, 0.0}, {402.0, 874.0}}
+                    TabBar, 0x11bbc8c10, {{0.0, 791.0}, {402.0, 83.0}}, label: 'Tab Bar'
+                      Other, 0x11bbc8d30, {{21.0, 791.0}, {360.0, 62.0}}
+                        Other, 0x11bbc8e50, {{21.0, 791.0}, {95.0, 54.0}}
+                        Other, 0x11bbc8f70, {{21.0, 791.0}, {360.0, 62.0}}
+                          Button, 0x11bbc9090, {{25.0, 795.0}, {95.0, 54.0}}, label: 'Focus'
+                            Image, 0x11bbc91b0, {{59.0, 801.3}, {27.3, 27.3}}, identifier: 'circle.circle.fill', label: 'circle.circle.fill'
+                          Button, 0x11bbc92d0, {{110.7, 795.0}, {95.0, 54.0}}, label: 'Insights'
+                            Image, 0x11bbc93f0, {{140.7, 802.3}, {35.0, 25.3}}, identifier: 'chart.bar.fill', label: 'chart column'
+                          Button, 0x11bbc9510, {{196.3, 795.0}, {95.0, 54.0}}, label: 'Schedule'
+                            Image, 0x11bbc9630, {{229.3, 802.3}, {29.0, 25.0}}, identifier: 'calendar', label: 'calendar'
+                          Button, 0x11bbc9750, {{282.0, 795.0}, {95.0, 54.0}}, label: 'Settings', Selected
+                            Image, 0x11bbc9870, {{315.0, 800.0}, {29.0, 29.3}}, identifier: 'sun.max.fill', label: 'brightness higher'
+                        Other, 0x11bbc9990, {{282.0, 795.0}, {95.0, 54.0}}
+                          Other, 0x11bbc9ab0, {{282.0, 795.0}, {95.0, 54.0}}
+                            Other, 0x11bbc9bd0, {{282.0, 795.0}, {95.0, 54.0}}
+                              Other, 0x11bbc9cf0, {{282.0, 795.0}, {95.0, 54.0}}
+                            Other, 0x11bbc9e10, {{282.0, 795.0}, {95.0, 54.0}}
+                              Other, 0x11bbc9f30, {{282.0, 795.0}, {95.0, 54.0}}
+                                Other, 0x11bbca050, {{282.0, 795.0}, {95.0, 54.0}}
+                                  Other, 0x11bbca170, {{282.0, 795.0}, {95.0, 54.0}}
+                                Other, 0x11bbca290, {{282.0, 795.0}, {95.0, 54.0}}
+                              Other, 0x11bbca3b0, {{282.0, 795.0}, {95.0, 54.0}}
+                  Other, 0x11bbca4d0, {{0.0, 791.0}, {402.0, 83.0}}
+                    Other, 0x11bbca5f0, {{0.0, 791.0}, {402.0, 83.0}}
+                      Other, 0x11bbca710, {{0.0, 791.0}, {402.0, 83.0}}
+                        Other, 0x11bbca830, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x11bbca950, {{0.0, 791.0}, {402.0, 83.0}}
+                            Other, 0x11bbcaa70, {{0.0, 791.0}, {402.0, 83.0}}
+      Other, 0x11bbcab90, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x11bbcacb0, {{-402.0, -874.0}, {1206.0, 2622.0}}
+        Other, 0x11bbcadd0, {{0.0, 62.0}, {402.0, 812.0}}
+          Other, 0x11bbcaef0, {{0.0, 62.0}, {402.0, 812.0}}
+            Other, 0x11bbcb010, {{0.0, 62.0}, {402.0, 812.0}}
+              Other, 0x11bbcb130, {{0.0, 62.0}, {402.0, 812.0}}
+                Other, 0x11bbcb250, {{0.0, 62.0}, {402.0, 812.0}}
+                  Other, 0x11bbcb370, {{0.0, 62.0}, {402.0, 812.0}}
+                    Other, 0x11bbcb490, {{0.0, 62.0}, {402.0, 812.0}}
+                      Other, 0x11bbcb5b0, {{0.0, 62.0}, {402.0, 812.0}}
+                        Other, 0x11bbcb6d0, {{0.0, 62.0}, {402.0, 812.0}}
+                          Other, 0x11bbcb7f0, {{0.0, 62.0}, {402.0, 812.0}}
+                            Button, 0x11bbcb910, {{28.0, 70.0}, {70.3, 44.0}}, identifier: 'profiles-back', label: 'Settings'
+                              Image, 0x11bbcba30, {{29.0, 86.0}, {7.0, 12.3}}, identifier: 'chevron.left', label: 'Back'
+                              StaticText, 0x11bbcbb50, {{44.7, 83.5}, {53.7, 17.0}}, label: 'Settings'
+                            CollectionView, 0x11bbcbc70, {{0.0, 116.0}, {402.0, 758.0}}
+                              Other, 0x11bbcbd90, {{0.0, -1400.0}, {402.0, 3465.0}}
+                              Cell, 0x11bbcbeb0, {{0.0, 116.0}, {402.0, 117.7}}
+                                Other, 0x11bbcbfd0, {{0.0, 116.0}, {402.0, 117.7}}
+                                  Other, 0x11bbcc0f0, {{0.0, 116.0}, {402.0, 117.7}}
+                                    Other, 0x11bbcc210, {{0.0, 116.0}, {402.0, 117.7}}
+                                Other, 0x11bbcc330, {{0.0, 116.0}, {402.0, 117.7}}
+                                  Other, 0x11bbcc450, {{0.0, 116.0}, {402.0, 117.7}}
+                                    Other, 0x11bbcc570, {{0.0, 116.0}, {402.0, 117.7}}
+                                      StaticText, 0x11bbcc690, {{28.0, 139.8}, {75.7, 26.3}}, label: 'Profiles'
+                                      Button, 0x11bbcc7b0, {{322.7, 134.0}, {51.3, 44.0}}, label: 'Reorder'
+                                      StaticText, 0x11bbcc8d0, {{28.0, 188.0}, {329.0, 31.7}}, label: 'Each profile blocks its own set of apps and remembers its default length.'
+                              Cell, 0x11bbcc9f0, {{0.0, 233.7}, {402.0, 65.3}}
+                                Other, 0x11bbccb10, {{0.0, 233.7}, {402.0, 65.3}}
+                                  Other, 0x11bbccc30, {{0.0, 233.7}, {402.0, 65.3}}
+                                    Other, 0x11bbccd50, {{0.0, 233.7}, {402.0, 65.3}}
+                                Other, 0x11bbcce70, {{0.0, 233.7}, {402.0, 65.3}}
+                                  Other, 0x11bbccf90, {{0.0, 233.7}, {402.0, 65.3}}
+                                    Other, 0x11bbcd0b0, {{0.0, 233.7}, {402.0, 65.3}}
+                                      Button, 0x11bbcd1d0, {{0.0, 233.7}, {402.0, 65.3}}, identifier: 'profile-row-Work', label: 'Work, 25 min focus · 5 min break'
+                                        StaticText, 0x11bbcd2f0, {{28.0, 249.7}, {35.3, 17.0}}, label: 'Work'
+                                        StaticText, 0x11bbcd410, {{28.0, 268.7}, {139.0, 13.3}}, label: '25 min focus · 5 min break'
+                                        Image, 0x11bbcd530, {{366.7, 260.0}, {6.7, 11.7}}, identifier: 'chevron.right', label: 'Forward'
+                              Cell, 0x11bbcd650, {{0.0, 299.0}, {402.0, 65.3}}
+                                Other, 0x11bbcd770, {{0.0, 299.0}, {402.0, 65.3}}
+                                  Other, 0x11bbcd890, {{0.0, 299.0}, {402.0, 65.3}}
+                                    Other, 0x11bbcd9b0, {{0.0, 299.0}, {402.0, 65.3}}
+                                Other, 0x11bbcdad0, {{0.0, 299.0}, {402.0, 65.3}}
+                                  Other, 0x11bbcdbf0, {{0.0, 299.0}, {402.0, 65.3}}
+                                    Other, 0x11bbcdd10, {{0.0, 299.0}, {402.0, 65.3}}
+                                      Button, 0x11bbcde30, {{0.0, 299.0}, {402.0, 65.3}}, identifier: 'profile-row-Study', label: 'Study, 50 min focus · 10 min break'
+                                        StaticText, 0x11bbcdf50, {{28.0, 315.0}, {39.7, 17.0}}, label: 'Study'
+                                        StaticText, 0x11bbce070, {{28.0, 334.0}, {144.7, 13.3}}, label: '50 min focus · 10 min break'
+                                        Image, 0x11bbce190, {{366.7, 325.3}, {6.7, 11.7}}, identifier: 'chevron.right', label: 'Forward'
+                              Cell, 0x11bbce2b0, {{0.0, 364.3}, {402.0, 65.3}}
+                                Other, 0x11bbce3d0, {{0.0, 364.3}, {402.0, 65.3}}
+                                  Other, 0x11bbce4f0, {{0.0, 364.3}, {402.0, 65.3}}
+                                    Other, 0x11bbce610, {{0.0, 364.3}, {402.0, 65.3}}
+                                Other, 0x11bbce730, {{0.0, 364.3}, {402.0, 65.3}}
+                                  Other, 0x11bbce850, {{0.0, 364.3}, {402.0, 65.3}}
+                                    Other, 0x11bbce970, {{0.0, 364.3}, {402.0, 65.3}}
+                                      Button, 0x11bbcea90, {{0.0, 364.3}, {402.0, 65.3}}, identifier: 'profile-row-Gym', label: 'Gym, 60 min focus'
+                                        StaticText, 0x11bbcebb0, {{28.0, 380.3}, {31.0, 17.0}}, label: 'Gym'
+                                        StaticText, 0x11bbcecd0, {{28.0, 399.3}, {68.3, 13.3}}, label: '60 min focus'
+                                        Image, 0x11bbcedf0, {{366.7, 390.7}, {6.7, 11.7}}, identifier: 'chevron.right', label: 'Forward'
+                              Cell, 0x11bbcef10, {{0.0, 429.7}, {402.0, 64.3}}
+                                Other, 0x11bbcf030, {{0.0, 429.7}, {402.0, 64.3}}
+                                  Other, 0x11bbcf150, {{0.0, 429.7}, {402.0, 64.3}}
+                                    Other, 0x11bbcf270, {{0.0, 429.7}, {402.0, 64.3}}
+                                Other, 0x11bbcf390, {{0.0, 429.7}, {402.0, 64.3}}
+                                  Other, 0x11bbcf4b0, {{0.0, 429.7}, {402.0, 64.3}}
+                                    Other, 0x11bbcf5d0, {{0.0, 429.7}, {402.0, 64.3}}
+                                      Button, 0x11bbcf6f0, {{0.0, 429.7}, {402.0, 64.3}}, identifier: 'profile-row-Sleep', label: 'Sleep, 480 min focus'
+                                        StaticText, 0x11bbcf810, {{28.0, 445.7}, {38.0, 17.0}}, label: 'Sleep'
+                                        StaticText, 0x11bbcf930, {{28.0, 464.7}, {75.7, 13.3}}, label: '480 min focus'
+                                        Image, 0x11bbcfa50, {{366.7, 456.0}, {6.7, 11.7}}, identifier: 'chevron.right', label: 'Forward'
+                              Cell, 0x11bbcfb70, {{0.0, 494.0}, {402.0, 55.0}}
+                                Other, 0x11bbcfc90, {{0.0, 494.0}, {402.0, 55.0}}
+                                  Other, 0x11bbcfdb0, {{0.0, 494.0}, {402.0, 55.0}}
+                                    Other, 0x11bbcfed0, {{0.0, 494.0}, {402.0, 55.0}}
+                                Other, 0x11bbcfff0, {{0.0, 494.0}, {402.0, 55.0}}
+                                  Other, 0x11bbd0110, {{0.0, 494.0}, {402.0, 55.0}}
+                                    Other, 0x11bbd0230, {{0.0, 494.0}, {402.0, 55.0}}
+                                      Button, 0x11bbd0350, {{0.0, 494.0}, {402.0, 55.0}}, identifier: 'new-profile', label: 'New profile'
+                                        Image, 0x11bbd0470, {{30.0, 515.3}, {12.3, 12.3}}, identifier: 'plus', label: 'Add'
+                                        StaticText, 0x11bbd0590, {{56.3, 513.0}, {73.7, 17.0}}, label: 'New profile'
+                              Other, 0x11bbd06b0, {{369.0, 144.0}, {30.0, 668.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                Other, 0x11bbd07d0, {{396.0, 119.0}, {3.0, 550.7}}
+                              Other, 0x11bbd08f0, {{369.0, 144.0}, {30.0, 668.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                Other, 0x11bbd0a10, {{396.0, 119.0}, {3.0, 550.7}}
+                    Other, 0x11bbd0b30, {{0.0, 62.0}, {402.0, 812.0}}
+                      Other, 0x11bbd0c50, {{0.0, 62.0}, {402.0, 812.0}}
+    Window, 0x11bbd0d70, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11bbd0e90, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x11bbd0fb0, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x11bbba8a0, pid: 49194, label: 'NoFeed'
+Query chain:
+ →Find: Target Application 'me.adithyan.shalinth.Zenly'
+  Output: {
+    Application, 0x11bbd10d0, pid: 49194, label: 'NoFeed'
+  }

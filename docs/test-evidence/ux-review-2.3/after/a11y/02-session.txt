@@ -1,6 +1,9 @@
-[contrast] Contrast failed — element: 48:REMAINING
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:FOCUSING · WORK frame: (127,195 147×13)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:REMAINING frame: (157,436 87×13)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+
+# Flagged by the audit, passing on the rendered pixels (not counted)
+[contrast] Contrast failed — element: 48:REMAINING frame: (157,436 87×13)
     Contrast failed for SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:REMAINING
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:FOCUSING · WORK
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+    measured 10.3:1 on the rendered pixels (needs 4.5:1)

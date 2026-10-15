@@ -688,7 +688,7 @@ private struct ProfileSavedView: View {
                         .frame(width: 150, height: 150)
                     Image(systemName: profile.iconName ?? "circle")
                         .font(.system(size: 34, weight: .light))
-                        .foregroundStyle(tone)
+                        .foregroundStyle(tone.readable)
                 }
                 .frame(width: 168, height: 168)
 

@@ -162,7 +162,7 @@ struct SchedulesView: View {
                         .foregroundStyle(ZTheme.Palette.text(0.30))
                     Text("\(calendar.component(.day, from: day))")
                         .font(ZTheme.Font.numeral(15))
-                        .foregroundStyle(isToday ? tone
+                        .foregroundStyle(isToday ? tone.readable
                                          : isWeekend ? ZTheme.Palette.text(0.30)
                                          : ZTheme.Palette.text(0.55))
                 }
@@ -228,7 +228,7 @@ struct SchedulesView: View {
                         recentlyAdded = nil
                     }
                     .font(ZTheme.Font.display(14, weight: .semibold))
-                    .foregroundStyle(tone)
+                    .foregroundStyle(tone.readable)
                     .buttonStyle(.plain)
                 }
             }
@@ -357,7 +357,7 @@ struct SchedulesView: View {
                 } label: {
                     Text("Grant access")
                         .font(ZTheme.Font.display(14, weight: .semibold))
-                        .foregroundStyle(tone)
+                        .foregroundStyle(tone.readable)
                 }
                 .buttonStyle(.plain)
                 hairline(strong: true)
@@ -456,7 +456,7 @@ private struct ScheduleRow: View {
                                 Text("NEW")
                                     .font(ZTheme.Font.body(11))
                                     .tracking(1.76)
-                                    .foregroundStyle(tone)
+                                    .foregroundStyle(tone.readable)
                             }
                             Text(detail)
                                 .font(ZTheme.Font.body(12))

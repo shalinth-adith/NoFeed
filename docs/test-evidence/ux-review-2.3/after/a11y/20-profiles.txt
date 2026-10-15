@@ -1,28 +1,2 @@
-[hit-region] Hit area is too small — element: -
-    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
-[hit-region] Hit area is too small — element: -
-    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
-[hit-region] Hit area is too small — element: -
-    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
-[hit-region] Hit area is too small — element: -
-    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
-[hit-region] Hit area is too small — element: -
-    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
-[hit-region] Hit area is too small — element: -
-    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
-[hit-region] Hit area is too small — element: -
-    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
-[hit-region] Hit area is too small — element: -
-    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
-[hit-region] Hit area is too small — element: -
-    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
-[hit-region] Hit area is too small — element: -
-    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
-[hit-region] Hit area is too small — element: -
-    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
-[hit-region] Hit area is too small — element: -
-    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:New profile
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:New profile frame: (56,513 73×17)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: 48:New profile
-    Contrast failed for SwiftUI.AccessibilityNode

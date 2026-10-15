@@ -340,13 +340,13 @@ final class QuietSessionScreens: XCTestCase {
         // "Late night" is not a default profile; the swipe target is whichever
         // row is not the active one, so the sheet is never opened on a running
         // session (that is screen 21's job, tested below).
-        XCTAssertTrue(app.staticTexts["Study"].waitForExistence(timeout: 8),
+        XCTAssertTrue(app.descendants(matching: .any)["profile-row-Study"].waitForExistence(timeout: 8),
                       "The Profiles list never appeared")
         capture(app, "20-profiles-list")
 
         // Swipe the cell, not the label. The name renders about 42pt wide and a
         // gesture that short never reaches the swipe-action threshold.
-        let row = app.cells.containing(.staticText, identifier: "Study").firstMatch
+        let row = app.cells.containing(.any, identifier: "profile-row-Study").firstMatch
         XCTAssertTrue(row.exists, "No list row carries the Study profile")
         row.swipeLeft()
         XCTAssertTrue(tapIfHittable(app, "Delete", timeout: 3), "The delete swipe action is missing")
@@ -368,7 +368,7 @@ final class QuietSessionScreens: XCTestCase {
 
         // "Keep it" must actually keep it.
         XCTAssertTrue(tapIfHittable(app, "Keep it", timeout: 3), "The sheet has no way out")
-        XCTAssertTrue(app.staticTexts["Study"].waitForExistence(timeout: 5),
+        XCTAssertTrue(app.descendants(matching: .any)["profile-row-Study"].waitForExistence(timeout: 5),
                       "Keeping the profile removed it anyway")
     }
 
@@ -391,12 +391,14 @@ final class QuietSessionScreens: XCTestCase {
                       "Minimizing never returned to the tab bar")
         openProfiles(app)
 
-        XCTAssertTrue(app.staticTexts["ACTIVE"].waitForExistence(timeout: 8),
+        let activeRow = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS 'ACTIVE'")).firstMatch
+        XCTAssertTrue(activeRow.waitForExistence(timeout: 8),
                       "The running profile is not marked active")
 
         // Swipe the row carrying the ACTIVE eyebrow — the cell, not the label,
         // which is far too narrow to reach the swipe-action threshold.
-        let active = app.cells.containing(.staticText, identifier: "ACTIVE").firstMatch
+        let active = app.cells.containing(NSPredicate(format: "label CONTAINS 'ACTIVE'")).firstMatch
         XCTAssertTrue(active.exists, "No list row carries the ACTIVE eyebrow")
         active.swipeLeft()
         XCTAssertTrue(tapIfHittable(app, "Delete", timeout: 3), "The delete swipe action is missing")

@@ -149,6 +149,8 @@ struct QuietEditorScaffold<Body: View>: View {
                 .offset(y: -20)
                 .allowsHitTesting(false)
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("quiet-footer")
     }
 }
 
@@ -235,7 +237,7 @@ struct QuietHelperRow: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             Button(actionTitle) { Haptics.light(); action() }
                 .font(ZTheme.Font.body(QuietMetrics.helperSize, weight: .semibold))
-                .foregroundStyle(tone)
+                .foregroundStyle(tone.readable)
                 .buttonStyle(.plain)
                 .fixedSize()
         }

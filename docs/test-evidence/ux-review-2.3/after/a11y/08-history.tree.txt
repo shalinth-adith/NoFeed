@@ -1,0 +1,214 @@
+Attributes: Application, 0x1187a6bb0, pid: 49194, label: 'NoFeed'
+Element subtree:
+ →Application, 0x1187a6bb0, pid: 49194, label: 'NoFeed'
+    Window (Main), 0x1187a57f0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x118792600, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x118781960, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x1187915d0, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x1187a22f0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x1187a7810, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x1187a7930, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x1187a7a50, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x1187a7b70, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x1187a7cd0, {{0.0, 0.0}, {402.0, 874.0}}
+                        Other, 0x1187a7df0, {{0.0, 0.0}, {402.0, 874.0}}
+                          Other, 0x1187a7f10, {{0.0, 0.0}, {402.0, 874.0}}
+                            NavigationBar, 0x1187a8030, {{0.0, 62.0}, {402.0, 54.0}}, identifier: 'History'
+                              Button, 0x1187a8150, {{16.0, 62.0}, {44.0, 44.0}}, identifier: 'BackButton', label: 'Back'
+                              StaticText, 0x1187a8270, {{172.0, 71.8}, {58.0, 24.3}}, label: 'History'
+                            Other, 0x1187a8390, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x1187a84b0, {{0.0, 0.0}, {402.0, 874.0}}
+                                Other, 0x1187a85d0, {{0.0, 0.0}, {402.0, 874.0}}
+                                  Other, 0x1187a86f0, {{0.0, 0.0}, {402.0, 874.0}}
+                                    ScrollView, 0x1187a8810, {{0.0, 0.0}, {402.0, 874.0}}
+                                      Other, 0x1187a8930, {{0.0, 0.0}, {402.0, 170.8}}
+                                      Other, 0x1187a8a50, {{0.0, 116.0}, {402.0, 1843.3}}
+                                        StaticText, 0x1187a8b70, {{59.2, 138.0}, {33.0, 30.0}}, label: '19'
+                                        StaticText, 0x1187a8c90, {{185.3, 138.0}, {31.3, 30.0}}, label: '6h'
+                                        StaticText, 0x1187a8db0, {{318.0, 138.0}, {16.7, 30.0}}, label: '6'
+                                        StaticText, 0x1187a8ed0, {{52.8, 170.0}, {45.7, 13.3}}, label: 'sessions'
+                                        StaticText, 0x1187a8ff0, {{179.8, 170.0}, {42.3, 13.3}}, label: 'focused'
+                                        StaticText, 0x1187a9110, {{299.0, 170.0}, {54.7, 13.3}}, label: 'day streak'
+                                        ScrollView, 0x1187a9230, {{18.0, 215.3}, {366.0, 36.0}}
+                                          Other, 0x1187a9350, {{18.0, 215.3}, {263.7, 36.0}}
+                                            Button, 0x1187a9470, {{20.0, 215.3}, {47.3, 36.0}}, label: 'All'
+                                            Button, 0x1187a9590, {{75.3, 215.3}, {66.7, 36.0}}, label: 'Study'
+                                            Button, 0x1187a96b0, {{150.0, 215.3}, {62.7, 36.0}}, label: 'Work'
+                                            Button, 0x1187a97d0, {{220.7, 215.3}, {59.0, 36.0}}, label: 'Gym'
+                                        StaticText, 0x1187a98f0, {{20.0, 269.3}, {39.0, 15.7}}, label: 'Today'
+                                        StaticText, 0x1187a9a10, {{346.0, 270.5}, {36.0, 13.3}}, label: '33 min'
+                                        Button, 0x1187a9b30, {{18.0, 295.0}, {366.0, 68.0}}, label: 'Study, 9:00 AM · 33 min, Felt focused'
+                                          Image, 0x1187a9c50, {{42.0, 320.7}, {20.3, 16.3}}, identifier: 'book.fill', label: 'Bookmark'
+                                          StaticText, 0x1187a9d70, {{86.0, 312.3}, {39.7, 17.0}}, label: 'Study'
+                                          StaticText, 0x1187a9e90, {{86.0, 331.3}, {96.0, 14.3}}, label: '9:00 AM · 33 min'
+                                          Other, 0x1187a9fb0, {{289.7, 322.3}, {59.0, 13.3}}, label: 'Felt focused'
+                                            Image, 0x1187aa0d0, {{289.7, 324.7}, {9.0, 8.7}}, identifier: 'checkmark', label: 'Selected', Selected
+                                            StaticText, 0x1187aa1f0, {{304.0, 322.3}, {44.7, 13.3}}, label: 'Focused'
+                                          Image, 0x1187aa310, {{364.0, 323.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187aa430, {{18.0, 373.0}, {366.0, 68.0}}, label: 'Work, 2:50 AM · 0 min · ended early'
+                                          Image, 0x1187aa550, {{41.7, 398.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187aa670, {{86.0, 390.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187aa790, {{86.0, 409.3}, {164.7, 14.3}}, label: '2:50 AM · 0 min · ended early'
+                                          Image, 0x1187aa8b0, {{364.0, 401.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187aa9d0, {{18.0, 451.0}, {366.0, 68.0}}, label: 'Work, 2:45 AM · 0 min · ended early'
+                                          Image, 0x1187aaaf0, {{41.7, 476.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187aac10, {{86.0, 468.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187aad30, {{86.0, 487.3}, {164.7, 14.3}}, label: '2:45 AM · 0 min · ended early'
+                                          Image, 0x1187aae50, {{364.0, 479.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187aaf70, {{18.0, 529.0}, {366.0, 68.0}}, label: 'Work, 2:40 AM · 0 min · ended early'
+                                          Image, 0x1187ab090, {{41.7, 554.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187ab1b0, {{86.0, 546.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187ab2d0, {{86.0, 565.3}, {165.0, 14.3}}, label: '2:40 AM · 0 min · ended early'
+                                          Image, 0x1187ab3f0, {{364.0, 557.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187ab510, {{18.0, 607.0}, {366.0, 68.0}}, label: 'Work, 2:37 AM · 0 min · ended early'
+                                          Image, 0x1187ab630, {{41.7, 632.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187ab750, {{86.0, 624.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187ab870, {{86.0, 643.3}, {164.0, 14.3}}, label: '2:37 AM · 0 min · ended early'
+                                          Image, 0x1187ab990, {{364.0, 635.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187abab0, {{18.0, 685.0}, {366.0, 68.0}}, label: 'Work, 2:32 AM · 0 min · ended early'
+                                          Image, 0x1187abbd0, {{41.7, 710.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187abcf0, {{86.0, 702.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187abe10, {{86.0, 721.3}, {164.3, 14.3}}, label: '2:32 AM · 0 min · ended early'
+                                          Image, 0x1187abf30, {{364.0, 713.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187ac050, {{18.0, 763.0}, {366.0, 68.0}}, label: 'Work, 2:26 AM · 0 min · ended early'
+                                          Image, 0x1187ac170, {{41.7, 788.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187ac290, {{86.0, 780.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187ac3b0, {{86.0, 799.3}, {164.7, 14.3}}, label: '2:26 AM · 0 min · ended early'
+                                          Image, 0x1187ac4d0, {{364.0, 791.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187ac5f0, {{18.0, 841.0}, {366.0, 68.0}}, label: 'Work, 2:23 AM · 0 min · ended early'
+                                          Image, 0x1187ac710, {{41.7, 866.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187ac830, {{86.0, 858.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187ac950, {{86.0, 877.3}, {164.3, 14.3}}, label: '2:23 AM · 0 min · ended early'
+                                          Image, 0x1187aca70, {{364.0, 869.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187acb90, {{18.0, 919.0}, {366.0, 68.0}}, label: 'Work, 2:19 AM · 0 min · ended early'
+                                          Image, 0x1187accb0, {{41.7, 944.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187acdd0, {{86.0, 936.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187acef0, {{86.0, 955.3}, {163.0, 14.3}}, label: '2:19 AM · 0 min · ended early'
+                                          Image, 0x1187ad010, {{364.0, 947.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187ad130, {{18.0, 997.0}, {366.0, 68.0}}, label: 'Work, 2:00 AM · 0 min · ended early'
+                                          Image, 0x1187ad250, {{41.7, 1022.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187ad370, {{86.0, 1014.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187ad490, {{86.0, 1033.3}, {164.7, 14.3}}, label: '2:00 AM · 0 min · ended early'
+                                          Image, 0x1187ad5b0, {{364.0, 1025.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187ad6d0, {{18.0, 1075.0}, {366.0, 68.0}}, label: 'Work, 1:54 AM · 0 min · ended early'
+                                          Image, 0x1187ad7f0, {{41.7, 1100.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187ad910, {{86.0, 1092.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187ada30, {{86.0, 1111.3}, {163.3, 14.3}}, label: '1:54 AM · 0 min · ended early'
+                                          Image, 0x1187adb50, {{364.0, 1103.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187adc70, {{18.0, 1153.0}, {366.0, 68.0}}, label: 'Work, 1:49 AM · 0 min · ended early'
+                                          Image, 0x1187add90, {{41.7, 1178.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187adeb0, {{86.0, 1170.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187adfd0, {{86.0, 1189.3}, {163.3, 14.3}}, label: '1:49 AM · 0 min · ended early'
+                                          Image, 0x1187ae0f0, {{364.0, 1181.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187ae210, {{18.0, 1231.0}, {366.0, 68.0}}, label: 'Work, 1:28 AM · 0 min · ended early'
+                                          Image, 0x1187ae330, {{41.7, 1256.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187ae450, {{86.0, 1248.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187ae570, {{86.0, 1267.3}, {163.0, 14.3}}, label: '1:28 AM · 0 min · ended early'
+                                          Image, 0x1187ae690, {{364.0, 1259.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        Button, 0x1187ae7b0, {{18.0, 1309.0}, {366.0, 68.0}}, label: 'Work, 1:10 AM · 0 min · ended early'
+                                          Image, 0x1187ae8d0, {{41.7, 1334.3}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187ae9f0, {{86.0, 1326.3}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187aeb10, {{86.0, 1345.3}, {161.0, 14.3}}, label: '1:10 AM · 0 min · ended early'
+                                          Image, 0x1187aec30, {{364.0, 1337.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        StaticText, 0x1187aed50, {{20.0, 1395.0}, {65.0, 15.7}}, label: 'Yesterday'
+                                        StaticText, 0x1187aee70, {{345.7, 1396.2}, {36.3, 13.3}}, label: '93 min'
+                                        Button, 0x1187aef90, {{18.0, 1420.7}, {366.0, 68.0}}, label: 'Work, 9:00 AM · 93 min, Felt focused'
+                                          Image, 0x1187af0b0, {{41.7, 1446.0}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187af1d0, {{86.0, 1438.0}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187af2f0, {{86.0, 1457.0}, {96.0, 14.3}}, label: '9:00 AM · 93 min'
+                                          Other, 0x1187af410, {{289.7, 1448.0}, {59.0, 13.3}}, label: 'Felt focused'
+                                            Image, 0x1187af530, {{289.7, 1450.3}, {9.0, 8.7}}, identifier: 'checkmark', label: 'Selected', Selected
+                                            StaticText, 0x1187af650, {{304.0, 1448.0}, {44.7, 13.3}}, label: 'Focused'
+                                          Image, 0x1187af770, {{364.0, 1449.3}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        StaticText, 0x1187af890, {{20.0, 1506.7}, {123.7, 15.7}}, label: 'Wednesday, 14 Oct'
+                                        StaticText, 0x1187afb00, {{342.3, 1507.8}, {39.7, 13.3}}, label: '110 min'
+                                        Button, 0x1187afc20, {{18.0, 1532.3}, {366.0, 68.0}}, label: 'Work, 9:00 AM · 110 min, Felt distracted'
+                                          Image, 0x1187afd40, {{41.7, 1557.7}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187afe60, {{86.0, 1549.7}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187aff80, {{86.0, 1568.7}, {99.7, 14.3}}, label: '9:00 AM · 110 min'
+                                          Other, 0x1187b00a0, {{279.0, 1559.7}, {69.7, 13.3}}, label: 'Felt distracted'
+                                            Image, 0x1187b01c0, {{279.0, 1561.7}, {9.7, 9.7}}, identifier: 'arrow.uturn.left', label: 'Undo'
+                                            StaticText, 0x1187b02e0, {{294.0, 1559.7}, {54.7, 13.3}}, label: 'Distracted'
+                                          Image, 0x1187b0400, {{364.0, 1561.0}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        StaticText, 0x1187b0520, {{20.0, 1618.3}, {103.0, 15.7}}, label: 'Tuesday, 13 Oct'
+                                        StaticText, 0x1187b0640, {{345.7, 1619.5}, {36.3, 13.3}}, label: '43 min'
+                                        Button, 0x1187b0760, {{18.0, 1644.0}, {366.0, 68.0}}, label: 'Gym, 9:00 AM · 43 min, Was interrupted'
+                                          Image, 0x1187b0880, {{40.7, 1671.3}, {23.0, 13.3}}, identifier: 'dumbbell.fill', label: 'dumbbell.fill'
+                                          StaticText, 0x1187b09a0, {{86.0, 1661.3}, {31.0, 17.0}}, label: 'Gym'
+                                          StaticText, 0x1187b0ac0, {{86.0, 1680.3}, {96.0, 14.3}}, label: '9:00 AM · 43 min'
+                                          Other, 0x1187b0be0, {{274.3, 1671.3}, {74.3, 13.3}}, label: 'Was interrupted'
+                                            Image, 0x1187b0d00, {{274.3, 1672.3}, {11.3, 11.3}}, identifier: 'bell.slash', label: 'Notifications Off'
+                                            StaticText, 0x1187b0e20, {{289.7, 1671.3}, {59.0, 13.3}}, label: 'Interrupted'
+                                          Image, 0x1187b0f40, {{364.0, 1672.7}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        StaticText, 0x1187b1060, {{20.0, 1730.0}, {99.3, 15.7}}, label: 'Monday, 12 Oct'
+                                        StaticText, 0x1187b1180, {{345.7, 1731.2}, {36.3, 13.3}}, label: '80 min'
+                                        Button, 0x1187b12a0, {{18.0, 1755.7}, {366.0, 68.0}}, label: 'Study, 9:00 AM · 80 min, Felt focused'
+                                          Image, 0x1187b13c0, {{42.0, 1781.7}, {20.3, 16.3}}, identifier: 'book.fill', label: 'Bookmark'
+                                          StaticText, 0x1187b14e0, {{86.0, 1773.0}, {39.7, 17.0}}, label: 'Study'
+                                          StaticText, 0x1187b1600, {{86.0, 1792.0}, {96.0, 14.3}}, label: '9:00 AM · 80 min'
+                                          Other, 0x1187b1720, {{289.7, 1783.0}, {59.0, 13.3}}, label: 'Felt focused'
+                                            Image, 0x1187b1840, {{289.7, 1785.3}, {9.0, 8.7}}, identifier: 'checkmark', label: 'Selected', Selected
+                                            StaticText, 0x1187b1960, {{304.0, 1783.0}, {44.7, 13.3}}, label: 'Focused'
+                                          Image, 0x1187b1a80, {{364.0, 1784.3}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                        StaticText, 0x1187b1ba0, {{20.0, 1841.7}, {94.7, 15.7}}, label: 'Sunday, 11 Oct'
+                                        StaticText, 0x1187b1cc0, {{346.0, 1842.8}, {36.0, 13.3}}, label: '56 min'
+                                        Button, 0x1187b1de0, {{18.0, 1867.3}, {366.0, 68.0}}, label: 'Work, 9:00 AM · 56 min, Felt focused'
+                                          Image, 0x1187b1f00, {{41.7, 1892.7}, {20.7, 17.3}}, identifier: 'briefcase.fill', label: 'Briefcase'
+                                          StaticText, 0x1187b2020, {{86.0, 1884.7}, {35.3, 17.0}}, label: 'Work'
+                                          StaticText, 0x1187b2140, {{86.0, 1903.7}, {96.0, 14.3}}, label: '9:00 AM · 56 min'
+                                          Other, 0x1187b2260, {{289.7, 1894.7}, {59.0, 13.3}}, label: 'Felt focused'
+                                            Image, 0x1187b2380, {{289.7, 1897.0}, {9.0, 8.7}}, identifier: 'checkmark', label: 'Selected', Selected
+                                            StaticText, 0x1187b24a0, {{304.0, 1894.7}, {44.7, 13.3}}, label: 'Focused'
+                                          Image, 0x1187b25c0, {{364.0, 1896.0}, {6.3, 10.7}}, identifier: 'chevron.right', label: 'Forward'
+                                      Other, 0x1187b28e0, {{0.0, 726.2}, {402.0, 147.8}}
+                                      Other, 0x1187b2a00, {{0.0, 726.2}, {402.0, 147.8}}
+                                        Image, 0x1187b2b20, {{-120.0, 731.0}, {642.0, 286.0}}, identifier: 'AdditionalDimmingOverlay'
+                                        Other, 0x1187b2c40, {{0.0, 726.2}, {402.0, 147.8}}
+                                          Other, 0x1187b2d60, {{0.0, 726.2}, {402.0, 147.8}}
+                                        Other, 0x1187b2e80, {{0.0, 726.2}, {402.0, 147.8}}
+                                          Other, 0x1187b2fa0, {{0.0, 726.2}, {402.0, 147.8}}
+                                          Other, 0x1187b30c0, {{0.0, 726.2}, {402.0, 147.8}}
+                            Other, 0x1187b31e0, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x1187b3300, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x1187b3420, {{0.0, 791.0}, {402.0, 83.0}}
+                  Other, 0x1187b3540, {{0.0, 0.0}, {402.0, 874.0}}
+                    TabBar, 0x1187b3660, {{0.0, 791.0}, {402.0, 83.0}}, label: 'Tab Bar'
+                      Other, 0x1187b3780, {{21.0, 791.0}, {360.0, 62.0}}
+                        Other, 0x1187b38a0, {{21.0, 791.0}, {95.0, 54.0}}
+                        Other, 0x1187b39c0, {{21.0, 791.0}, {360.0, 62.0}}
+                          Button, 0x1187b3ae0, {{25.0, 795.0}, {95.0, 54.0}}, label: 'Focus'
+                            Image, 0x1187b3c00, {{59.0, 801.3}, {27.3, 27.3}}, identifier: 'circle.circle.fill', label: 'circle.circle.fill'
+                          Button, 0x1187b3d20, {{110.7, 795.0}, {95.0, 54.0}}, label: 'Insights', Selected
+                            Image, 0x1187b3e40, {{140.7, 802.3}, {35.0, 25.3}}, identifier: 'chart.bar.fill', label: 'chart column'
+                          Button, 0x1187b3f60, {{196.3, 795.0}, {95.0, 54.0}}, label: 'Schedule'
+                            Image, 0x1187b4080, {{229.3, 802.3}, {29.0, 25.0}}, identifier: 'calendar', label: 'calendar'
+                          Button, 0x1187b41a0, {{282.0, 795.0}, {95.0, 54.0}}, label: 'Settings'
+                            Image, 0x1187b42c0, {{315.0, 800.0}, {29.0, 29.3}}, identifier: 'sun.max.fill', label: 'brightness higher'
+                        Other, 0x1187b43e0, {{110.7, 795.0}, {95.0, 54.0}}
+                          Other, 0x1187b4500, {{110.7, 795.0}, {95.0, 54.0}}
+                            Other, 0x1187b4620, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x1187b4740, {{110.7, 795.0}, {95.0, 54.0}}
+                            Other, 0x1187b4860, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x1187b4980, {{110.7, 795.0}, {95.0, 54.0}}
+                                Other, 0x1187b4aa0, {{110.7, 795.0}, {95.0, 54.0}}
+                                  Other, 0x1187b4bc0, {{110.7, 795.0}, {95.0, 54.0}}
+                                Other, 0x1187b4ce0, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x1187b4e00, {{110.7, 795.0}, {95.0, 54.0}}
+                  Other, 0x1187b4f20, {{0.0, 791.0}, {402.0, 83.0}}
+                    Other, 0x1187b5040, {{0.0, 791.0}, {402.0, 83.0}}
+                      Other, 0x1187b5160, {{0.0, 791.0}, {402.0, 83.0}}
+                        Other, 0x1187b5280, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x1187b53a0, {{0.0, 791.0}, {402.0, 83.0}}
+                            Other, 0x1187b54c0, {{0.0, 791.0}, {402.0, 83.0}}
+                        Other, 0x1187b55e0, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x1187b5700, {{0.0, 791.0}, {402.0, 83.0}}
+    Window, 0x1187b5820, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x1187b5940, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x1187b5a60, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x1187a6bb0, pid: 49194, label: 'NoFeed'
+Query chain:
+ →Find: Target Application 'me.adithyan.shalinth.Zenly'
+  Output: {
+    Application, 0x109906400, pid: 49194, label: 'NoFeed'
+  }

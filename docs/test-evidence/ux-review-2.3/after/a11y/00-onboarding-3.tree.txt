@@ -1,0 +1,31 @@
+Attributes: Application, 0x104490970, pid: 49336, label: 'NoFeed'
+Element subtree:
+ →Application, 0x104490970, pid: 49336, label: 'NoFeed'
+    Window (Main), 0x104484440, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x1044977d0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x1044978f0, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x104497530, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x104497650, {{0.0, 0.0}, {402.0, 874.0}}
+              CollectionView, 0x104497a10, {{0.0, 62.0}, {402.0, 778.0}}
+                Cell, 0x104497b30, {{0.0, 62.0}, {402.0, 778.0}}
+                  Other, 0x104497c50, {{0.0, 62.0}, {402.0, 778.0}}
+                    Other, 0x104497d70, {{0.0, 62.0}, {402.0, 778.0}}
+                      Other, 0x104497e90, {{0.0, 62.0}, {402.0, 778.0}}
+                        Other, 0x104497fb0, {{48.8, 199.6}, {304.3, 540.4}}
+                          Image, 0x1044980d0, {{127.5, 199.6}, {147.1, 147.1}}, identifier: 'hand.raised.fill', label: 'Block'
+                          StaticText, 0x1044981f0, {{119.7, 377.2}, {162.7, 33.7}}, label: 'Almost there'
+                          StaticText, 0x104498310, {{48.8, 434.8}, {304.3, 54.0}}, label: 'Without Screen Time access NoFeed can time a session but can’t block anything. You can grant it now, or later from Settings.'
+                          Button, 0x104498540, {{56.0, 628.0}, {290.0, 56.0}}, label: 'Grant Screen Time Access'
+                          Button, 0x104498660, {{56.0, 696.0}, {290.0, 44.0}}, label: 'Continue without blocking'
+                Other, 0x104498780, {{369.0, 124.0}, {30.0, 654.0}}, label: 'Vertical scroll bar, 5 pages', value: 0%
+                  Other, 0x1044988a0, {{396.0, 127.0}, {3.0, 648.0}}
+                Other, 0x1044989c0, {{369.0, 124.0}, {30.0, 654.0}}, label: 'Vertical scroll bar, 5 pages', value: 0%
+                  Other, 0x104498ae0, {{396.0, 127.0}, {3.0, 648.0}}
+              PageIndicator, 0x104498c00, {{0.0, 803.3}, {402.0, 29.7}}, value: page 5 of 5
+Path to element:
+ →Application, 0x104490970, pid: 49336, label: 'NoFeed'
+Query chain:
+ →Find: Target Application 'me.adithyan.shalinth.Zenly'
+  Output: {
+    Application, 0x10433df80, pid: 49336, label: 'NoFeed'
+  }

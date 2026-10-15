@@ -61,10 +61,12 @@ struct SessionView: View {
                                 .font(ZTheme.Font.numeral(62, weight: .regular))
                                 .monospacedDigit()
                                 .foregroundStyle(ZTheme.Palette.textPrimary)
+                            // Medium weight and stronger ink: 11pt tracked caps
+                            // over the tone halo measured under 4.5:1 at 72%.
                             Text(session.isPaused ? "HELD" : "REMAINING")
-                                .font(ZTheme.Font.body(11))
+                                .font(ZTheme.Font.body(11, weight: .medium))
                                 .tracking(2.64)            // .24em at 11pt
-                                .foregroundStyle(ZTheme.Palette.text(0.55))
+                                .foregroundStyle(ZTheme.Palette.text(0.85))
                         }
                     }
                     .accessibilityElement(children: .ignore)

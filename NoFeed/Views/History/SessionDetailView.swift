@@ -81,7 +81,7 @@ struct SessionDetailView: View {
         return Label(completed ? "Completed" : "Ended early",
                      systemImage: completed ? "checkmark.circle.fill" : "flag.checkered")
             .font(ZTheme.Font.display(13, weight: .semibold))
-            .foregroundStyle(tint)
+            .foregroundStyle(tint.readable)
             .padding(.horizontal, 14)
             .padding(.vertical, 7)
             .background(tint.opacity(0.14), in: Capsule())

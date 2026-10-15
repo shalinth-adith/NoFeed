@@ -1,24 +1,18 @@
-[contrast] Contrast nearly passed — element: -
-    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
-[contrast] Contrast nearly passed — element: -
-    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
-[contrast] Contrast nearly passed — element: -
-    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
-[contrast] Contrast nearly passed — element: -
-    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
-[contrast] Contrast failed — element: -
-    Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: -
-    Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: -
-    Contrast failed for SwiftUI.AccessibilityNode
-[element-detection] Potentially inaccessible text — element: -
+[element-detection] Potentially inaccessible text — element: - frame: (0,0 0×0)
     This element appears to display text that should be represented using the accessibility API.
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:Grant Screen Time Access
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 49:
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 49: frame: (117,226 253×24)
     User will not be able to change the font size of this UITextField
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Your name
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Daily sessions goal frame: (32,568 137×23)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Daily sessions goal
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:Grant Screen Time Access frame: (16,381 370×55)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Your name frame: (32,227 77×23)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+
+# Under the tab bar or off screen (not counted)
+[contrast] Contrast failed — element: 48:Shown on the block screen when you open a distracting app during focus. Leave empty for the default. frame: (16,756 370×51)
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:Break Reminders frame: (16,807 370×43)
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:Daily break reminder frame: (32,869 149×23)
+    Contrast failed for SwiftUI.AccessibilityNode

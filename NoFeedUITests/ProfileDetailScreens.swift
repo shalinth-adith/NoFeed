@@ -145,7 +145,7 @@ final class ProfileDetailScreens: XCTestCase {
         openProfiles(app)
         capture(app, "20-profiles-list")
 
-        let work = app.staticTexts["Work"].firstMatch
+        let work = app.descendants(matching: .any)["profile-row-Work"].firstMatch
         XCTAssertTrue(work.waitForExistence(timeout: 6), "No profile rows")
         work.tap()
 
@@ -174,7 +174,7 @@ final class ProfileDetailScreens: XCTestCase {
         let app = launch()
         openProfiles(app)
 
-        let study = app.staticTexts["Study"].firstMatch
+        let study = app.descendants(matching: .any)["profile-row-Study"].firstMatch
         XCTAssertTrue(study.waitForExistence(timeout: 6), "No Study profile")
         study.tap()
 
@@ -200,7 +200,7 @@ final class ProfileDetailScreens: XCTestCase {
         capture(app, "20b-after-rename")
 
         XCTAssertTrue(tap(app.buttons["profile-detail-back"]), "Back button missing")
-        XCTAssertTrue(app.staticTexts["Reading"].waitForExistence(timeout: 6),
+        XCTAssertTrue(app.descendants(matching: .any)["profile-row-Reading"].waitForExistence(timeout: 6),
                       "Save did not apply the new name to the profiles list")
     }
 
@@ -297,7 +297,7 @@ final class ProfileDetailScreens: XCTestCase {
         let app = launch()
         openProfiles(app)
 
-        let gym = app.staticTexts["Gym"].firstMatch
+        let gym = app.descendants(matching: .any)["profile-row-Gym"].firstMatch
         XCTAssertTrue(gym.waitForExistence(timeout: 6), "No Gym profile")
         gym.tap()
         XCTAssertTrue(tap(app.buttons["profile-detail-edit"]), "Edit button missing on 20b")

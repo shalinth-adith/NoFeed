@@ -82,6 +82,13 @@ struct SettingsView: View {
                 }
                 .scrollContentBackground(.hidden)
                 .tint(ZTheme.Palette.textPrimary)
+                // LabeledContent values ("120 min", "3", the version) draw in the
+                // hierarchical secondary style, which defaulted to the system
+                // grey at about 3:1 on this ground. Pin both lower levels to the
+                // Quiet ink floor.
+                .foregroundStyle(ZTheme.Palette.textPrimary,
+                                 ZTheme.Palette.text(0.72),
+                                 ZTheme.Palette.text(0.66))
                 // Drag the form downward to dismiss. Independent of any toolbar,
                 // so it works even where the keyboard accessory does not render.
                 .scrollDismissesKeyboard(.interactively)
@@ -114,7 +121,10 @@ struct SettingsView: View {
     /// sizes, where an `HStack` leaves neither child enough width and the field
     /// draws on top of the wrapped label.
     private var nameRow: some View {
-        let field = TextField("Add your name", text: $userName)
+        let field = TextField(text: $userName,
+                              prompt: Text("Add your name").foregroundStyle(ZTheme.Palette.text(0.72))) {
+            Text("Your name")
+        }
             .foregroundStyle(ZTheme.Palette.text(0.7))
             .submitLabel(.done)
 
@@ -136,7 +146,7 @@ struct SettingsView: View {
     }
 
     private var youSection: some View {
-        Section("You") {
+        Section {
             nameRow
             Button {
                 showProfiles = true
@@ -152,11 +162,13 @@ struct SettingsView: View {
                         .foregroundStyle(ZTheme.Palette.text(0.3))
                 }
             }
+        } header: {
+            sectionHeader("You")
         }
     }
 
     private var permissionSection: some View {
-        Section("Screen Time") {
+        Section {
             switch authorization.status {
             case .approved:
                 // Neutral Quiet chrome: the checkmark shape still reads as
@@ -168,6 +180,8 @@ struct SettingsView: View {
                     Task { await authorization.requestAuthorization() }
                 }
             }
+        } header: {
+            sectionHeader("Screen Time")
         }
         .listRowBackground(glassRow)
     }
@@ -177,8 +191,11 @@ struct SettingsView: View {
             // `axis: .vertical` makes Return insert a newline instead of
             // submitting, so this field needs an explicit way out of the
             // keyboard — otherwise it can be opened and never dismissed.
-            TextField("e.g. Future you will thank you.",
-                      text: $shieldMessage, axis: .vertical)
+            TextField(text: $shieldMessage,
+                      prompt: Text("e.g. Future you will thank you.").foregroundStyle(ZTheme.Palette.text(0.72)),
+                      axis: .vertical) {
+                Text("Shield message")
+            }
                 .lineLimit(1...3)
                 .focused($shieldFieldFocused)
 
@@ -202,9 +219,10 @@ struct SettingsView: View {
                 .accessibilityLabel("Done editing shield message")
             }
         } header: {
-            Text("Shield message")
+            sectionHeader("Shield message")
         } footer: {
             Text("Shown on the block screen when you open a distracting app during focus. Leave empty for the default.")
+                .foregroundStyle(ZTheme.Palette.text(0.72))
         }
         .listRowBackground(glassRow)
     }
@@ -220,9 +238,10 @@ struct SettingsView: View {
             // The streak-goal stepper is gone: nothing on Insights read it
             // (review 2.3, M1). Its stored value stays for the day a screen does.
         } header: {
-            Text("Daily Goals")
+            sectionHeader("Daily Goals")
         } footer: {
             Text("Your daily targets, shown as weekly progress bars on Insights.")
+                .foregroundStyle(ZTheme.Palette.text(0.72))
         }
         .listRowBackground(glassRow)
     }
@@ -235,9 +254,10 @@ struct SettingsView: View {
                 DatePicker("Remind me at", selection: reminderTime, displayedComponents: .hourAndMinute)
             }
         } header: {
-            Text("Break Reminders")
+            sectionHeader("Break Reminders")
         } footer: {
             Text("A gentle daily nudge to step away and recharge.")
+                .foregroundStyle(ZTheme.Palette.text(0.72))
         }
         .listRowBackground(glassRow)
     }
@@ -252,7 +272,7 @@ struct SettingsView: View {
             }
             .accessibilityIdentifier("settings-unlock-window")
         } header: {
-            Text("Unlock Window")
+            sectionHeader("Unlock Window")
         } footer: {
             // Says why fifteen is the floor, because "why can't I pick 2 minutes"
             // is the first question this setting raises and the answer is a real
@@ -278,6 +298,7 @@ struct SettingsView: View {
             // enforce, and the whole value of strict mode is that the promise
             // holds.
             Text("Adds a second button to the block screen that lifts every block for a while, then puts them back. Fifteen minutes is the shortest window iOS can reliably close on its own. Never offered while anything strict is running — a session or a schedule.")
+                .foregroundStyle(ZTheme.Palette.text(0.72))
         }
         .listRowBackground(glassRow)
         .onChange(of: unlockMinutes) { _, new in
@@ -297,13 +318,14 @@ struct SettingsView: View {
                 DatePicker("Send it at", selection: recapTime, displayedComponents: .hourAndMinute)
             }
         } header: {
-            Text("Weekly Recap")
+            sectionHeader("Weekly Recap")
         } footer: {
             // Says the day out loud because it is derived from the locale rather
             // than fixed — Sunday for most readers, Saturday where the week
             // starts on Sunday — and a setting that will not say when it fires
             // is a setting people turn off.
             Text("A summary of your week on \(lastDayOfWeekName) — hours focused, and how many times you reached for a blocked app and stopped. Skipped on weeks with no sessions.")
+                .foregroundStyle(ZTheme.Palette.text(0.72))
         }
         .listRowBackground(glassRow)
         .onChange(of: recapEnabled) { _, _ in updateRecap() }
@@ -335,7 +357,7 @@ struct SettingsView: View {
     }
 
     private var aboutSection: some View {
-        Section("About") {
+        Section {
             LabeledContent("Version", value: appVersion)
             Link(destination: URL(string: "https://shalinth-adith.github.io/NoFeed/privacy-policy.html")!) {
                 settingsLinkLabel("Privacy policy")
@@ -355,6 +377,8 @@ struct SettingsView: View {
             }
             .accessibilityIdentifier("settings-send-feedback")
             .accessibilityHint("Opens a new email with your app and device details filled in")
+        } header: {
+            sectionHeader("About")
         }
         .listRowBackground(glassRow)
         .alert("No mail app is set up", isPresented: $showMailFallback) {
@@ -376,6 +400,12 @@ struct SettingsView: View {
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(ZTheme.Palette.text(0.3))
         }
+    }
+
+    /// Section headers and footers in the Quiet ink rather than the system's
+    /// secondary grey, which measured about 3:1 on the cream ground.
+    private func sectionHeader(_ title: String) -> some View {
+        Text(title).foregroundStyle(ZTheme.Palette.text(0.72))
     }
 
     /// Hands the pre-filled link to whatever mail client the system has. If

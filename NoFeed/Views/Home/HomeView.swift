@@ -265,9 +265,9 @@ struct HomeView: View {
                         .font(ZTheme.Font.numeral(min(86, diameter * 0.4), weight: .regular))
                         .foregroundStyle(ZTheme.Palette.textPrimary)
                     Text("MINUTES")
-                        .font(ZTheme.Font.body(11, weight: .regular))
+                        .font(ZTheme.Font.body(11, weight: .medium))
                         .tracking(3)
-                        .foregroundStyle(ZTheme.Palette.text(0.55))
+                        .foregroundStyle(ZTheme.Palette.text(0.85))
                 }
             }
             .accessibilityElement(children: .ignore)

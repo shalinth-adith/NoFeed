@@ -1,0 +1,21 @@
+Attributes: Application, 0x104339690, pid: 49383, label: 'NoFeed'
+Element subtree:
+ →Application, 0x104339690, pid: 49383, label: 'NoFeed'
+    Window (Main), 0x104339d80, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x1043381a0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x10434f6d0, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x1043504a0, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x10434df00, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x10433b260, {{0.0, 62.0}, {402.0, 778.0}}, identifier: 'app-paused'
+                Other, 0x104338bc0, {{93.0, 225.2}, {216.1, 275.0}}
+                StaticText, 0x104335830, {{106.8, 510.7}, {188.3, 13.3}}, label: 'IN SESSION · 16:12 LEFT'
+                StaticText, 0x104356980, {{66.3, 534.0}, {269.3, 27.7}}, label: 'Instagram is bookmarked.'
+                StaticText, 0x104357030, {{70.7, 573.7}, {260.7, 35.3}}, label: 'You’ll come back to exactly this spot when the session ends.'
+                StaticText, 0x1043573b0, {{124.2, 769.7}, {153.7, 14.3}}, label: 'Returning to your session…'
+Path to element:
+ →Application, 0x104339690, pid: 49383, label: 'NoFeed'
+Query chain:
+ →Find: Target Application 'me.adithyan.shalinth.Zenly'
+  Output: {
+    Application, 0x11bb79030, pid: 49383, label: 'NoFeed'
+  }

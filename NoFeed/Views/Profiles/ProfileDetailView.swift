@@ -108,7 +108,7 @@ struct ProfileDetailView: View {
                     Text("Profiles")
                         .font(ZTheme.Font.body(15))
                 }
-                .foregroundStyle(tone)
+                .foregroundStyle(tone.readable)
                 .frame(minHeight: 44)
                 .contentShape(Rectangle())
             }
@@ -123,7 +123,7 @@ struct ProfileDetailView: View {
             } label: {
                 Text("Edit")
                     .font(ZTheme.Font.body(15, weight: .semibold))
-                    .foregroundStyle(tone)
+                    .foregroundStyle(tone.readable)
                     .frame(minWidth: 44, minHeight: 44)
                     .contentShape(Rectangle())
             }
@@ -152,7 +152,7 @@ struct ProfileDetailView: View {
                         .font(ZTheme.Font.body(12))
                         .tracking(1.2)                       // .1em at 12pt
                         .textCase(.uppercase)
-                        .foregroundStyle(tone)
+                        .foregroundStyle(tone.readable)
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
@@ -340,7 +340,7 @@ struct ProfileDetailView: View {
                 .font(ZTheme.Font.body(15))
                 // The alert tone, not the warning one: destructive reads as
                 // red on iOS and amber reads as caution (review 2.3, L4).
-                .foregroundStyle(ZTheme.Palette.alert)
+                .foregroundStyle(ZTheme.Palette.alert.readable)
                 .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
                 .contentShape(Rectangle())
                 .padding(.top, 18)
@@ -375,7 +375,7 @@ struct ProfileDetailView: View {
                     } label: {
                         Text("Go to session")
                             .font(ZTheme.Font.body(13, weight: .semibold))
-                            .foregroundStyle(tone)
+                            .foregroundStyle(tone.readable)
                             .padding(.top, 8)
                             .contentShape(Rectangle())
                     }

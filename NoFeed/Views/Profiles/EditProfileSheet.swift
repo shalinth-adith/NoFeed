@@ -149,7 +149,7 @@ struct EditProfileSheet: View {
                 Button { save() } label: {
                     Text("Save")
                         .font(ZTheme.Font.body(15, weight: .semibold))
-                        .foregroundStyle(canSave ? tone : ZTheme.Palette.text(0.30))
+                        .foregroundStyle(canSave ? tone.readable : ZTheme.Palette.text(0.30))
                         .frame(minWidth: 44, minHeight: 44, alignment: .trailing)
                         .contentShape(Rectangle())
                 }

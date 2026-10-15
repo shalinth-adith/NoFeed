@@ -1,68 +1,60 @@
-[contrast] Contrast failed — element: 48:6
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:focused frame: (179,170 42×13)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:9:00 AM · 33 min frame: (86,331 96×14)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Work frame: (86,546 35×17)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Today frame: (20,269 39×15)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Work frame: (86,702 35×17)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:33 min frame: (346,270 36×13)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:sessions frame: (52,170 45×13)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:2:32 AM · 0 min · ended early frame: (86,721 164×14)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:2:37 AM · 0 min · ended early frame: (86,643 164×14)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:2:45 AM · 0 min · ended early frame: (86,487 164×14)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:All frame: (20,215 47×36)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:Gym frame: (220,215 58×36)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Work frame: (86,468 35×17)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:Study frame: (75,215 66×36)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:2:40 AM · 0 min · ended early frame: (86,565 165×14)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Study frame: (86,312 39×17)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Work frame: (86,390 35×17)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:2:50 AM · 0 min · ended early frame: (86,409 164×14)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Focused frame: (304,322 44×13)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:19 frame: (59,138 33×30)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:6h frame: (185,138 31×30)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:day streak frame: (298,170 54×13)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Work frame: (86,624 35×17)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:Work frame: (150,215 62×36)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:6 frame: (317,138 16×30)
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+
+# Under the tab bar or off screen (not counted)
+[contrast] Contrast failed — element: 48:Work frame: (86,780 35×17)
     Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: 48:Yesterday
+[contrast] Contrast failed — element: 48:2:26 AM · 0 min · ended early frame: (86,799 164×14)
     Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: 48:93 min
+[contrast] Contrast failed — element: 48:Work frame: (86,858 35×17)
     Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: 48:Work
-    Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: 48:9:00 AM · 93 min
-    Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: 9:All
-    Contrast failed for SwiftUI.AccessibilityNode
-[contrast] Contrast failed — element: 48:Focused
-    Contrast failed for SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Today
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:day streak
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:1:54 AM · 0 min · ended early
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Focused
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:Study
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Study
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:93 min
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Work
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:33 min
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Yesterday
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Work
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:sessions
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:All
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Work
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:focused
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:6h
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:6
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:Gym
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:1:49 AM · 0 min · ended early
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:1:10 AM · 0 min · ended early
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 9:Work
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:2:00 AM · 0 min · ended early
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:1:28 AM · 0 min · ended early
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Work
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:11
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Work
-    User will not be able to change the font size of this SwiftUI.AccessibilityNode
-[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:9:00 AM · 33 min
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Work frame: (86,780 35×17)
     User will not be able to change the font size of this SwiftUI.AccessibilityNode

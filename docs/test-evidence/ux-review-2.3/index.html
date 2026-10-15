@@ -1,0 +1,354 @@
+<title>NoFeed 2.3 Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column for the findings, a dense phone-frame grid for the evidence. Palette is the app's own "Quiet" system. */
+:root {
+  --bg: #F3F3F0; --surface: #FFFFFF; --ink: #16171B; --ink-2: rgba(22,23,27,0.62); --ink-3: rgba(22,23,27,0.42);
+  --line: rgba(0,0,0,0.10); --accent: #5A73D8; --accent-soft: rgba(90,115,216,0.14);
+  --critical: #B4342C; --high: #B86A12; --medium: #7A6A1E; --low: #3C6E5A;
+  --sans: "IBM Plex Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0A0B0E; --surface: #121318; --ink: #E7E8EC; --ink-2: rgba(231,232,236,0.62); --ink-3: rgba(231,232,236,0.42);
+  --line: rgba(255,255,255,0.09); --accent: #7C93E8; --accent-soft: rgba(124,147,232,0.16);
+  --critical: #E0665E; --high: #E09A4A; --medium: #D1B84A; --low: #7FBE9A; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0A0B0E; --surface: #121318; --ink: #E7E8EC; --ink-2: rgba(231,232,236,0.62); --ink-3: rgba(231,232,236,0.42);
+  --line: rgba(255,255,255,0.09); --accent: #7C93E8; --accent-soft: rgba(124,147,232,0.16);
+  --critical: #E0665E; --high: #E09A4A; --medium: #D1B84A; --low: #7FBE9A; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.55; margin: 0; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; padding-block: 32px 64px; }
+header { display: grid; gap: 10px; padding-bottom: 28px; border-bottom: 1px solid var(--line); margin-bottom: 36px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); }
+h1 { font-size: clamp(28px, 4vw, 40px); line-height: 1.1; margin: 0; font-weight: 600; text-wrap: balance; }
+h2 { font-size: 22px; margin: 44px 0 14px; font-weight: 600; text-wrap: balance; }
+h3 { font-size: 16px; margin: 0 0 6px; font-weight: 600; }
+p { margin: 0 0 12px; max-width: 70ch; }
+.lede { color: var(--ink-2); max-width: 70ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
+.score { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 20px 0 8px; }
+.score div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; min-width: 0; }
+.score b { display: block; font-size: 13px; color: var(--ink-2); font-weight: 500; margin-bottom: 4px; }
+.score span { display: inline-block; font-family: var(--mono); font-size: 12px; padding: 2px 8px; border-radius: 999px; margin-bottom: 6px; }
+.ok { background: rgba(60,110,90,0.14); color: var(--low); } .weak { background: rgba(184,106,18,0.14); color: var(--high); } .fail { background: rgba(180,52,44,0.14); color: var(--critical); }
+.finding { display: grid; grid-template-columns: minmax(0,1fr) 180px; gap: 18px; padding: 20px 0; border-top: 1px solid var(--line); }
+.finding:last-of-type { border-bottom: 1px solid var(--line); }
+.finding .id { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; margin-right: 10px; padding: 2px 8px; border-radius: 6px; }
+.sev-c .id { background: rgba(180,52,44,0.14); color: var(--critical); } .sev-h .id { background: rgba(184,106,18,0.14); color: var(--high); }
+.sev-m .id { background: rgba(122,106,30,0.14); color: var(--medium); } .sev-l .id { background: rgba(60,110,90,0.14); color: var(--low); }
+.finding .fix { background: var(--accent-soft); border-radius: 10px; padding: 10px 14px; font-size: 15px; }
+.finding .fix b { color: var(--accent); font-weight: 600; }
+.finding figure { margin: 0; min-width: 0; }
+.finding img { width: 100%; border-radius: 14px; border: 1px solid var(--line); display: block; background: #000; }
+.finding figcaption { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 6px; word-break: break-all; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; color: var(--ink-2); font-size: 13px; }
+td.n { text-align: right; font-family: var(--mono); }
+.tablewrap { overflow-x: auto; }
+.lows { padding-left: 18px; } .lows li { margin-bottom: 8px; max-width: 70ch; }
+.good { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; }
+.good ul { margin: 0; padding-left: 18px; } .good li { margin-bottom: 6px; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.gallery figure { margin: 0; min-width: 0; }
+.gallery img { width: 100%; border-radius: 12px; border: 1px solid var(--line); display: block; background: #000; }
+.gallery figcaption { font-size: 12px; color: var(--ink-2); margin-top: 6px; line-height: 1.3; }
+code { font-family: var(--mono); font-size: 0.92em; }
+pre { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; overflow-x: auto; font-size: 13px; }
+.persona { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.persona div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; min-width: 0; font-size: 15px; }
+.persona b { display: block; margin-bottom: 6px; }
+@media (max-width: 640px) { .finding { grid-template-columns: 1fr; } .finding figure { max-width: 240px; } }
+@media (prefers-reduced-motion: no-preference) { a { transition: color 120ms; } }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">UI/UX · accessibility · acceptance</div>
+  <h1>NoFeed 2.3 Review</h1>
+  <p class="lede">Every screen walked as three users, audited by Apple's accessibility checker, and captured in light, dark and at the largest text size. No real users took part; this is an expert walkthrough standing in for user testing.</p>
+  <div class="meta"><span>2026-10-16</span><span>Build 2.3 (1)</span><span>24 screens audited</span><span>71 screenshots</span><span>Simulator only: Screen Time itself cannot run there</span></div>
+</header>
+
+<h2>Scorecard</h2>
+<div class="score">
+  <div><b>Visual design and tone</b><span class="ok">Strong</span><br>Calm, consistent "Quiet" language on every custom screen. Copy is unusually good.</div>
+  <div><b>Core loop</b><span class="ok">Works</span><br>Pick → focus → hold to end → summary runs end to end with no dead ends.</div>
+  <div><b>First-run honesty</b><span class="weak">Weak</span><br>"You're all set" after the one permission is skipped; promises badges that do not exist.</div>
+  <div><b>Dynamic Type</b><span class="fail">Fails</span><br>Every custom screen ignores the user's text size. Only Settings scales. 250 findings.</div>
+  <div><b>Colour contrast</b><span class="fail">Fails on secondary text</span><br>100 hard failures, 82 borderline, all on the 30–55% ink used for captions and labels.</div>
+  <div><b>Touch targets</b><span class="weak">29 undersized</span><br>Text buttons in navigation bars and the Schedule week strip.</div>
+</div>
+
+<h2>Findings</h2>
+<p class="lede">Critical blocks a class of users. High misleads or confuses most users. Medium is friction or inconsistency. Low is polish.</p>
+
+<div class="finding sev-c">
+  <div>
+    <h3><span class="id">C1</span>Custom screens ignore Dynamic Type entirely</h3>
+    <p>At the largest accessibility size, Home, Session, Insights, Schedule, the editors, the block screen and onboarding render pixel-identical to the default size. Settings, built from system list components, grows as expected. The audit flags 250 unsupported elements across 24 screens. Cause: every font in <code>ZTheme.Font</code> is a fixed <code>.system(size:)</code> with no text style to scale against.</p>
+    <div class="fix"><b>Fix.</b> Give each font helper a <code>relativeTo:</code> text style (or use <code>@ScaledMetric</code>), then cap the hero numerals with <code>.dynamicTypeSize(...accessibility2)</code> where the layout cannot flex. Retest with <code>xcrun simctl ui &lt;sim&gt; content_size accessibility-extra-extra-extra-large</code>.</div>
+  </div>
+  <figure><div class="pair"><img src="thumbs/xxxl_01-home-xxxl.png" alt="Home at the largest text size, unchanged"><img src="thumbs/xxxl_22-settings-xxxl.png" alt="Settings at the largest text size, scaled up"></div><figcaption>Home (unchanged) vs Settings (scaled) at accessibility XXXL</figcaption></figure>
+</div>
+
+<div class="finding sev-h">
+  <div>
+    <h3><span class="id">H1</span>"You're all set" after skipping Screen Time</h3>
+    <p>Tap <em>Maybe later</em> on the permission page and the final page still celebrates completion. The app cannot block anything in this state. Home then shows a dimmed <em>Begin focus</em> under a permission card.</p>
+    <div class="fix"><b>Fix.</b> Branch the last page on authorization: "Almost there — grant Screen Time to start blocking" with the grant button, and only say "all set" when it is true.</div>
+  </div>
+  <figure><div class="pair"><img src="thumbs/manual_00-onboarding-5-all-set-dark.png" alt="Onboarding final page saying You're all set"><img src="thumbs/manual_01-home-no-permission-dark.png" alt="Home with permission card and disabled Begin focus"></div><figcaption>After "Maybe later": "all set", then a Home that cannot start</figcaption></figure>
+</div>
+
+<div class="finding sev-h">
+  <div>
+    <h3><span class="id">H2</span>Secondary text fails contrast across the app</h3>
+    <p>100 hard failures and 82 borderline, all the same token: ink at 30% or 55% opacity for eyebrows (<code>HISTORY</code>, <code>FOCUSING · WORK</code>, <code>MINUTES</code>), captions (<code>Demo · Notes</code>, <code>Ended early</code>), chart day letters, and editor helper text.</p>
+    <div class="fix"><b>Fix.</b> Raise the floor: 0.30 → 0.55 for anything that carries information, keep 0.30 only for decorative hairlines. A 4.5:1 ratio needs roughly 0.62 opacity on the cream ground and 0.58 on the dark canvas.</div>
+  </div>
+  <figure><img src="thumbs/light_a11y_05-insights-top.png" alt="Insights in light mode"><figcaption>Insights: 47 audit findings, mostly contrast on captions and day letters</figcaption></figure>
+</div>
+
+<div class="finding sev-h">
+  <div>
+    <h3><span class="id">H3</span>Schedule editor opens with the keyboard over its two required fields</h3>
+    <p>A new schedule focuses the optional Title field. The keyboard then covers Days and Profile, the only things the form needs. The helper text itself says a title was never needed. The same behaviour broke the UI test until it learned to dismiss the keyboard first.</p>
+    <div class="fix"><b>Fix.</b> Do not auto-focus the title on a new schedule.</div>
+  </div>
+  <figure><img src="thumbs/light_16-new-schedule-live.png" alt="New schedule editor with keyboard covering the form"><figcaption>Days and Profile are below the keyboard</figcaption></figure>
+</div>
+
+<div class="finding sev-h">
+  <div>
+    <h3><span class="id">H4</span>Two permission prompts back to back on first landing</h3>
+    <p>Seconds after the Screen Time prompt, Home raises the system notifications prompt with no in-app explanation of what notifications are for.</p>
+    <div class="fix"><b>Fix.</b> Ask when the first session starts (its end-of-session alert is the first real reason), preceded by one line of rationale.</div>
+  </div>
+  <figure><img src="thumbs/manual_01-home-first-landing-notification-prompt-dark.png" alt="Notifications permission prompt over Home on first landing"><figcaption>First landing on Home</figcaption></figure>
+</div>
+
+<div class="finding sev-m">
+  <div>
+    <h3><span class="id">M1</span>Promises that point at nothing</h3>
+    <p>Onboarding says "unlock badges"; there is no badges screen. Settings › Daily Goals says targets are "shown as progress orbs on Insights"; Insights draws bars. The <em>Streak goal</em> stepper changes nothing. A daily 9 am "New daily challenge" notification opens an app with no challenge screen.</p>
+    <div class="fix"><b>Fix.</b> Rewrite the onboarding line to what exists, delete the footer sentence, remove the streak-goal stepper or make Insights use it, and drop the challenge notification until a challenge screen ships.</div>
+  </div>
+  <figure><div class="pair"><img src="thumbs/manual_00-onboarding-3-habit-dark.png" alt="Onboarding page promising badges"><img src="thumbs/manual_22-settings-top-dark.png" alt="Settings goals section"></div><figcaption>"Unlock badges" and "progress orbs on Insights"</figcaption></figure>
+</div>
+
+<div class="finding sev-m">
+  <div>
+    <h3><span class="id">M2</span>Dark-mode bar chart is nearly invisible</h3>
+    <p>Six of seven bars sit at about 3.5% white on near-black and read as empty; only today's bar is visible. The weekly recap chart uses the same fill. In light mode the bars are fine.</p>
+    <div class="fix"><b>Fix.</b> Raise the dark "raise" fill for chart bars to about 12% white, or give non-today bars a 1pt stroke.</div>
+  </div>
+  <figure><img src="thumbs/xxxl_05-insights-xxxl.png" alt="Insights in dark mode with bars barely visible"><figcaption>Insights, dark: only Friday's bar reads</figcaption></figure>
+</div>
+
+<div class="finding sev-m">
+  <div>
+    <h3><span class="id">M3</span>Profiles are managed from two places</h3>
+    <p>The Schedule tab carries a "Profiles" section with <em>New profile</em>; Settings › Focus profiles is the full list. A profile created from Schedule lands in a list reached from Settings.</p>
+    <div class="fix"><b>Fix.</b> One home. Either the Schedule tab's section links to the same Profiles list, or it goes and the schedule editor's profile picker gets an inline "New profile".</div>
+  </div>
+  <figure><img src="thumbs/manual_14-schedule-empty-dark.png" alt="Schedule tab with a Profiles section"><figcaption>Schedule tab, empty state</figcaption></figure>
+</div>
+
+<div class="finding sev-m">
+  <div>
+    <h3><span class="id">M4</span>Strict-mode copy is now untrue</h3>
+    <p>The profile editor says "No early exit once a session starts". Since 2.3 a strict session can be ended by a sixty-second hold.</p>
+    <div class="fix"><b>Fix.</b> "Ending early takes a full minute's hold."</div>
+  </div>
+  <figure><img src="thumbs/light_20c-profile-edit.png" alt="Profile editor with strict mode toggle"><figcaption>Edit profile › Strict mode</figcaption></figure>
+</div>
+
+<div class="finding sev-m">
+  <div>
+    <h3><span class="id">M5</span>Undersized tap targets</h3>
+    <p>29 elements under 44pt: <em>Maybe later</em>, <em>That's all for now</em>, <em>Edit</em>, <em>Save</em>, <em>Cancel</em>, <em>Reorder</em>, <em>Delete profile</em>, and the seven dates in the Schedule week strip.</p>
+    <div class="fix"><b>Fix.</b> <code>.frame(minHeight: 44)</code> plus <code>.contentShape(Rectangle())</code> on text buttons. If the week-strip dates are not tappable, hide them from accessibility so they are not offered as targets.</div>
+  </div>
+  <figure><img src="thumbs/light_20b-profile-detail.png" alt="Profile detail screen"><figcaption>Profile detail: Profiles, Edit and Delete profile all under 44pt</figcaption></figure>
+</div>
+
+<div class="finding sev-m">
+  <div>
+    <h3><span class="id">M6</span>Delete-profile sheet clips its own text</h3>
+    <p>The audit flags clipped text on <code>Delete "Work"?</code>, <em>Delete profile</em> and <em>Keep it</em>, plus four "potentially inaccessible text" nodes on the same sheet. Also "7 seconds focused" on the ended-early screen and <em>Streak goal</em> in Settings.</p>
+    <div class="fix"><b>Fix.</b> Let these labels wrap (no <code>lineLimit(1)</code>, <code>fixedSize(horizontal: false, vertical: true)</code>) and let the sheet grow with its content.</div>
+  </div>
+  <figure><img src="thumbs/light_a11y_20-delete-sheet.png" alt="Delete profile confirmation sheet"><figcaption>Delete sheet</figcaption></figure>
+</div>
+
+<div class="finding sev-m">
+  <div>
+    <h3><span class="id">M7</span>Two visual languages</h3>
+    <p>Settings is a stock grouped form; every other screen is the flat "Quiet" row system. The switch is jarring, and it is also why Settings is the only screen that scales text.</p>
+    <div class="fix"><b>Fix.</b> Port Settings to the Quiet row components, or accept it as the one system-styled screen and record that in the design notes. Fixing C1 removes the strongest reason anyone notices.</div>
+  </div>
+  <figure><div class="pair"><img src="thumbs/manual_22-settings-bottom-dark.png" alt="Settings in dark, grouped form style"><img src="thumbs/light_a11y_20-profiles.png" alt="Profiles list in the Quiet row style"></div><figcaption>Settings (grouped form) vs Profiles (Quiet rows)</figcaption></figure>
+</div>
+
+<div class="finding sev-m">
+  <div>
+    <h3><span class="id">M8</span>Session-detail icon has no readable label</h3>
+    <p>VoiceOver reads the distraction icon by its symbol name, "hand tap fill".</p>
+    <div class="fix"><b>Fix.</b> <code>.accessibilityLabel("Reached for a blocked app")</code>, or hide it from accessibility.</div>
+  </div>
+  <figure><img src="thumbs/light_a11y_08b-session-detail.png" alt="Session detail screen"><figcaption>Session detail</figcaption></figure>
+</div>
+
+<h2>Low</h2>
+<ul class="lows">
+  <li><b>L1</b> Backing out of the system passcode sheet and relaunching restarts onboarding from page 1. Remember the page index.</li>
+  <li><b>L2</b> A session abandoned after 14 seconds shows as "0 min · Ended early" on Insights. Show seconds under a minute, or omit minutes for ended-early rows.</li>
+  <li><b>L3</b> "+6.9 h vs last week" on a first week compares against a week that never happened. The recap already handles this with "Your first week"; reuse that rule.</li>
+  <li><b>L4</b> <em>Delete profile</em> is drawn in the amber warning tone. iOS users read red as destructive; amber reads as caution.</li>
+  <li><b>L5</b> A profile saved "without blocking" is indistinguishable in the list afterwards. Add a "Blocks nothing yet" subtitle.</li>
+  <li><b>L6</b> Home leaves about 40% of a tall phone empty between the profile row and the orb.</li>
+  <li><b>L7</b> About has no privacy policy or support link. Both exist on the website.</li>
+  <li><b>L8</b> Home's dimmed <em>Begin focus</em> has no caption next to it saying why. The reason sits in a card at the top.</li>
+</ul>
+
+<h2>Accessibility audit totals</h2>
+<p class="lede">Apple's automated audit, run on 24 screens by the new <code>AccessibilityAudit</code> UI test. Per-screen files are in <code>light/a11y/</code> in the repo.</p>
+<div class="tablewrap"><table>
+<tr><th>Finding</th><th class="n">Count</th><th>Where</th></tr>
+<tr><td>Dynamic Type unsupported</td><td class="n">250</td><td>every custom screen</td></tr>
+<tr><td>Contrast failed</td><td class="n">100</td><td>secondary text, chart labels, eyebrows</td></tr>
+<tr><td>Contrast nearly passed</td><td class="n">82</td><td>same tokens at larger sizes</td></tr>
+<tr><td>Hit area too small</td><td class="n">29</td><td>nav-bar text buttons, week strip, Maybe later, That's all for now</td></tr>
+<tr><td>Potentially inaccessible text</td><td class="n">6</td><td>delete sheet, Settings</td></tr>
+<tr><td>Text clipped</td><td class="n">5</td><td>delete sheet, ended-early, Settings</td></tr>
+<tr><td>Dynamic Type partially unsupported</td><td class="n">5</td><td>Settings footers</td></tr>
+<tr><td>Label not human-readable</td><td class="n">1</td><td>session detail icon</td></tr>
+</table></div>
+<p>Re-run after fixes; the table above is the baseline.</p>
+<pre>TEST_RUNNER_QUIET_SHOT_DIR=/tmp/a11y xcodebuild test -project NoFeed.xcodeproj -scheme NoFeed \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -only-testing:NoFeedUITests/AccessibilityAudit</pre>
+
+<h2>Persona walkthroughs</h2>
+<div class="persona">
+  <div><b>First launch, declines Screen Time</b>Reads five pages with good pacing and strong copy, skips the permission, is told "You're all set", lands on a Home with a disabled button and a notifications prompt on top. The app is honest everywhere except the one page that matters.</div>
+  <div><b>Returning user, a week of history</b>Home shows streak and today's minutes. Begin focus, pause, resume and hold-to-end all behave. The summary asks how it felt with three chips; the ended-early screen refuses to scold and offers a shorter try. The loop is complete. Only the schedule editor's keyboard and the dark chart trip it.</div>
+  <div><b>Assistive-technology user</b>Sets the largest text and finds only Settings responds. VoiceOver labels are good on Home, Insights and the editors, but text buttons are small, the delete sheet clips, and one icon reads as "hand tap fill". Blocked by C1; the rest is a day's work.</div>
+</div>
+
+<h2>What is working well</h2>
+<div class="good"><ul>
+  <li>Copy is specific and humane: "Held for you. Nothing is blocked while you're away." "Some days that's what there is."</li>
+  <li>Hold-to-end is the right gate: impossible by accident, no dialog.</li>
+  <li>The "Couldn't save" sheet is a model error state. It says why, keeps the input, and offers both exits.</li>
+  <li>The running-profile delete refusal explains itself in place with a way out.</li>
+  <li>The schedule clash panel names the conflict and offers two one-tap repairs.</li>
+  <li>Dark mode is first-class on every custom screen; the Quiet tone system holds together.</li>
+</ul></div>
+
+<h2>Suggested order of work</h2>
+<ol class="lows">
+  <li>C1 Dynamic Type, then layout checks at the largest size.</li>
+  <li>H2 contrast floor: two numbers in the theme file.</li>
+  <li>H1 and M1 honesty fixes.</li>
+  <li>H3 schedule editor focus, H4 notification timing.</li>
+  <li>M5 tap targets, M6 clipping, M8 icon label.</li>
+  <li>M2 dark chart, M3 profile entry points, M4 strict copy.</li>
+  <li>Lows as time allows.</li>
+</ol>
+
+<h2>Every screen</h2>
+<p class="lede">Onboarding and first-run states in dark; the automated tours in light (iPhone 17 Pro) and dark (iPhone 17 Pro Max); the text-size pass on iPhone Air.</p>
+
+<h3>Onboarding and first run</h3>
+<div class="gallery">
+  <figure><img src="thumbs/manual_00-onboarding-1-welcome-dark.png" alt=""><figcaption>Welcome</figcaption></figure>
+  <figure><img src="thumbs/manual_00-onboarding-2-focus-dark.png" alt=""><figcaption>Focus, your way</figcaption></figure>
+  <figure><img src="thumbs/manual_00-onboarding-3-habit-dark.png" alt=""><figcaption>Build the habit</figcaption></figure>
+  <figure><img src="thumbs/manual_00-onboarding-4-permission-dark.png" alt=""><figcaption>Screen Time access</figcaption></figure>
+  <figure><img src="thumbs/manual_00-onboarding-5-all-set-dark.png" alt=""><figcaption>You're all set</figcaption></figure>
+  <figure><img src="thumbs/manual_01-home-first-landing-notification-prompt-dark.png" alt=""><figcaption>First landing: notifications prompt</figcaption></figure>
+  <figure><img src="thumbs/manual_01-home-no-permission-dark.png" alt=""><figcaption>Home without permission</figcaption></figure>
+  <figure><img src="thumbs/manual_06-insights-empty-dark.png" alt=""><figcaption>Insights, first run</figcaption></figure>
+  <figure><img src="thumbs/manual_14-schedule-empty-dark.png" alt=""><figcaption>Schedule, empty</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_00-onboarding-1.png" alt=""><figcaption>Welcome, light</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_00-onboarding-4.png" alt=""><figcaption>Permission, light</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_00-onboarding-5.png" alt=""><figcaption>All set, light</figcaption></figure>
+</div>
+
+<h3>Core loop</h3>
+<div class="gallery">
+  <figure><img src="thumbs/manual_01-home-dark.png" alt=""><figcaption>Home, dark</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_01-home.png" alt=""><figcaption>Home, light</figcaption></figure>
+  <figure><img src="thumbs/manual_02-session-dark.png" alt=""><figcaption>Session, dark</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_02-session.png" alt=""><figcaption>Session, light</figcaption></figure>
+  <figure><img src="thumbs/manual_02b-session-held-dark.png" alt=""><figcaption>Session held</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_03-block-screen.png" alt=""><figcaption>Block screen (preview)</figcaption></figure>
+  <figure><img src="thumbs/light_03-app-paused.png" alt=""><figcaption>App paused</figcaption></figure>
+  <figure><img src="thumbs/light_03b-back-to-focus.png" alt=""><figcaption>Back to focus</figcaption></figure>
+  <figure><img src="thumbs/light_04-complete.png" alt=""><figcaption>Session complete</figcaption></figure>
+  <figure><img src="thumbs/light_04-complete-rated.png" alt=""><figcaption>Complete, reflected</figcaption></figure>
+  <figure><img src="thumbs/manual_04b-ended-early-dark.png" alt=""><figcaption>Ended early, dark</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_04b-ended-early.png" alt=""><figcaption>Ended early, light</figcaption></figure>
+</div>
+
+<h3>Insights, history, recap</h3>
+<div class="gallery">
+  <figure><img src="thumbs/light_05-insights-top.png" alt=""><figcaption>Insights, top</figcaption></figure>
+  <figure><img src="thumbs/light_05-insights-goals.png" alt=""><figcaption>Insights, goals</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_05-insights-bottom.png" alt=""><figcaption>Insights, bottom (light)</figcaption></figure>
+  <figure><img src="thumbs/light_06-insights-first-run.png" alt=""><figcaption>Insights, first run</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_07-weekly-recap.png" alt=""><figcaption>Weekly recap</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_08-history.png" alt=""><figcaption>History</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_08b-session-detail.png" alt=""><figcaption>Session detail</figcaption></figure>
+</div>
+
+<h3>Schedule</h3>
+<div class="gallery">
+  <figure><img src="thumbs/light_a11y_14-schedule.png" alt=""><figcaption>Schedule tab</figcaption></figure>
+  <figure><img src="thumbs/light_16-new-schedule-live.png" alt=""><figcaption>New schedule</figcaption></figure>
+  <figure><img src="thumbs/light_17-nothing-chosen.png" alt=""><figcaption>Save with nothing chosen</figcaption></figure>
+  <figure><img src="thumbs/light_16b-ready-to-save.png" alt=""><figcaption>Ready to save</figcaption></figure>
+  <figure><img src="thumbs/light_19-added.png" alt=""><figcaption>Added</figcaption></figure>
+  <figure><img src="thumbs/light_18-times-that-dont-work.png" alt=""><figcaption>Clash</figcaption></figure>
+</div>
+
+<h3>Profiles</h3>
+<div class="gallery">
+  <figure><img src="thumbs/light_20-profiles-list.png" alt=""><figcaption>Profiles list</figcaption></figure>
+  <figure><img src="thumbs/light_20b-profile-detail.png" alt=""><figcaption>Profile detail</figcaption></figure>
+  <figure><img src="thumbs/light_20c-profile-edit.png" alt=""><figcaption>Edit profile</figcaption></figure>
+  <figure><img src="thumbs/light_20c-blocked-apps-picker.png" alt=""><figcaption>Blocked apps picker</figcaption></figure>
+  <figure><img src="thumbs/light_09-new-profile-live.png" alt=""><figcaption>New profile</figcaption></figure>
+  <figure><img src="thumbs/light_10-nothing-entered.png" alt=""><figcaption>Nothing entered</figcaption></figure>
+  <figure><img src="thumbs/light_11-duplicate-name.png" alt=""><figcaption>Duplicate name</figcaption></figure>
+  <figure><img src="thumbs/light_09b-ready-to-save.png" alt=""><figcaption>Ready to save</figcaption></figure>
+  <figure><img src="thumbs/light_12-couldnt-save.png" alt=""><figcaption>Couldn't save</figcaption></figure>
+  <figure><img src="thumbs/light_13-saved.png" alt=""><figcaption>Saved</figcaption></figure>
+  <figure><img src="thumbs/light_13-saved-no-start.png" alt=""><figcaption>Saved, no start</figcaption></figure>
+  <figure><img src="thumbs/light_20-profiles-delete.png" alt=""><figcaption>Delete sheet</figcaption></figure>
+  <figure><img src="thumbs/light_21-profiles-cant-delete.png" alt=""><figcaption>Can't delete while running</figcaption></figure>
+  <figure><img src="thumbs/light_20b-after-rename.png" alt=""><figcaption>After rename</figcaption></figure>
+</div>
+
+<h3>Settings</h3>
+<div class="gallery">
+  <figure><img src="thumbs/manual_22-settings-top-dark.png" alt=""><figcaption>Settings, top (dark)</figcaption></figure>
+  <figure><img src="thumbs/manual_22-settings-bottom-dark.png" alt=""><figcaption>Settings, bottom (dark)</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_22-settings-top.png" alt=""><figcaption>Settings, top (light)</figcaption></figure>
+  <figure><img src="thumbs/light_a11y_22-settings-bottom.png" alt=""><figcaption>Settings, bottom (light)</figcaption></figure>
+</div>
+
+<h3>Largest accessibility text size</h3>
+<div class="gallery">
+  <figure><img src="thumbs/xxxl_01-home-xxxl.png" alt=""><figcaption>Home: unchanged</figcaption></figure>
+  <figure><img src="thumbs/xxxl_05-insights-xxxl.png" alt=""><figcaption>Insights: unchanged</figcaption></figure>
+  <figure><img src="thumbs/xxxl_14-schedule-xxxl.png" alt=""><figcaption>Schedule: unchanged</figcaption></figure>
+  <figure><img src="thumbs/xxxl_22-settings-xxxl.png" alt=""><figcaption>Settings: scales</figcaption></figure>
+</div>
+</div>

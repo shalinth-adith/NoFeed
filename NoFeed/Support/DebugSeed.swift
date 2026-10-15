@@ -104,6 +104,42 @@ enum DebugSeed {
         ActiveSessionInfo.clear()
     }
 
+    /// Every recorded session gone, so Insights shows its first-run state.
+    /// `testInsightsFirstRunScreen` asks for this; nothing else should.
+    @MainActor
+    static func clearHistoryIfRequested(
+        context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
+    ) {
+        guard ProcessInfo.processInfo.arguments.contains("NoFeedUITestResetHistory")
+        else { return }
+        let request = FocusSession.fetchRequest()
+        for session in (try? context.fetch(request)) ?? [] {
+            context.delete(session)
+        }
+        try? context.save()
+    }
+
+    static var wantsProfileReset: Bool {
+        ProcessInfo.processInfo.arguments.contains("NoFeedUITestResetProfiles")
+    }
+
+    /// Every schedule gone. `testScheduleEditorScreens` creates one and then
+    /// deliberately collides with it; a leftover from an earlier run collides
+    /// one step too early. Simulator never registers DeviceActivity, so
+    /// deleting the rows is the whole teardown.
+    @MainActor
+    static func clearSchedulesIfRequested(
+        context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
+    ) {
+        guard ProcessInfo.processInfo.arguments.contains("NoFeedUITestResetSchedules")
+        else { return }
+        let request = FocusSchedule.fetchRequest()
+        for schedule in (try? context.fetch(request)) ?? [] {
+            context.delete(schedule)
+        }
+        try? context.save()
+    }
+
     // MARK: - Seeding
 
     /// Four more profiles, so Home's switcher has eight names and must scroll.

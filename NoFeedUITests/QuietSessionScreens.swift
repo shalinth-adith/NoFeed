@@ -63,7 +63,13 @@ final class QuietSessionScreens: XCTestCase {
     }
 
     private func launchToHome(_ extra: [String] = []) -> XCUIApplication {
-        let app = launch(["NoFeedUITestBypassScreenTime"] + extra)
+        // Reset the session too: `testProfileCannotBeDeletedWhileRunning`
+        // deliberately leaves one running, and the next launch would restore
+        // it over the tab bar. And the profiles: the delete-sheet test needs
+        // the shipped "Study", which another suite renames.
+        let app = launch(["NoFeedUITestBypassScreenTime",
+                          "NoFeedUITestResetSession",
+                          "NoFeedUITestResetProfiles"] + extra)
         let tabBar = app.tabBars.firstMatch
         if !tabBar.waitForExistence(timeout: 6) {
             app.tap()                       // skip the splash
@@ -284,19 +290,15 @@ final class QuietSessionScreens: XCTestCase {
 
     /// First run: no sessions, so Insights shows the comp's empty state.
     func testInsightsFirstRunScreen() {
-        let app = launchToHome()
+        // The empty state needs an empty store. Earlier tests in this simulator
+        // leave sessions behind, so ask the app to clear them on this launch
+        // rather than requiring a freshly erased simulator.
+        let app = launchToHome(["NoFeedUITestResetHistory"])
         app.tabBars.buttons["Insights"].tap()
 
         let call = app.descendants(matching: .any)["insights-begin-first-focus"].firstMatch
-        if !call.waitForExistence(timeout: 6) {
-            // The store already has history from an earlier run in this
-            // simulator. Skipping is honest; asserting would be a lie about
-            // what was captured.
-            capture(app, "06-insights-first-run-UNAVAILABLE")
-            XCTFail("Insights is not in its first-run state — reset the simulator "
-                    + "(xcrun simctl erase) to capture screen 06")
-            return
-        }
+        XCTAssertTrue(call.waitForExistence(timeout: 6),
+                      "Insights is not in its first-run state after a history reset")
         XCTAssertTrue(app.staticTexts["Your focus story starts here"].exists)
         capture(app, "06-insights-first-run")
     }

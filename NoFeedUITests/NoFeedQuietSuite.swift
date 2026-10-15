@@ -297,6 +297,10 @@ final class NoFeedQuietSuite: XCTestCase {
         // "New Profile" is the last row of the List. SwiftUI does not realize
         // off-screen rows, so with enough profiles it is absent until scrolled to.
         let newProfile = app.buttons["new-profile"]
+        // A leftover from an aborted earlier run blocks Save — the editor
+        // refuses a duplicate name — so clear it before starting.
+        deleteProfile(app, named: "UITestWork")
+
         var scrolls = 0
         while !newProfile.exists && scrolls < 8 {
             app.swipeUp()
@@ -352,21 +356,21 @@ final class NoFeedQuietSuite: XCTestCase {
         deleteProfile(app, named: "UITestWork")
     }
 
-    /// Removes a profile by name, accepting the confirmation dialog.
+    /// Removes a profile by name through the detail screen (Quiet 20b) and its
+    /// confirmation sheet. A no-op when no such profile is listed.
     private func deleteProfile(_ app: XCUIApplication, named name: String) {
         let row = app.staticTexts.matching(
             NSPredicate(format: "label == %@", name)).firstMatch
         guard row.waitForExistence(timeout: 4) else { return }
-        row.swipeLeft()
+        robustTap(app, row)
 
-        let delete = app.buttons.matching(
-            NSPredicate(format: "label CONTAINS[c] 'Delete'")).firstMatch
-        guard delete.waitForExistence(timeout: 3) else { return }
+        let delete = app.buttons["profile-detail-delete"]
+        guard delete.waitForExistence(timeout: 4) else { return }
         robustTap(app, delete)
 
-        let confirm = app.sheets.buttons.matching(
-            NSPredicate(format: "label CONTAINS[c] 'Delete'")).firstMatch
-        if confirm.waitForExistence(timeout: 3) { robustTap(app, confirm) }
+        let confirm = app.buttons["confirm-delete-profile"]
+        guard confirm.waitForExistence(timeout: 3) else { return }
+        robustTap(app, confirm)
         _ = row.waitForNonExistence(timeout: 5)
     }
 

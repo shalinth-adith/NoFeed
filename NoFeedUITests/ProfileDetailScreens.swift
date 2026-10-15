@@ -48,8 +48,11 @@ final class ProfileDetailScreens: XCTestCase {
     /// granted it, so stand in for that with the DEBUG-only bypass flag.
     private func launch() -> XCUIApplication {
         let app = XCUIApplication()
+        // Profiles too: this suite renames Study and adds "Reading room", and
+        // the next run must find the four defaults again.
         app.launchArguments += ["NoFeedUITestBypassScreenTime",
-                                "NoFeedUITestResetSession"]
+                                "NoFeedUITestResetSession",
+                                "NoFeedUITestResetProfiles"]
         app.launch()
         let tabBar = app.tabBars.firstMatch
         if !tabBar.waitForExistence(timeout: 6) {

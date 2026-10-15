@@ -34,6 +34,8 @@ struct NoFeedApp: App {
         // straight back.
         DebugSeed.clearSessionIfRequested()
         MainActor.assumeIsolated {
+            DebugSeed.clearHistoryIfRequested()
+            DebugSeed.clearSchedulesIfRequested()
             DebugSeed.seedDemoHistoryIfRequested()
             DebugSeed.seedManyProfilesIfRequested()
             // Stored-property initializers run before this body, so `profiles`
@@ -41,6 +43,9 @@ struct NoFeedApp: App {
             // history seed doesn't care — Insights queries on demand — but the
             // profile list is held in memory and would simply not show them.
             profiles.fetch()
+            if DebugSeed.wantsProfileReset { profiles.resetToDefaultsForUITests() }
+            // Same reason for the schedule list after a UI-test reset.
+            schedules.fetch()
         }
         DebugSeed.primeShieldPreviewSession()
         #endif

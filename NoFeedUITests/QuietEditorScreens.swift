@@ -39,8 +39,11 @@ final class QuietEditorScreens: XCTestCase {
 
     // MARK: - Navigation helpers
 
-    private func launch() -> XCUIApplication {
+    private func launch(_ arguments: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
+        // The profile walkthrough adds "Learning"; start from the four defaults
+        // so a second run is not refused as a duplicate.
+        app.launchArguments += ["NoFeedUITestResetProfiles"] + arguments
         app.launch()
         let tabBar = app.tabBars.firstMatch
         if !tabBar.waitForExistence(timeout: 6) {
@@ -167,7 +170,9 @@ final class QuietEditorScreens: XCTestCase {
     // MARK: - 16 → 19 · the schedule editor
 
     func testScheduleEditorScreens() throws {
-        let app = launch()
+        // Start with no schedules: the walkthrough adds one and then collides
+        // with it on purpose, which only reads right from an empty list.
+        let app = launch(["NoFeedUITestResetSchedules"])
         XCTAssertTrue(tap(app.tabBars.buttons["Schedule"]), "Schedule tab missing")
 
         let addSchedule = app.buttons["add-schedule"]
@@ -204,7 +209,11 @@ final class QuietEditorScreens: XCTestCase {
         // 18 · a second schedule on the same day at the same hour collides.
         scrollTo(app, addSchedule)
         XCTAssertTrue(tap(addSchedule), "Add schedule missing the second time")
-        _ = titleField.waitForExistence(timeout: 6)
+        XCTAssertTrue(titleField.waitForExistence(timeout: 6), "Second editor did not open")
+        // A new schedule focuses its title, and the keyboard covers the day
+        // and profile rows. The first pass typed a title ending in a return;
+        // this one has nothing to type, so send the return on its own.
+        titleField.typeText("\n")
         XCTAssertTrue(tap(app.buttons["Monday"]), "Day row missing")
         XCTAssertTrue(tap(app.buttons["Work"]), "Profile row missing")
 

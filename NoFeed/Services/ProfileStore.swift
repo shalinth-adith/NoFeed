@@ -168,6 +168,19 @@ final class ProfileStore {
         catch { print("[NoFeed] ProfileStore save failed: \(error)") }
     }
 
+    #if DEBUG
+    /// Back to the four shipped profiles. UI tests that rename or add profiles
+    /// ask for this on launch, so a leftover from an earlier run can never
+    /// trip the duplicate-name rule or hide the profile a test expects.
+    func resetToDefaultsForUITests() {
+        for profile in profiles { context.delete(profile) }
+        save()
+        seedDefaultsIfNeeded()
+        fetch()
+        activeProfileID = profiles.first?.id
+    }
+    #endif
+
     private func seedDefaultsIfNeeded() {
         let request = FocusProfile.fetchRequest()
         let count = (try? context.count(for: request)) ?? 0

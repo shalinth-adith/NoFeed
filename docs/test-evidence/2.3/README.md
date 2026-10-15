@@ -10,7 +10,20 @@ Build: commit `b4aabe6` and later, iPhone 17 Pro Simulator (iOS 26), app launche
 | `NoFeedTests` (unit) | 170 tests in 22 suites, 0 failures |
 | `QuietSessionScreens/testCompleteScreen` | PASS — completed summary shows the three chips; tapping Focused selects it |
 | `QuietSessionScreens/testInsightsPopulatedScreen` | PASS |
-| `NoFeedQuietSuite` | 14 pass, 2 skipped. `testProfileChevronOpensEditor` and `testDeleteProfileAsksForConfirmation` were updated to the 20b/20c Profiles screens (row → detail → Edit; the delete confirmation is a custom sheet found by identifier) and pass. |
+| `NoFeedQuietSuite` | 14 pass, 2 skipped |
+| `QuietSessionScreens` | 8 pass |
+| `ProfileDetailScreens` | 5 pass |
+| `QuietEditorScreens` | 2 pass |
+| `NoFeedUITests` (legacy) | 2 pass; three tests that drove the retired "Profiles"/"Schedules" tabs were deleted, their flows being covered by `NoFeedQuietSuite` |
+| `NoFeedUITestsLaunchTests` | 2 pass |
+
+The full UI suite was run across three simulators (it exceeds a single ten-minute slot). Eight
+tests that failed on the first pass were all fixture leaks between runs — a leftover profile
+tripping the duplicate-name rule, a renamed Study, a session left running, a prior schedule
+colliding one step early — plus one keyboard covering the schedule editor's rows on its second
+open. Fixed by three DEBUG-only launch arguments (`NoFeedUITestResetProfiles`,
+`NoFeedUITestResetSchedules`, `NoFeedUITestResetHistory`) that the suites pass, and a cleanup
+helper rewritten for the 20b/20c screens.
 
 ## Screenshots
 

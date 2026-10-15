@@ -33,6 +33,7 @@ struct NoFeedApp: App {
         // runs on the first `.active` and would bring a test's leftover session
         // straight back.
         DebugSeed.clearSessionIfRequested()
+        DebugSeed.resetOnboardingIfRequested()
         MainActor.assumeIsolated {
             DebugSeed.clearHistoryIfRequested()
             DebugSeed.clearSchedulesIfRequested()

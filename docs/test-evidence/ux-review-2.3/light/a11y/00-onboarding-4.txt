@@ -1,0 +1,12 @@
+[hit-region] Hit area is too small — element: 9:Maybe later
+    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Maybe later
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:NoFeed uses Apple's Screen Time to block distracting apps during focus. Your activity stays private on your device — NoFeed never sees it.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Grant Screen Time Access
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Screen Time Access
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 9:Maybe later
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.

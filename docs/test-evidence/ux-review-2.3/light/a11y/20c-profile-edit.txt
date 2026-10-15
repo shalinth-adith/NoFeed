@@ -1,0 +1,80 @@
+[hit-region] Hit area is too small — element: 9:Cancel
+    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
+[hit-region] Hit area is too small — element: 9:Save
+    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Mon · 9:00 AM
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Starts on its own
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Focus
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Break
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Choose
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:5 min
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Block everything
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Save
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:None chosen
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:SCHEDULE
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Edit profile
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:BLOCKED APPS
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Allowed apps are never blocked. Most people allow a messaging app, so someone important can still reach them.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:LENGTH
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:25 min
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:No early exit once a session starts
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Except the apps you allow
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:NAME
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Cancel
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Allowed apps
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Hold me to it
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 49:
+    User will not be able to change the font size of this UITextField
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:STRICT MODE
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 9:Cancel
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast failed — element: 9:Save
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:NAME
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:LENGTH
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:BLOCKED APPS
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 48:Except the apps you allow
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast failed — element: 48:Allowed apps are never blocked. Most people allow a messaging app, so someone important can still reach them.
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:SCHEDULE
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 48:Mon · 9:00 AM
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast failed — element: 48:STRICT MODE
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 48:No early exit once a session starts
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 48:25 min
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 48:5 min
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 48:Allowed apps
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 48:Choose
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.

@@ -1,0 +1,58 @@
+[contrast] Contrast nearly passed — element: 9:Done
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast failed — element: 48:11–17 Oct
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:6 sessions
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 48:of quiet
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast failed — element: 48:S
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:M
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:T
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:T
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:F
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:S
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 48:Your first week of this. The rest builds on it.
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast failed — element: 48:NEXT WEEK
+    Contrast failed for SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:of quiet
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:F
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:M
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Your first week of this. The rest builds on it.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:T
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Sat had none. One short session there would even out the week.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:S
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Done
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Your week
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:T
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:11–17 Oct
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:6h 55m
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:NEXT WEEK
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:You reached for a blocked app 22 times, and stopped almost every time.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:W
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:S
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:6 sessions
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode

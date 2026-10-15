@@ -1,0 +1,24 @@
+[contrast] Contrast failed — element: -
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: -
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: -
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: -
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 48:Adds a second button to the block screen that lifts every block for a while, then puts them back. Fifteen minutes is the shortest window iOS can reliably close on its own. Never offered while anything strict is running — a session or a schedule.
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: -
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: -
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast failed — element: -
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: -
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: -
+    Contrast failed for SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Adds a second button to the block screen that lifts every block for a while, then puts them back. Fifteen minutes is the shortest window iOS can reliably close on its own. Never offered while anything strict is running — a session or a schedule.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are partially unsupported — element: 48:Send it at
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode

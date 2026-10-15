@@ -1,0 +1,16 @@
+[contrast] Contrast failed — element: 48:IN SESSION · 16:12 LEFT
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:Instagram is bookmarked.
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:You’ll come back to exactly this spot when the session ends.
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:Returning to your session…
+    Contrast failed for SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Instagram is bookmarked.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:IN SESSION · 16:12 LEFT
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:You’ll come back to exactly this spot when the session ends.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Returning to your session…
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode

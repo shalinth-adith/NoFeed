@@ -1,0 +1,17 @@
+01-home: 7
+02-session: 7
+02b-session-held: 7
+04b-ended-early: 11
+05-insights-top: 47
+05-insights-bottom: 44
+07-weekly-recap: 29
+08-history: 52
+08b-session-detail: 20
+14-schedule: 50
+16-schedule-editor: 44
+22-settings-top: 12
+22-settings-bottom: 12
+20-profiles: 25
+20b-profile-detail: 28
+20c-profile-edit: 40
+20-delete-sheet: 14

@@ -1,0 +1,28 @@
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:The profile goes; its 5 sessions stay in your history and your streak isn’t touched.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Delete profile
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Keep it
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Delete “Work”?
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[text-clipped] Text clipped — element: 48:Delete “Work”?
+    Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
+[text-clipped] Text clipped — element: 9:Delete profile
+    Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
+[text-clipped] Text clipped — element: 9:Keep it
+    Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
+[contrast] Contrast nearly passed — element: 48:The profile goes; its 5 sessions stay in your history and your streak isn’t touched.
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 9:Delete profile
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 9:Keep it
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[element-detection] Potentially inaccessible text — element: -
+    This element appears to display text that should be represented using the accessibility API.
+[element-detection] Potentially inaccessible text — element: -
+    This element appears to display text that should be represented using the accessibility API.
+[element-detection] Potentially inaccessible text — element: -
+    This element appears to display text that should be represented using the accessibility API.
+[element-detection] Potentially inaccessible text — element: -
+    This element appears to display text that should be represented using the accessibility API.

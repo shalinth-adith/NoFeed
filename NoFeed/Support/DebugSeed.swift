@@ -119,6 +119,14 @@ enum DebugSeed {
         try? context.save()
     }
 
+    /// Show onboarding again on this launch, so a review can look at it
+    /// without erasing the simulator.
+    static func resetOnboardingIfRequested() {
+        guard ProcessInfo.processInfo.arguments.contains("NoFeedUITestResetOnboarding")
+        else { return }
+        AppGroup.defaults.set(false, forKey: "hasCompletedOnboarding")
+    }
+
     static var wantsProfileReset: Bool {
         ProcessInfo.processInfo.arguments.contains("NoFeedUITestResetProfiles")
     }

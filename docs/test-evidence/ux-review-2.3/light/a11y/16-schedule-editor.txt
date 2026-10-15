@@ -1,0 +1,88 @@
+[hit-region] Hit area is too small — element: 9:Cancel
+    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Sleep
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: -
+    User will not be able to change the font size of this UITextFieldLabel
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Days and a profile is all it takes
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:8 hours — and yours to change.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Starts
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Tap the days it should repeat.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Add to schedule
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Gym
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Fine as it is — a title was never needed.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Work
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:New schedule
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:5:00 PM
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Study
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:DAYS
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:TIME
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:TITLE
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:9:00 AM
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Ends
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 49:
+    User will not be able to change the font size of this UITextField
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:BLOCKING
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:The profile decides what gets blocked.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Cancel
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:PROFILE
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 9:Cancel
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast failed — element: 48:Days and a profile is all it takes
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 9:Add to schedule
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:TITLE
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:Fine as it is — a title was never needed.
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:TIME
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:8 hours — and yours to change.
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:DAYS
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:Tap the days it should repeat.
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:PROFILE
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 9:Work
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 9:Study
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 9:Gym
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 9:Sleep
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast failed — element: 48:The profile decides what gets blocked.
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:BLOCKING
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:Block everything
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:Except the apps you allow
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 48:Starts
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 48:Ends
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.

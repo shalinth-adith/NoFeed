@@ -1,0 +1,56 @@
+[hit-region] Hit area is too small — element: 9:Profiles
+    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
+[hit-region] Hit area is too small — element: 9:Edit
+    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
+[hit-region] Hit area is too small — element: 9:Delete profile
+    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
+[contrast] Contrast failed — element: 9:Edit
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:Profiles
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:BLOCKED APPS
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:except your allowed ones
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast failed — element: 48:SCHEDULE
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 48:Starts on its own at 9:00 AM
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 48:Focus
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 48:Break
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 48:Sessions
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:5
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:except your allowed ones
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Sessions
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:5 min
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Break
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:BLOCKED APPS
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Delete profile
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Edit
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Profiles
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Focus
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:25 min
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Work
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:SCHEDULE
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Mon
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Every app
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Starts on its own at 9:00 AM
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode

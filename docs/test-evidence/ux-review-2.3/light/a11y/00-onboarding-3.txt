@@ -1,0 +1,6 @@
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Earn streaks, unlock badges, and watch your focused time add up.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Build the habit
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Next
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode

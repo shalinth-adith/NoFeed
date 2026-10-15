@@ -1,0 +1,8 @@
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:It opens on its own in 16 minutes. Nothing inside will have moved.
+
+Opens at 1:47 AM
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Instagram is behind this door.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Back to focus
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode

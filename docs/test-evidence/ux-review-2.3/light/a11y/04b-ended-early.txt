@@ -1,0 +1,22 @@
+[hit-region] Hit area is too small — element: 9:That’s all for now
+    The size of this SwiftUI.AccessibilityNode is too small for user to interact.
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:7 seconds focused
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:You made a start.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Your streak is safe · kept 6 this week
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Try a shorter one — 5 min
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:That’s all for now
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Some days that’s what there is. Starting at all does still count — nothing about today is broken.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[text-clipped] Text clipped — element: 48:7 seconds focused
+    Text of this SwiftUI.AccessibilityNode may be clipped at larger Dynamic Type sizes.
+[contrast] Contrast nearly passed — element: 48:Some days that’s what there is. Starting at all does still count — nothing about today is broken.
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast failed — element: 48:Your streak is safe · kept 6 this week
+    Contrast failed for SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 9:That’s all for now
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.

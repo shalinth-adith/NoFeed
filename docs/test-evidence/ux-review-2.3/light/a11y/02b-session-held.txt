@@ -1,0 +1,14 @@
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:HELD
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Held for you. Nothing is blocked while you’re away.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:24:56
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:HELD · WORK
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[contrast] Contrast nearly passed — element: 48:HELD · WORK
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast nearly passed — element: 48:Held for you. Nothing is blocked while you’re away.
+    Contrast is not high enough for SwiftUI.AccessibilityNode unless font size is larger.
+[contrast] Contrast failed — element: 48:HELD
+    Contrast failed for SwiftUI.AccessibilityNode

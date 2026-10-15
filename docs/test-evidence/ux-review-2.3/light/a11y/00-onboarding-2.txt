@@ -1,0 +1,6 @@
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 9:Next
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Focus, your way
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode
+[dynamic-type] Dynamic Type font sizes are unsupported — element: 48:Start a focus session and NoFeed blocks distracting apps and websites until your timer ends.
+    User will not be able to change the font size of this SwiftUI.AccessibilityNode

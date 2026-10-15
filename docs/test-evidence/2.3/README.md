@@ -10,7 +10,7 @@ Build: commit `b4aabe6` and later, iPhone 17 Pro Simulator (iOS 26), app launche
 | `NoFeedTests` (unit) | 170 tests in 22 suites, 0 failures |
 | `QuietSessionScreens/testCompleteScreen` | PASS — completed summary shows the three chips; tapping Focused selects it |
 | `QuietSessionScreens/testInsightsPopulatedScreen` | PASS |
-| `NoFeedQuietSuite` | 12 pass, 2 skipped, 2 fail: `testProfileChevronOpensEditor`, `testDeleteProfileAsksForConfirmation`. Both look for the pre-20b/20c Profiles design (an "Edit Work" chevron button and a swipe-to-delete dialog). Pre-existing, untouched by this work. |
+| `NoFeedQuietSuite` | 14 pass, 2 skipped. `testProfileChevronOpensEditor` and `testDeleteProfileAsksForConfirmation` were updated to the 20b/20c Profiles screens (row → detail → Edit; the delete confirmation is a custom sheet found by identifier) and pass. |
 
 ## Screenshots
 

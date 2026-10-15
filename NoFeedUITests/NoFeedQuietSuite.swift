@@ -370,8 +370,9 @@ final class NoFeedQuietSuite: XCTestCase {
         _ = row.waitForNonExistence(timeout: 5)
     }
 
-    /// The row chevron opens the profile editor. It used to be a plain image, so
-    /// the row looked navigable while editing was reachable only by swiping.
+    /// A profile row opens its detail (Quiet 20b), and Edit there opens the
+    /// editor (20c) on that profile. This is the path App Review found missing:
+    /// the row used to draw a chevron while editing was reachable only by swipe.
     func testProfileChevronOpensEditor() throws {
         let app = try launchToHome()
         openTab(app, "Settings")
@@ -381,18 +382,21 @@ final class NoFeedQuietSuite: XCTestCase {
         XCTAssertTrue(profilesRow.waitForExistence(timeout: 15), "'Focus profiles' row missing")
         robustTap(app, profilesRow)
 
-        let chevron = app.buttons.matching(
-            NSPredicate(format: "label == 'Edit Work'")).firstMatch
-        XCTAssertTrue(chevron.waitForExistence(timeout: 8),
-                      "Chevron is not exposed as a button — it is still decorative")
-        robustTap(app, chevron)
+        let work = app.staticTexts["Work"].firstMatch
+        XCTAssertTrue(work.waitForExistence(timeout: 8), "No 'Work' profile row")
+        robustTap(app, work)
 
-        let nameField = app.textFields["profile-name"]
+        let edit = app.buttons["profile-detail-edit"]
+        XCTAssertTrue(edit.waitForExistence(timeout: 8),
+                      "Tapping the row did not open the profile detail")
+        robustTap(app, edit)
+
+        let nameField = app.textFields["profile-edit-name"]
         XCTAssertTrue(nameField.waitForExistence(timeout: 6),
-                      "Tapping the chevron did not open the profile editor")
+                      "Edit did not open the profile editor")
         XCTAssertEqual(nameField.value as? String, "Work",
                        "Editor opened on the wrong profile")
-        snap(app, "TC-4.x-chevron-opens-editor")
+        snap(app, "TC-4.x-row-opens-editor")
 
         let cancel = app.buttons.matching(
             NSPredicate(format: "label ==[c] 'Cancel'")).firstMatch
@@ -421,19 +425,20 @@ final class NoFeedQuietSuite: XCTestCase {
         XCTAssertTrue(delete.waitForExistence(timeout: 4), "Delete swipe action missing")
         delete.tap()
 
-        // ProfilesView uses .confirmationDialog, which surfaces as a sheet.
-        let dialog = app.sheets.firstMatch
-        let alert = app.alerts.firstMatch
-        XCTAssertTrue(dialog.waitForExistence(timeout: 4) || alert.exists,
+        // The confirmation is `DeleteProfileSheet`, a SwiftUI view in a `.sheet`
+        // — not a `confirmationDialog`, so it is not an `XCUIElement` sheet or
+        // alert. Find it by its identifier.
+        let dialog = app.descendants(matching: .any)["delete-profile-sheet"].firstMatch
+        XCTAssertTrue(dialog.waitForExistence(timeout: 4),
                       "No confirmation shown before deleting a profile")
         snap(app, "TC-4.3-delete-confirmation")
 
-        // Cancel — leave the fixture intact for other tests.
-        let cancel = app.buttons.matching(
-            NSPredicate(format: "label ==[c] 'Cancel'")).firstMatch
-        if cancel.exists { cancel.tap() }
+        // Keep — leave the fixture intact for other tests.
+        let keep = app.buttons["keep-profile"]
+        XCTAssertTrue(keep.waitForExistence(timeout: 3), "The confirmation has no way to keep the profile")
+        robustTap(app, keep)
         XCTAssertTrue(app.staticTexts["Gym"].waitForExistence(timeout: 4),
-                      "Cancel did not keep the profile")
+                      "Keep did not keep the profile")
     }
 
     // MARK: - Session screens (Quiet spec 02 · 04 · 04b)

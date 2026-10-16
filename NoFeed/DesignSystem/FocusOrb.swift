@@ -137,10 +137,10 @@ extension FocusOrb where Center == AnyView {
         NoFeedBackground()
         VStack(spacing: 40) {
             FocusOrb(state: .idle) {
-                Text("25").font(ZTheme.Font.numeral(72)).foregroundStyle(ZTheme.Palette.textPrimary)
+                Text(verbatim: "25").font(ZTheme.Font.numeral(72)).foregroundStyle(ZTheme.Palette.textPrimary)
             }
             FocusOrb(state: .active(progress: 0.6), diameter: 160) {
-                Text("11:18").font(ZTheme.Font.numeral(36)).foregroundStyle(ZTheme.Palette.textPrimary)
+                Text(verbatim: "11:18").font(ZTheme.Font.numeral(36)).foregroundStyle(ZTheme.Palette.textPrimary)
             }
         }
     }

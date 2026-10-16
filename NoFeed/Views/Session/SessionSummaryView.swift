@@ -131,7 +131,7 @@ struct SessionSummaryView: View {
                 .foregroundStyle(ZTheme.Palette.text(0.55))
 
             HStack(alignment: .firstTextBaseline, spacing: 6) {
-                Text("\(summary.completedMinutes)")
+                Text(summary.completedMinutes, format: .number)
                     .font(ZTheme.Font.numeral(64, weight: .regular))
                     .foregroundStyle(ZTheme.Palette.textPrimary)
                 Text("min")
@@ -290,33 +290,35 @@ struct SessionSummaryView: View {
     /// "That's your fourth this week — the streak holds."
     private func weekLine(_ summary: SessionSummary) -> String {
         let count = analytics.calendarWeekSessionCount()
-        let ordinal = Self.ordinals[min(count, Self.ordinals.count - 1)]
-        let streak = summary.streak > 1 ? " — the streak holds." : "."
-        return count > 0 ? "That\u{2019}s your \(ordinal) this week\(streak)"
-                         : "The first of the week\(streak)"
+        let ordinal = Self.ordinal(count)
+        let streak = summary.streak > 1 ? String(localized: " — the streak holds.") : "."
+        return count > 0 ? String(localized: "That\u{2019}s your \(ordinal) this week\(streak)")
+                         : String(localized: "The first of the week\(streak)")
     }
 
     private func headline(_ summary: SessionSummary) -> String {
         let minutes = summary.completedMinutes
-        guard minutes >= 1 else { return "You made a start." }
-        let spelled = Self.spelled[min(minutes, Self.spelled.count - 1)]
-        return minutes <= 10 ? "You gave it \(spelled) minute\(minutes == 1 ? "" : "s")."
-                             : "You gave it \(minutes) minutes."
+        guard minutes >= 1 else { return String(localized: "You made a start.") }
+        if let spelled = Self.spelledEnglish(minutes) {
+            return "You gave it \(spelled) minute\(minutes == 1 ? "" : "s")."
+        }
+        return String(localized: "You gave it \(minutes) minutes.")
     }
 
     private func keptPhrase(_ summary: SessionSummary) -> String {
         let minutes = summary.completedMinutes
-        guard minutes >= 1 else { return "Starting at all does" }
-        let spelled = Self.spelled[min(minutes, Self.spelled.count - 1)]
-        return minutes <= 10 ? "The \(spelled) minute\(minutes == 1 ? "" : "s")"
-                             : "The \(minutes) minutes"
+        guard minutes >= 1 else { return String(localized: "Starting at all does") }
+        if let spelled = Self.spelledEnglish(minutes) {
+            return "The \(spelled) minute\(minutes == 1 ? "" : "s")"
+        }
+        return String(localized: "The \(minutes) minutes")
     }
 
     /// "Your streak is safe · kept 4 of 5 this week"
     private func streakLine(_ summary: SessionSummary) -> String {
         let kept = analytics.calendarWeekSessionCount()
-        let safe = summary.streak > 0 ? "Your streak is safe" : "Nothing lost"
-        return kept > 0 ? "\(safe) · kept \(kept) this week" : safe
+        let safe = summary.streak > 0 ? String(localized: "Your streak is safe") : String(localized: "Nothing lost")
+        return kept > 0 ? String(localized: "\(safe) · kept \(kept) this week") : safe
     }
 
     /// Something genuinely easier than what was just abandoned: round the time
@@ -340,14 +342,35 @@ struct SessionSummaryView: View {
         let seconds = max(0, summary.completedSeconds)
         let m = seconds / 60, s = seconds % 60
         var parts: [String] = []
-        if m > 0 { parts.append("\(m) minute\(m == 1 ? "" : "s")") }
-        if s > 0 { parts.append("\(s) second\(s == 1 ? "" : "s")") }
-        return parts.isEmpty ? "Under a second focused"
-                             : parts.joined(separator: " ") + " focused"
+        if m > 0 { parts.append(String(localized: "\(m) minutes")) }
+        if s > 0 { parts.append(String(localized: "\(s) seconds")) }
+        return parts.isEmpty ? String(localized: "Under a second focused")
+                             : String(localized: "\(parts.joined(separator: " ")) focused", comment: "The argument is a spoken duration, like “2 minutes 24 seconds”.")
+    }
+
+    /// "fourth" in English, where the word list is right; elsewhere the
+    /// locale's own ordinal numeral ("4.", "4º", "4e"), which needs no grammar
+    /// from this file.
+    private static func ordinal(_ count: Int) -> String {
+        if Bundle.main.preferredLocalizations.first == "en" {
+            return ordinals[min(count, ordinals.count - 1)]
+        }
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .ordinal
+        formatter.locale = Locale(identifier: Bundle.main.preferredLocalizations.first ?? "en")
+        return formatter.string(from: NSNumber(value: count)) ?? "\(count)"
     }
 
     private static let ordinals = ["none", "first", "second", "third", "fourth", "fifth",
                                    "sixth", "seventh", "eighth", "ninth", "tenth", "latest"]
+    /// "Five minutes" reads better than "5 minutes" at the short end, but the
+    /// word list and the one/other choice are English grammar. Other languages
+    /// get digits and the catalog's plural rules instead.
+    private static func spelledEnglish(_ minutes: Int) -> String? {
+        guard minutes <= 10, Bundle.main.preferredLocalizations.first == "en" else { return nil }
+        return spelled[minutes]
+    }
+
     private static let spelled = ["zero", "one", "two", "three", "four", "five",
                                   "six", "seven", "eight", "nine", "ten"]
 }

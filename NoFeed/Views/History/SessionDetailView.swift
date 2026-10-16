@@ -117,7 +117,7 @@ struct SessionDetailView: View {
         .glassCard(radius: ZTheme.Radius.card, padding: ZTheme.Spacing.lg)
     }
 
-    private func timeColumn(_ label: String, value: String) -> some View {
+    private func timeColumn(_ label: LocalizedStringResource, value: String) -> some View {
         VStack(spacing: 3) {
             Text(label)
                 .font(ZTheme.Font.body(11, weight: .semibold))
@@ -140,10 +140,13 @@ struct SessionDetailView: View {
                     // Decorative; the text beside it says what it means.
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("\(distractions.count)")
+                    Text(distractions.count, format: .number)
                         .font(ZTheme.Font.numeral(24, weight: .bold))
                         .foregroundStyle(ZTheme.Palette.textPrimary)
-                    Text(distractions.count == 1 ? "distraction" : "distractions")
+                    // The number is drawn above; this is only its noun, plural-aware.
+                    Text(distractions.count == 1
+                         ? String(localized: "distraction", comment: "Under a large count of exactly one.")
+                         : String(localized: "distractions", comment: "Under a large count other than one."))
                         .font(ZTheme.Font.body(12.5))
                         .foregroundStyle(ZTheme.Palette.text(0.55))
                 }
@@ -173,7 +176,7 @@ struct SessionDetailView: View {
 
     private func distractionRow(index: Int, date: Date) -> some View {
         HStack(spacing: 11) {
-            Text("\(index + 1)")
+            Text(index + 1, format: .number)
                 .font(ZTheme.Font.numeral(13, weight: .bold))
                 .foregroundStyle(ZTheme.Palette.streak)
                 .frame(width: 24, height: 24)
@@ -237,6 +240,6 @@ struct SessionDetailView: View {
     private func elapsedLabel(for date: Date) -> String {
         guard let start = session.startedAt else { return "" }
         let minutes = max(0, Int(date.timeIntervalSince(start) / 60))
-        return minutes == 0 ? "at start" : "\(minutes) min in"
+        return minutes == 0 ? String(localized: "at start") : String(localized: "\(minutes) min in")
     }
 }

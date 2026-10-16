@@ -166,7 +166,7 @@ struct ProfileDetailView: View {
     /// reads as time you have rather than none.
     private var minutesLeft: String {
         let minutes = max(1, Int(ceil(Double(session.remainingSeconds) / 60)))
-        return "\(minutes) minute\(minutes == 1 ? "" : "s")"
+        return String(localized: "\(minutes) minutes")
     }
 
     // MARK: - Stat strip
@@ -183,7 +183,7 @@ struct ProfileDetailView: View {
         .padding(.top, 26)
     }
 
-    private func stat(_ value: String, _ label: String) -> some View {
+    private func stat(_ value: LocalizedStringResource, _ label: LocalizedStringResource) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(value)
                 .font(ZTheme.Font.numeral(19, weight: .semibold))
@@ -244,7 +244,7 @@ struct ProfileDetailView: View {
         if !allowedSites.isEmpty {
             QuietFieldLabel(text: "Allowed websites", topPadding: QuietMetrics.sectionGap)
             ForEach(allowedSites, id: \.self) { site in
-                plainRow(site, trailing: nil)
+                plainRow(.verbatim(site), trailing: nil)
             }
         }
     }
@@ -262,7 +262,7 @@ struct ProfileDetailView: View {
         }
     }
 
-    private func plainRow(_ title: String, trailing: String?) -> some View {
+    private func plainRow(_ title: LocalizedStringResource, trailing: LocalizedStringResource?) -> some View {
         VStack(spacing: 0) {
             HStack(spacing: 15) {
                 Text(title)
@@ -319,8 +319,8 @@ struct ProfileDetailView: View {
         let start = Int(schedule.startHour) * 60 + Int(schedule.startMinute)
         let time = ScheduleEditView.timeText(start)
         return schedule.isEnabled
-            ? "Starts on its own at \(time)"
-            : "Paused — would start at \(time)"
+            ? String(localized: "Starts on its own at \(time)")
+            : String(localized: "Paused — would start at \(time)")
     }
 
     // MARK: - Delete

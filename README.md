@@ -87,6 +87,30 @@ NoFeedUITests/     UI tests, screenshot tours and the accessibility audit
 docs/              Review notes, test reports, evidence, the support site
 ```
 
+## Localization
+
+NoFeed ships in English, Spanish, French, German, Japanese and Brazilian
+Portuguese. All copy lives in two String Catalogs:
+
+- `Shared/Localizable.xcstrings` holds every UI, notification, widget and shield
+  string. Each target that compiles shared code bundles it.
+- `NoFeed/AppShortcuts.xcstrings` holds the Siri phrases.
+
+Rules for new copy:
+
+- Pass literals to `Text`, `Button` and the Quiet components directly; they take
+  `LocalizedStringResource`, so the literal is extracted. Wrap computed copy in
+  `String(localized:)`. User data such as a profile name goes through
+  `.verbatim(_:)` or `Text(verbatim:)`.
+- Never build a plural by hand (`"minute\(n == 1 ? "" : "s")"`). Write the plural
+  once, `"\(n) minutes"`, and give the key one/other variations in the catalog.
+  A label that sits under a separately drawn number needs two keys instead,
+  because the catalog rejects a plural form without the number.
+- Format dates and times with `formatted(...)` styles, not fixed `dateFormat`
+  patterns, so order and the 12/24-hour clock follow the user's region.
+- Building in Xcode adds new keys to the catalog. A key without translations
+  falls back to English at runtime.
+
 ## Testing
 
 ```bash

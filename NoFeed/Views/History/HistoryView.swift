@@ -61,13 +61,13 @@ struct HistoryView: View {
 
     private var summaryStrip: some View {
         HStack(spacing: ZTheme.Spacing.sm) {
-            miniStat(value: "\(filtered.count)", label: "sessions", color: ZTheme.Palette.textPrimary)
+            miniStat(value: "\(filtered.count)", label: filtered.count == 1 ? "session" : "sessions", color: ZTheme.Palette.textPrimary)
             miniStat(value: hoursLabel(totalMinutes), label: "focused", color: ZTheme.Palette.textPrimary)
             miniStat(value: "\(streak)", label: "day streak", color: ZTheme.Palette.teal)
         }
     }
 
-    private func miniStat(value: String, label: String, color: Color) -> some View {
+    private func miniStat(value: String, label: LocalizedStringResource, color: Color) -> some View {
         VStack(spacing: 2) {
             Text(value)
                 .font(ZTheme.Font.numeral(26, weight: .bold))
@@ -96,14 +96,14 @@ struct HistoryView: View {
             HStack(spacing: 8) {
                 pill(title: "All", value: nil)
                 ForEach(profileNames, id: \.self) { name in
-                    pill(title: name, value: name)
+                    pill(title: .verbatim(name), value: name)
                 }
             }
             .padding(.horizontal, 2)
         }
     }
 
-    private func pill(title: String, value: String?) -> some View {
+    private func pill(title: LocalizedStringResource, value: String?) -> some View {
         let isOn = filter == value
         return Button {
             Haptics.light()
@@ -216,19 +216,19 @@ struct HistoryView: View {
 
     private func subtitle(_ session: FocusSession) -> String {
         let time = (session.startedAt ?? Date()).formatted(date: .omitted, time: .shortened)
-        var s = "\(time) · \(session.completedMinutes) min"
-        if session.endedEarly { s += " · ended early" }
+        var s = String(localized: "\(time) · \(session.completedMinutes) min")
+        if session.endedEarly { s += String(localized: " · ended early") }
         return s
     }
 
     private func hoursLabel(_ minutes: Int) -> String {
-        minutes >= 60 ? "\(minutes / 60)h" : "\(minutes)m"
+        minutes >= 60 ? String(localized: "\(minutes / 60)h") : String(localized: "\(minutes)m")
     }
 
     private func dayLabel(_ date: Date) -> String {
         let cal = Calendar.current
-        if cal.isDateInToday(date) { return "Today" }
-        if cal.isDateInYesterday(date) { return "Yesterday" }
+        if cal.isDateInToday(date) { return String(localized: "Today") }
+        if cal.isDateInYesterday(date) { return String(localized: "Yesterday") }
         return date.formatted(.dateTime.weekday(.wide).month(.abbreviated).day())
     }
 }

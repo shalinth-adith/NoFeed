@@ -153,8 +153,8 @@ struct AnalyticsView: View {
     /// "Tue · Work, 25 min" — enough to place the session, nothing more.
     private func reflectSubject(_ session: FocusSession) -> String {
         let day = dayLabel(session.startedAt)
-        let name = session.profileName ?? "Focus"
-        return "\(day) · \(name), \(session.completedMinutes) min"
+        let name = session.profileName ?? String(localized: "Focus")
+        return String(localized: "\(day) · \(name), \(session.completedMinutes) min")
     }
 
     private var weekMinutes: Int { stats.reduce(0) { $0 + $1.focusMinutes } }
@@ -171,11 +171,11 @@ struct AnalyticsView: View {
         // Same rule as the recap: a first week has nothing to be compared to,
         // and "+6.9 h vs last week" against a week that never happened is
         // noise (review 2.3, L3).
-        guard hadPreviousWeek else { return "Your first week" }
+        guard hadPreviousWeek else { return String(localized: "Your first week") }
         let delta = Double(weekMinutes - previousWeekMinutes) / 60
-        if abs(delta) < 0.05 { return "Same as last week" }
+        if abs(delta) < 0.05 { return String(localized: "Same as last week") }
         let sign = delta > 0 ? "+" : "−"
-        return "\(sign)\(String(format: "%.1f", abs(delta))) h vs last week"
+        return String(localized: "\(sign)\(String(format: "%.1f", abs(delta))) h vs last week")
     }
 
     // MARK: - Header
@@ -187,8 +187,9 @@ struct AnalyticsView: View {
             .padding(.bottom, 34)
     }
 
-    private func sectionLabel(_ text: String) -> some View {
-        Text(text.uppercased())
+    private func sectionLabel(_ text: LocalizedStringResource) -> some View {
+        Text(text)
+            .textCase(.uppercase)
             .font(ZTheme.Font.body(11))
             .tracking(1.8)
             .foregroundStyle(ZTheme.Palette.text(0.30))
@@ -220,19 +221,21 @@ struct AnalyticsView: View {
     /// the productivity score but had nowhere to show.
     private var distractionRow: some View {
         HStack(alignment: .firstTextBaseline, spacing: 8) {
-            Text("\(weekAttempts)")
+            Text(weekAttempts, format: .number)
                 .font(ZTheme.Font.numeral(30, weight: .regular))
                 .foregroundStyle(ZTheme.Palette.textPrimary)
-            Text(weekAttempts == 1 ? "distraction blocked this week"
-                                   : "distractions blocked this week")
+            Text(weekAttempts == 1
+                 ? String(localized: "distraction blocked this week", comment: "Follows a large count of exactly one.")
+                 : String(localized: "distractions blocked this week", comment: "Follows a large count other than one."))
                 .font(ZTheme.Font.body(14))
                 .foregroundStyle(ZTheme.Palette.text(0.55))
             Spacer(minLength: 0)
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(
-            "\(weekAttempts) \(weekAttempts == 1 ? "distraction" : "distractions") blocked this week"
-            + (todayAttempts > 0 ? ", \(todayAttempts) today" : ""))
+            todayAttempts > 0
+                ? String(localized: "\(weekAttempts) distractions blocked this week, \(todayAttempts) today")
+                : String(localized: "\(weekAttempts) distractions blocked this week"))
     }
 
     /// The recap's door inside the app.
@@ -310,8 +313,9 @@ struct AnalyticsView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .accessibilityElement(children: .ignore)
-                .accessibilityLabel("\(stat.label): \(stat.focusMinutes) minutes"
-                                    + (isToday ? ", today" : ""))
+                .accessibilityLabel(isToday
+                    ? String(localized: "\(stat.label): \(stat.focusMinutes) minutes, today")
+                    : String(localized: "\(stat.label): \(stat.focusMinutes) minutes"))
             }
         }
         .frame(height: 134)
@@ -352,14 +356,14 @@ struct AnalyticsView: View {
     private func rowNote(_ session: FocusSession) -> String {
         let note = (session.note ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         if !note.isEmpty { return note }
-        return session.wasCompleted ? "Completed" : "Ended early"
+        return session.wasCompleted ? String(localized: "Completed") : String(localized: "Ended early")
     }
 
     private func dayLabel(_ date: Date?) -> String {
         guard let date else { return "—" }
         let calendar = Calendar.current
-        if calendar.isDateInToday(date) { return "Today" }
-        if calendar.isDateInYesterday(date) { return "Yesterday" }
+        if calendar.isDateInToday(date) { return String(localized: "Today") }
+        if calendar.isDateInYesterday(date) { return String(localized: "Yesterday") }
         let formatter = DateFormatter()
         formatter.dateFormat = "EEE"
         return formatter.string(from: date)
@@ -387,7 +391,7 @@ struct AnalyticsView: View {
                     .font(ZTheme.Font.body(15))
                     .foregroundStyle(ZTheme.Palette.textPrimary)
                 Spacer()
-                Text("\(streak) day\(streak == 1 ? "" : "s")")
+                Text("\(streak) days")
                     .font(ZTheme.Font.body(15))
                     .foregroundStyle(ZTheme.Palette.text(0.55))
             }
@@ -395,7 +399,7 @@ struct AnalyticsView: View {
         }
     }
 
-    private func goalRow(title: String, value: String, progress: Double, fill: Color) -> some View {
+    private func goalRow(title: LocalizedStringResource, value: String, progress: Double, fill: Color) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .firstTextBaseline) {
                 Text(title)
@@ -418,7 +422,7 @@ struct AnalyticsView: View {
             .frame(height: 3)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("\(title): \(value)")
+        .accessibilityLabel(Text(title) + Text(verbatim: ": \(value)"))
     }
 
     /// "10" not "10.0" for whole-hour goals.

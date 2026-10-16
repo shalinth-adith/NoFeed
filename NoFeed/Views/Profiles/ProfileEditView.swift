@@ -100,7 +100,7 @@ struct ProfileEditView: View {
         QuietEditorScaffold(
             title: target == nil ? "New profile" : "Edit profile",
             cancelTitle: "Cancel",
-            status: status,
+            status: .verbatim(status),
             statusIsAlert: statusIsAlert,
             ctaTitle: target == nil ? "Create profile" : "Save changes",
             ctaIdentifier: "profile-save",
@@ -312,12 +312,12 @@ struct ProfileEditView: View {
             QuietHairline()
 
             if let bad = badDomains.first, let fix = Self.repair(bad) {
-                QuietHelperRow(text: Self.domainProblem(bad),
+                QuietHelperRow(text: .verbatim(Self.domainProblem(bad)),
                                color: ZTheme.Palette.alert,
                                actionTitle: "Use \(fix)",
                                tone: tone) { replace(bad, with: fix) }
             } else if let bad = badDomains.first {
-                QuietHelper(text: Self.domainProblem(bad), color: ZTheme.Palette.alert)
+                QuietHelper(text: .verbatim(Self.domainProblem(bad)), color: ZTheme.Palette.alert)
             } else if domains.isEmpty {
                 QuietHelper(text: "Leave this empty and the whole web stays open.")
             } else {
@@ -359,12 +359,12 @@ struct ProfileEditView: View {
 
             if !draft.blockAllApps {
                 QuietDisclosureRow(title: "Blocked apps & sites",
-                                   value: countText(blockCount)) { showBlockPicker = true }
+                                   value: .verbatim(countText(blockCount))) { showBlockPicker = true }
                 QuietHairline(color: ZTheme.Palette.glassFill)
             }
 
             QuietDisclosureRow(title: draft.blockAllApps ? "Allowed apps" : "Always allowed",
-                               value: countText(draft.allow.applicationTokens.count)) {
+                               value: .verbatim(countText(draft.allow.applicationTokens.count))) {
                 showAllowPicker = true
             }
 
@@ -427,17 +427,17 @@ struct ProfileEditView: View {
     // MARK: - Saved (screen 13)
 
     private var savedSummary: String {
-        let minutes = "\(draft.focusMinutes) minutes"
+        let minutes = String(localized: "\(draft.focusMinutes) minutes")
         let valid = domains.filter(Self.isValidDomain)
         if !valid.isEmpty {
-            return "\(minutes), everything blocked but \(Self.readableList(valid.map(Self.siteLabel)))."
+            return String(localized: "\(minutes), everything blocked but \(Self.readableList(valid.map(Self.siteLabel))).")
         }
         if draft.blockAllApps {
-            return "\(minutes) with everything else held back."
+            return String(localized: "\(minutes) with everything else held back.")
         }
         return blockCount > 0
-            ? "\(minutes), blocking the \(blockCount) app\(blockCount == 1 ? "" : "s") you picked."
-            : "\(minutes), with nothing blocked yet."
+            ? String(localized: "\(minutes), blocking the \(blockCount) apps you picked.")
+            : String(localized: "\(minutes), with nothing blocked yet.")
     }
 
     /// Make the new profile the active one and close.
@@ -495,19 +495,19 @@ struct ProfileEditView: View {
     /// a *fix*, because the comp words them differently (09/10 vs 11).
     private var status: String {
         guard statusIsAlert else {
-            if isReady { return "Ready when you are" }
-            return "A name and an icon is all it takes"
+            if isReady { return String(localized: "Ready when you are") }
+            return String(localized: "A name and an icon is all it takes")
         }
         let missing = (hasName ? 0 : 1) + (hasIcon ? 0 : 1)
         let fixes = (duplicateProfile == nil ? 0 : 1) + (badDomains.isEmpty ? 0 : 1)
 
         if missing > 0 && fixes == 0 {
-            return missing == 2 ? "Two things left, both above" : "One thing left, just above"
+            return missing == 2 ? String(localized: "Two things left, both above") : String(localized: "One thing left, just above")
         }
         if fixes > 0 && missing == 0 {
-            return fixes == 2 ? "Two entries need a small fix" : "One entry needs a small fix"
+            return fixes == 2 ? String(localized: "Two entries need a small fix") : String(localized: "One entry needs a small fix")
         }
-        return "A few things above still need you"
+        return String(localized: "A few things above still need you")
     }
 
     // MARK: - Actions
@@ -577,7 +577,7 @@ struct ProfileEditView: View {
     }
 
     private func countText(_ count: Int) -> String {
-        count == 0 ? "None" : "\(count)"
+        count == 0 ? String(localized: "None") : "\(count)"
     }
 
     // MARK: Domain parsing
@@ -606,10 +606,10 @@ struct ProfileEditView: View {
 
     /// Why this entry isn't a website — specific where we can be.
     static func domainProblem(_ candidate: String) -> String {
-        if candidate.contains(",") { return "That comma makes it not a website." }
-        if candidate.contains(" ") { return "A website can\u{2019}t have a space in it." }
-        if !candidate.contains(".") { return "That\u{2019}s missing its ending — .com, .ai, and so on." }
-        return "That isn\u{2019}t a website NoFeed can recognise."
+        if candidate.contains(",") { return String(localized: "That comma makes it not a website.") }
+        if candidate.contains(" ") { return String(localized: "A website can\u{2019}t have a space in it.") }
+        if !candidate.contains(".") { return String(localized: "That\u{2019}s missing its ending — .com, .ai, and so on.") }
+        return String(localized: "That isn\u{2019}t a website NoFeed can recognise.")
     }
 
     /// The comp's one-tap repair: fix the obvious typo if the result is a real
@@ -642,8 +642,8 @@ struct ProfileEditView: View {
         switch items.count {
         case 0:  return ""
         case 1:  return items[0]
-        case 2:  return "\(items[0]) and \(items[1])"
-        default: return items.dropLast().joined(separator: ", ") + " and \(items.last!)"
+        case 2:  return String(localized: "\(items[0]) and \(items[1])")
+        default: return items.dropLast().joined(separator: ", ") + String(localized: " and \(items.last!)")
         }
     }
 }

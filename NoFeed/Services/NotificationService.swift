@@ -97,8 +97,8 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
 
     func scheduleFocusEnd(after seconds: TimeInterval, profileName: String, startedAt: Date) {
         let content = UNMutableNotificationContent()
-        content.title = "Focus complete"
-        content.body = "Your \(profileName) session is done — how did it feel?"
+        content.title = String(localized: "Focus complete")
+        content.body = String(localized: "Your \(profileName) session is done — how did it feel?")
         content.sound = .default
         content.categoryIdentifier = Self.focusEndCategory
         // The start time is the session's identity across processes: the row
@@ -114,11 +114,11 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     func scheduleBreakEnd(after seconds: TimeInterval, focusedToday: Bool) {
         let content = UNMutableNotificationContent()
         if focusedToday {
-            content.title = "Break over"
-            content.body = "Ready for another focus session?"
+            content.title = String(localized: "Break over")
+            content.body = String(localized: "Ready for another focus session?")
         } else {
-            content.title = "Ready to focus?"
-            content.body = "You haven't focused yet today — start a session."
+            content.title = String(localized: "Ready to focus?")
+            content.body = String(localized: "You haven't focused yet today — start a session.")
         }
         content.sound = .default
         add(breakEndID, content, after: seconds)
@@ -132,11 +132,11 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     func scheduleDailyReminder(hour: Int, minute: Int, focusedToday: Bool) {
         let content = UNMutableNotificationContent()
         if focusedToday {
-            content.title = "Time for a break"
-            content.body = "You've focused today — step away for a few minutes to recharge."
+            content.title = String(localized: "Time for a break")
+            content.body = String(localized: "You've focused today — step away for a few minutes to recharge.")
         } else {
-            content.title = "Ready to focus?"
-            content.body = "You haven't focused yet today. Start a session."
+            content.title = String(localized: "Ready to focus?")
+            content.body = String(localized: "You haven't focused yet today. Start a session.")
         }
         content.sound = .default
 
@@ -191,7 +191,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     /// than the gap deserves.
     func scheduleWeeklyRecap(hour: Int, minute: Int, body: String) {
         let content = UNMutableNotificationContent()
-        content.title = "Your week"
+        content.title = String(localized: "Your week")
         content.body = body
         content.sound = .default
         content.userInfo = ["kind": Self.weeklyRecapKind]
@@ -242,8 +242,8 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
 
     func scheduleDailyChallengeReminder(hour: Int = 9, minute: Int = 0) {
         let content = UNMutableNotificationContent()
-        content.title = "New daily challenge"
-        content.body = "Open NoFeed to see today's focus challenge."
+        content.title = String(localized: "New daily challenge")
+        content.body = String(localized: "Open NoFeed to see today's focus challenge.")
         content.sound = .default
 
         var components = DateComponents()
@@ -255,7 +255,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
 
     func notifyChallengeComplete(title: String) {
         let content = UNMutableNotificationContent()
-        content.title = "Challenge complete 🎉"
+        content.title = String(localized: "Challenge complete 🎉")
         content.body = title
         content.sound = .default
         add(challengeDoneID, content, after: 1)
@@ -305,8 +305,8 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
                 if w > 7 { w -= 7 }
 
                 let content = UNMutableNotificationContent()
-                content.title = "Focus starting soon"
-                content.body = "\(title) begins in \(lead) minute\(lead == 1 ? "" : "s")."
+                content.title = String(localized: "Focus starting soon")
+                content.body = String(localized: "\(title) begins in \(lead) minutes.")
                 content.sound = .default
                 content.interruptionLevel = .timeSensitive
 
@@ -340,8 +340,8 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
 
         for weekday in weekdays {
             let content = UNMutableNotificationContent()
-            content.title = "Focus block starting"
-            content.body = "\(title) is starting now — open NoFeed to begin."
+            content.title = String(localized: "Focus block starting")
+            content.body = String(localized: "\(title) is starting now — open NoFeed to begin.")
             content.sound = .default
             content.interruptionLevel = .timeSensitive
 

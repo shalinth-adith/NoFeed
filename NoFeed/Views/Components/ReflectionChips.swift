@@ -48,7 +48,7 @@ struct ReflectionChips: View {
             .contentShape(Capsule())
         }
         .buttonStyle(.plain)
-        .accessibilityIdentifier("\(idPrefix)-reflection-\(choice.title.lowercased())")
+        .accessibilityIdentifier("\(idPrefix)-reflection-\(String(describing: choice))")
         .accessibilityLabel(choice.title)
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
     }

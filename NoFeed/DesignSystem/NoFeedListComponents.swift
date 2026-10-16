@@ -68,7 +68,7 @@ struct IconTile: View {
 
 /// The dashed periwinkle "New …" / "Add …" button.
 struct DashedActionButton: View {
-    var title: String
+    var title: LocalizedStringResource
     var systemImage: String = "plus"
     var action: () -> Void
 
@@ -98,8 +98,8 @@ struct DashedActionButton: View {
 /// A large left-aligned screen title (the look the design uses on Profiles /
 /// Schedule / Settings), placed above aurora-backed content.
 struct NoFeedScreenTitle: View {
-    var title: String
-    var subtitle: String?
+    var title: LocalizedStringResource
+    var subtitle: LocalizedStringResource?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {

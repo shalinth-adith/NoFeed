@@ -411,16 +411,16 @@ private struct ProfileRow: View {
     /// reads as time you have rather than none.
     private var minutesLeft: String {
         let minutes = max(1, Int(ceil(Double(remaining) / 60)))
-        return "\(minutes) minute\(minutes == 1 ? "" : "s")"
+        return String(localized: "\(minutes) minutes")
     }
 
     private var summary: String {
-        let focus = "\(profile.focusMinutes) min focus"
-        let brk = profile.breakMinutes > 0 ? " · \(profile.breakMinutes) min break" : ""
-        let strict = profile.isStrict ? " · strict" : ""
+        let focus = String(localized: "\(profile.focusMinutes) min focus")
+        let brk = profile.breakMinutes > 0 ? String(localized: " · \(profile.breakMinutes) min break") : ""
+        let strict = profile.isStrict ? String(localized: " · strict") : ""
         // A profile saved "without blocking" was indistinguishable from the
         // others in this list (review 2.3, L5).
-        let nothing = blocksNothing ? " · blocks nothing yet" : ""
+        let nothing = blocksNothing ? String(localized: " · blocks nothing yet") : ""
         return focus + brk + strict + nothing
     }
 
@@ -523,10 +523,9 @@ struct DeleteProfileSheet: View {
     /// sessions" would be the sentence drawing attention to its own template.
     private var reassurance: String {
         guard sessionCount > 0 else {
-            return "The profile goes; nothing else changes\u{2014}your history and your streak aren\u{2019}t touched."
+            return String(localized: "The profile goes; nothing else changes\u{2014}your history and your streak aren\u{2019}t touched.")
         }
-        let sessions = sessionCount == 1 ? "session" : "sessions"
-        return "The profile goes; its \(sessionCount) \(sessions) stay in your history and your streak isn\u{2019}t touched."
+        return String(localized: "The profile goes; its \(sessionCount) sessions stay in your history and your streak isn\u{2019}t touched.")
     }
 }
 

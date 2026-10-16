@@ -236,7 +236,7 @@ struct EditProfileSheet: View {
     /// The comp draws a chevron on these rows. Rather than push a screen for a
     /// single number, tapping reveals the stepper in place — the same move the
     /// schedule editor already makes for its time wheel.
-    private func lengthRow(title: String, value: String, field: LengthField) -> some View {
+    private func lengthRow(title: LocalizedStringResource, value: LocalizedStringResource, field: LengthField) -> some View {
         VStack(spacing: 0) {
             Button {
                 Haptics.light()
@@ -284,13 +284,13 @@ struct EditProfileSheet: View {
             QuietHairline(color: ZTheme.Palette.glassFill)
 
             if !draft.blockAllApps {
-                chooseRow(title: countLabel(blockCount, noun: "app", zero: "No apps chosen"),
+                chooseRow(title: countLabel(blockCount, zero: String(localized: "No apps chosen")),
                           identifier: "profile-edit-choose-blocked") { showBlockPicker = true }
                 QuietHairline(color: ZTheme.Palette.glassFill)
             }
 
             chooseRow(title: countLabel(draft.allow.applicationTokens.count,
-                                        noun: "app", zero: "None chosen"),
+                                        zero: String(localized: "None chosen")),
                       subtitle: draft.blockAllApps ? "Allowed apps" : "Always allowed",
                       identifier: "profile-edit-choose-allowed") { showAllowPicker = true }
             QuietHairline(color: ZTheme.Palette.glassFill)
@@ -312,13 +312,13 @@ struct EditProfileSheet: View {
         .animation(ZTheme.Motion.smooth, value: draft.blockAllApps)
     }
 
-    private func countLabel(_ count: Int, noun: String, zero: String = "None") -> String {
-        count == 0 ? zero : "\(count) \(noun)\(count == 1 ? "" : "s")"
+    private func countLabel(_ count: Int, zero: String) -> String {
+        count == 0 ? zero : String(localized: "\(count) apps")
     }
 
     /// The comp's "4 apps … Choose ›" row.
     private func chooseRow(title: String,
-                           subtitle: String? = nil,
+                           subtitle: LocalizedStringResource? = nil,
                            identifier: String,
                            action: @escaping () -> Void) -> some View {
         Button {
@@ -383,7 +383,7 @@ struct EditProfileSheet: View {
                             set: { schedules.setEnabled(schedule, $0) }))
                             .labelsHidden()
                             .tint(tone)
-                            .accessibilityLabel("Start \(schedule.title ?? "") on its own")
+                            .accessibilityLabel("Start \(schedule.title ?? String()) on its own")
                     }
                     .padding(.vertical, 15)
                     QuietHairline(color: ZTheme.Palette.glassFill)

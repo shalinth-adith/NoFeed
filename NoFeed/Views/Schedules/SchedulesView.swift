@@ -68,7 +68,7 @@ struct SchedulesView: View {
                         VStack(alignment: .leading, spacing: 0) {
                             permissionNotice
 
-                            sectionLabel(todayLabel)
+                            sectionLabel(.verbatim(todayLabel))
                                 .padding(.bottom, 8)
                             scheduleRows
                             addScheduleButton
@@ -179,14 +179,12 @@ struct SchedulesView: View {
 
     private func weekStripLabel(monday: Date, today: Date, calendar: Calendar) -> String {
         let sunday = calendar.date(byAdding: .day, value: 6, to: monday) ?? monday
-        let range = "\(monday.formatted(date: .abbreviated, time: .omitted)) to \(sunday.formatted(date: .abbreviated, time: .omitted))"
-        return "This week, \(range). Today is \(today.formatted(.dateTime.weekday(.wide)))."
+        let range = String(localized: "\(monday.formatted(date: .abbreviated, time: .omitted)) to \(sunday.formatted(date: .abbreviated, time: .omitted))")
+        return String(localized: "This week, \(range). Today is \(today.formatted(.dateTime.weekday(.wide))).")
     }
 
     private var todayLabel: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE"
-        return "Today · \(formatter.string(from: Date()))"
+        String(localized: "Today · \(Date().formatted(.dateTime.weekday(.wide)))")
     }
 
     // MARK: - Schedule rows
@@ -303,7 +301,7 @@ struct SchedulesView: View {
                 Text("All profiles")
                     .font(ZTheme.Font.body(15))
                     .foregroundStyle(ZTheme.Palette.textPrimary)
-                Text("\(profiles.profiles.count)")
+                Text(profiles.profiles.count, format: .number)
                     .font(ZTheme.Font.numeral(15))
                     .foregroundStyle(ZTheme.Palette.text(0.55))
                 Spacer()
@@ -369,8 +367,9 @@ struct SchedulesView: View {
 
     // MARK: - Helpers
 
-    private func sectionLabel(_ text: String) -> some View {
-        Text(text.uppercased())
+    private func sectionLabel(_ text: LocalizedStringResource) -> some View {
+        Text(text)
+            .textCase(.uppercase)
             .font(ZTheme.Font.body(11))
             .tracking(1.8)
             .foregroundStyle(ZTheme.Palette.text(0.30))
@@ -383,7 +382,7 @@ struct SchedulesView: View {
     }
 
     private func displayTitle(_ schedule: FocusSchedule?) -> String {
-        guard let schedule else { return "this schedule" }
+        guard let schedule else { return String(localized: "this schedule") }
         return ScheduleStore.displayName(for: schedule)
     }
 
@@ -399,7 +398,7 @@ struct SchedulesView: View {
         guard let profile, profile.focusMinutes > 0 else {
             return "\(days) · \(store.durationText(for: schedule))"
         }
-        return "\(days) · \(profile.focusMinutes) min"
+        return String(localized: "\(days) · \(profile.focusMinutes) min")
     }
 }
 
@@ -486,22 +485,23 @@ private struct ScheduleRow: View {
 
     private var title: String { ScheduleStore.displayName(for: schedule) }
 
-    /// "9:00" over "AM" — 12-hour start time, like the comp's time column.
+    /// "9:00" over "AM" on a 12-hour clock; "09:00" alone on a 24-hour one.
     private var timeColumn: some View {
         let hour24 = Int(schedule.startHour)
         let minute = Int(schedule.startMinute)
-        let hour12 = hour24 % 12 == 0 ? 12 : hour24 % 12
-        let meridiem = hour24 < 12 ? "AM" : "PM"
+        let meridiem = ScheduleEditView.meridiem(hour24)
         return VStack(alignment: .leading, spacing: 2) {
-            Text(String(format: "%d:%02d", hour12, minute))
+            Text(ScheduleEditView.timeText(hour24 * 60 + minute, withMeridiem: false))
                 .font(ZTheme.Font.numeral(15))
                 .foregroundStyle(schedule.isEnabled
                                  ? ZTheme.Palette.textPrimary
                                  : ZTheme.Palette.text(0.55))
-            Text(meridiem)
-                .font(ZTheme.Font.body(11))
-                .tracking(0.9)
-                .foregroundStyle(ZTheme.Palette.text(0.30))
+            if !meridiem.isEmpty {
+                Text(meridiem)
+                    .font(ZTheme.Font.body(11))
+                    .tracking(0.9)
+                    .foregroundStyle(ZTheme.Palette.text(0.30))
+            }
         }
         .frame(width: 58, alignment: .leading)
     }

@@ -35,7 +35,7 @@ enum ShieldMessage {
     /// `subject` is the app name or domain iOS gives us. Naming it is the whole
     /// point of the line — a generic "This app" would answer nothing.
     static func title(subject: String) -> String {
-        "\(subject) is behind this door."
+        String(localized: "\(subject) is behind this door.")
     }
 
     /// The lines under it: that the door opens by itself, when, and that
@@ -44,12 +44,12 @@ enum ShieldMessage {
         var lines: [String] = []
 
         if let minutes = ActiveSessionInfo.remainingMinutes {
-            let time = minutes == 1 ? "1 minute" : "\(minutes) minutes"
-            lines.append("It opens on its own in \(time). Nothing inside will have moved.")
+            let time = String(localized: "\(minutes) minutes")
+            lines.append(String(localized: "It opens on its own in \(time). Nothing inside will have moved."))
         } else {
             // No session, so no honest number to give. The reassurance still
             // holds and is the half worth keeping.
-            lines.append("Nothing inside will have moved.")
+            lines.append(String(localized: "Nothing inside will have moved."))
         }
 
         let trimmed = custom.trimmingCharacters(in: .whitespacesAndNewlines)

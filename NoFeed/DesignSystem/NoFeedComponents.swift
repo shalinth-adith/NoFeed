@@ -45,8 +45,8 @@ struct SelectablePill<Label: View>: View {
 
 /// A glass stat tile: icon + label up top, big rounded numeral below.
 struct StatTile: View {
-    var value: String
-    var label: String
+    var value: LocalizedStringResource
+    var label: LocalizedStringResource
     var systemImage: String
     var color: Color
 
@@ -70,7 +70,7 @@ struct StatTile: View {
 
 /// A left-aligned section header in the brand display face.
 struct NoFeedSectionHeader: View {
-    var title: String
+    var title: LocalizedStringResource
     var body: some View {
         Text(title)
             .font(ZTheme.Font.display(15, weight: .semibold))

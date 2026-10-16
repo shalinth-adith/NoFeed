@@ -155,7 +155,7 @@ final class ScheduleStore {
         case (false, false): return "\(profile) · \(title)"
         case (false, true):  return profile
         case (true, false):  return title
-        case (true, true):   return "Focus block"
+        case (true, true):   return String(localized: "Focus block")
         }
     }
 
@@ -254,16 +254,16 @@ final class ScheduleStore {
             - (Int(schedule.startHour) * 60 + Int(schedule.startMinute))
         let mins = raw > 0 ? raw : raw + 24 * 60
         let h = mins / 60, m = mins % 60
-        if h == 0 { return "\(m)m" }
-        return m == 0 ? "\(h)h" : "\(h)h\(m)"
+        if h == 0 { return String(localized: "\(m)m") }
+        return m == 0 ? String(localized: "\(h)h") : String(localized: "\(h)h\(m)")
     }
 
     /// What the schedule blocks, for the card subtitle.
     func blockingSummary(for schedule: FocusSchedule) -> String {
-        if schedule.blockAllApps { return "Blocks all apps" }
+        if schedule.blockAllApps { return String(localized: "Blocks all apps") }
         let sel = SelectionCodec.decode(schedule.blockSelectionData)
         let n = sel.applicationTokens.count + sel.categoryTokens.count + sel.webDomainTokens.count
-        return n == 0 ? "Nothing blocked" : "\(n) app\(n == 1 ? "" : "s") blocked"
+        return n == 0 ? String(localized: "Nothing blocked") : String(localized: "\(n) apps blocked")
     }
 
     // MARK: - Conflict detection (Quiet spec, screen 18)
@@ -359,11 +359,21 @@ final class ScheduleStore {
     }
 
     static func summary(for weekdays: Set<Int>) -> String {
-        if weekdays == [2, 3, 4, 5, 6] { return "Weekdays" }
-        if weekdays == [1, 7] { return "Weekends" }
-        if weekdays.count == 7 { return "Every day" }
-        let symbols = ["", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        if weekdays == [2, 3, 4, 5, 6] { return String(localized: "Weekdays") }
+        if weekdays == [1, 7] { return String(localized: "Weekends") }
+        if weekdays.count == 7 { return String(localized: "Every day") }
+        let symbols = ["", String(localized: "Sun"), String(localized: "Mon"), String(localized: "Tue"), String(localized: "Wed"), String(localized: "Thu"), String(localized: "Fri"), String(localized: "Sat")]
         return weekdays.sorted().map { symbols[$0] }.joined(separator: " ")
+    }
+
+    /// A whole sentence per case, so no language has to lowercase a label
+    /// to fit it into "Repeats …" (German capitalises nouns; "mo." is wrong).
+    static func repeatSentence(for weekdays: Set<Int>) -> String {
+        if weekdays == [2, 3, 4, 5, 6] { return String(localized: "Repeats on weekdays.") }
+        if weekdays == [1, 7] { return String(localized: "Repeats on weekends.") }
+        if weekdays.count == 7 { return String(localized: "Repeats every day.") }
+        return String(localized: "Repeats on \(summary(for: weekdays)).",
+                      comment: "The argument is a list of short weekday names, like “Mon Wed Fri”.")
     }
 
     // MARK: - Private
@@ -500,7 +510,7 @@ enum ScheduleAutoStart {
         let profile = profiles.profiles.first { $0.name == schedule.profileName }
         let name = schedule.title?.isEmpty == false
             ? schedule.title!
-            : (schedule.profileName?.isEmpty == false ? schedule.profileName! : "Focus block")
+            : (schedule.profileName?.isEmpty == false ? schedule.profileName! : String(localized: "Focus block"))
 
         session.startFocus(
             profileName: name,
@@ -534,7 +544,7 @@ enum ScheduleCountdown {
         let profile = profiles.profiles.first { $0.name == schedule.profileName }
         let name = schedule.title?.isEmpty == false
             ? schedule.title!
-            : (schedule.profileName?.isEmpty == false ? schedule.profileName! : "Focus block")
+            : (schedule.profileName?.isEmpty == false ? schedule.profileName! : String(localized: "Focus block"))
 
         LiveActivityManager.shared.startUpcoming(
             title: name,

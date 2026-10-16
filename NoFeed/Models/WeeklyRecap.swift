@@ -80,11 +80,11 @@ struct WeeklyRecap: Equatable {
     /// The comparison against last week, or nil when there is nothing to compare.
     var comparisonLine: String? {
         guard hadPreviousWeek else { return nil }
-        if isLevel { return "About the same as the week before." }
+        if isLevel { return String(localized: "About the same as the week before.") }
         let magnitude = Self.duration(abs(deltaMinutes))
         return deltaMinutes > 0
-            ? "\(magnitude) more than the week before."
-            : "\(magnitude) less than the week before."
+            ? String(localized: "\(magnitude) more than the week before.")
+            : String(localized: "\(magnitude) less than the week before.")
     }
 
     /// The line the whole recap exists to deliver. `DistractionLog` records an
@@ -92,31 +92,31 @@ struct WeeklyRecap: Equatable {
     /// door held, which is the opposite of what a raw "distraction count" sounds
     /// like and is why it is phrased as a win.
     var resistedLine: String {
-        guard attempts > 0 else { return "Nothing pulled at you this week." }
+        guard attempts > 0 else { return String(localized: "Nothing pulled at you this week.") }
 
         let reach = attempts == 1
-            ? "You reached for a blocked app once"
-            : "You reached for a blocked app \(attempts) times"
+            ? String(localized: "You reached for a blocked app once")
+            : String(localized: "You reached for a blocked app \(attempts) times")
 
         return heldEveryTime
-            ? "\(reach), and stopped every time."
-            : "\(reach), and stopped almost every time."
+            ? String(localized: "\(reach), and stopped every time.")
+            : String(localized: "\(reach), and stopped almost every time.")
     }
 
     /// One line on what the week was. Never scolds, never shouts.
     var motivation: String {
         if isEmpty {
-            return "A week away from it. Next week is open."
+            return String(localized: "A week away from it. Next week is open.")
         }
         if !hadPreviousWeek {
-            return "Your first week of this. The rest builds on it."
+            return String(localized: "Your first week of this. The rest builds on it.")
         }
         if isLevel {
-            return "Level with last week. Steady is the harder thing to do."
+            return String(localized: "Level with last week. Steady is the harder thing to do.")
         }
         return deltaMinutes > 0
-            ? "More quiet than last week. It is adding up."
-            : "A lighter week than the last. It still counts."
+            ? String(localized: "More quiet than last week. It is adding up.")
+            : String(localized: "A lighter week than the last. It still counts.")
     }
 
     /// A forward-looking nudge drawn from the shape of the week, or nil when the
@@ -126,18 +126,18 @@ struct WeeklyRecap: Equatable {
     /// something only this app can tell you, and is the reason to open the screen.
     var suggestion: String? {
         if isEmpty {
-            return "Fifteen minutes is enough to start with. Pick one day next week."
+            return String(localized: "Fifteen minutes is enough to start with. Pick one day next week.")
         }
         guard days.contains(where: { $0.minutes > 0 }) else { return nil }
 
         // A day with nothing in it is the cheapest win available next week.
         if let quietest = days.first(where: { $0.minutes == 0 }) {
-            return "\(quietest.label) had none. One short session there would even out the week."
+            return String(localized: "\(quietest.label) had none. One short session there would even out the week.")
         }
 
         // Otherwise point at what already worked and ask for it again.
         if let best = days.max(by: { $0.minutes < $1.minutes }), best.minutes > 0 {
-            return "\(best.label) was your strongest day, at \(Self.duration(best.minutes)). Worth repeating."
+            return String(localized: "\(best.label) was your strongest day, at \(Self.duration(best.minutes)). Worth repeating.")
         }
         return nil
     }
@@ -154,10 +154,10 @@ struct WeeklyRecap: Equatable {
     var highlightLine: String? {
         var parts: [String] = []
         if streak > 0 {
-            parts.append("\(streak)-day streak")
+            parts.append(String(localized: "\(streak)-day streak"))
         }
         if let best = bestDay {
-            parts.append("strongest on \(best.label)")
+            parts.append(String(localized: "strongest on \(best.label)"))
         }
         return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
@@ -166,7 +166,7 @@ struct WeeklyRecap: Equatable {
     /// survive a Lock Screen. Leads with the number, because that is what makes
     /// someone open it.
     var notificationBody: String {
-        var parts = ["\(durationText) of quiet across \(sessionCount) \(sessionCount == 1 ? "session" : "sessions")."]
+        var parts = [String(localized: "\(durationText) of quiet across \(sessionCount) sessions.")]
         if attempts > 0 { parts.append(resistedLine) }
         return parts.joined(separator: " ")
     }
@@ -176,9 +176,9 @@ struct WeeklyRecap: Equatable {
     /// "4h 20m" / "4h" / "45m". Drops a zero minute component so whole hours read
     /// as whole hours.
     static func duration(_ minutes: Int) -> String {
-        guard minutes >= 60 else { return "\(minutes)m" }
+        guard minutes >= 60 else { return String(localized: "\(minutes)m") }
         let hours = minutes / 60
         let rest = minutes % 60
-        return rest == 0 ? "\(hours)h" : "\(hours)h \(rest)m"
+        return rest == 0 ? String(localized: "\(hours)h") : String(localized: "\(hours)h \(rest)m")
     }
 }

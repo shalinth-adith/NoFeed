@@ -145,6 +145,7 @@ targets:
     platform: iOS
     sources:
       - path: NoFeedShield
+      - path: Shared/Localizable.xcstrings
       - path: Shared/AppGroup.swift
       - path: Shared/DistractionLog.swift
       - path: Shared/ShieldMessage.swift
@@ -190,6 +191,7 @@ targets:
     platform: iOS
     sources:
       - path: NoFeedShieldAction
+      - path: Shared/Localizable.xcstrings
       # Counts the attempt, and grants the timed pass when the second button is
       # pressed. Deliberately still NOT the whole reconcile stack: granting a
       # pass only ever *clears* shields, and clearing names nothing, so this
@@ -239,6 +241,7 @@ targets:
     platform: iOS
     sources:
       - path: NoFeedWidget
+      - path: Shared/Localizable.xcstrings
       - path: Shared/AppGroup.swift
       - path: Shared/StatsSnapshot.swift
       - path: Shared/FocusActivityAttributes.swift

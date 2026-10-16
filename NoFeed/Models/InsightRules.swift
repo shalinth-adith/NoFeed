@@ -44,11 +44,11 @@ struct InsightRules: Equatable {
         guard answered.count >= minimumSamples else { return .empty }
 
         let length = winner(of: answered, by: { lengthBucket($0.plannedMinutes) })
-            .map { "Your \($0) sessions go best." }
+            .map { String(localized: "Your \($0) sessions go best.") }
         let time = winner(of: answered, by: { timeOfDay($0.startHour) })
-            .map { "\($0) are your focused hours." }
+            .map { String(localized: "\($0) are your focused hours.") }
         let profile = winner(of: answered, by: { $0.profileName })
-            .map { "\($0) is where you stay focused." }
+            .map { String(localized: "\($0) is where you stay focused.") }
 
         return InsightRules(bestLength: length, bestTimeOfDay: time, bestProfile: profile)
     }
@@ -83,20 +83,20 @@ struct InsightRules: Equatable {
 
     static func lengthBucket(_ minutes: Int) -> String {
         switch minutes {
-        case ..<16: return "short (15 minutes or less)"
-        case 16...30: return "16–30 minute"
-        case 31...45: return "31–45 minute"
-        case 46...60: return "46–60 minute"
-        default: return "hour-plus"
+        case ..<16: return String(localized: "short (15 minutes or less)")
+        case 16...30: return String(localized: "16–30 minute")
+        case 31...45: return String(localized: "31–45 minute")
+        case 46...60: return String(localized: "46–60 minute")
+        default: return String(localized: "hour-plus", comment: "Session-length bucket for over an hour, read in “Your %@ sessions go best.”")
         }
     }
 
     static func timeOfDay(_ hour: Int) -> String {
         switch hour {
-        case 5...11: return "Mornings"
-        case 12...16: return "Afternoons"
-        case 17...21: return "Evenings"
-        default: return "Nights"
+        case 5...11: return String(localized: "Mornings")
+        case 12...16: return String(localized: "Afternoons")
+        case 17...21: return String(localized: "Evenings")
+        default: return String(localized: "Nights")
         }
     }
 }

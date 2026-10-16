@@ -118,7 +118,7 @@ struct WeeklyRecapView: View {
                     .padding(.top, 6)
             }
 
-            Text("\(recap.sessionCount) \(recap.sessionCount == 1 ? "session" : "sessions")")
+            Text("\(recap.sessionCount) sessions")
                 .font(ZTheme.Font.body(14))
                 .foregroundStyle(ZTheme.Palette.text(0.30))
                 .padding(.top, 2)
@@ -130,9 +130,8 @@ struct WeeklyRecapView: View {
     private func weekRange(_ recap: WeeklyRecap) -> String {
         let calendar = Calendar.current
         let end = calendar.date(byAdding: .day, value: 6, to: recap.weekStart) ?? recap.weekStart
-        let day = DateFormatter(); day.dateFormat = "d"
-        let dayMonth = DateFormatter(); dayMonth.dateFormat = "d MMM"
-        return "\(day.string(from: recap.weekStart))–\(dayMonth.string(from: end))"
+        // The interval style orders day and month the way the user's region does.
+        return (recap.weekStart..<end).formatted(.interval.day().month(.abbreviated))
     }
 
     // MARK: - Chart

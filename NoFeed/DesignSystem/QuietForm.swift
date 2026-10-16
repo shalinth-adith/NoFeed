@@ -69,12 +69,12 @@ final class QuietValidation {
 /// The editor shell: a "Cancel" + title header, a scrolling body, and a pinned
 /// footer carrying the status line and the single tone CTA.
 struct QuietEditorScaffold<Body: View>: View {
-    let title: String
-    let cancelTitle: String
+    let title: LocalizedStringResource
+    let cancelTitle: LocalizedStringResource
     /// The footer's status line — grey guidance, or alert once save was blocked.
-    let status: String
+    let status: LocalizedStringResource
     let statusIsAlert: Bool
-    let ctaTitle: String
+    let ctaTitle: LocalizedStringResource
     /// Stable identifier for the CTA, so UI tests can find each editor's save
     /// button by name rather than by position.
     var ctaIdentifier: String = "quiet-cta"
@@ -130,7 +130,7 @@ struct QuietEditorScaffold<Body: View>: View {
     private var footer: some View {
         VStack(alignment: .leading, spacing: 12) {
             QuietStatusLine(text: status, isAlert: statusIsAlert)
-            Button(ctaTitle) { onSubmit() }
+            Button { onSubmit() } label: { Text(ctaTitle) }
                 .buttonStyle(QuietCTAStyle(tone: tone, isReady: isReady))
                 .accessibilityIdentifier(ctaIdentifier)
         }
@@ -184,13 +184,14 @@ struct QuietCTAStyle: ButtonStyle {
 
 /// 11pt uppercase tracked section label. Turns alert when its field is flagged.
 struct QuietFieldLabel: View {
-    let text: String
+    let text: LocalizedStringResource
     var color: Color = ZTheme.Palette.text(0.30)
     /// Leading space when this label follows another section.
     var topPadding: CGFloat = 0
 
     var body: some View {
-        Text(text.uppercased())
+        Text(text)
+            .textCase(.uppercase)
             .font(ZTheme.Font.body(QuietMetrics.labelSize))
             .tracking(QuietMetrics.labelTracking)
             .foregroundStyle(color)
@@ -203,7 +204,7 @@ struct QuietFieldLabel: View {
 /// The 12pt line under a field. Always present — it explains in the neutral
 /// case and corrects in the flagged one, so the layout never jumps.
 struct QuietHelper: View {
-    let text: String
+    let text: LocalizedStringResource
     var color: Color = ZTheme.Palette.text(0.30)
 
     var body: some View {
@@ -221,9 +222,9 @@ struct QuietHelper: View {
 /// "Use chatgpt.com", "Weekdays", "End at 2:50 PM"). The fix carries the tone —
 /// it is the one thing to do next.
 struct QuietHelperRow: View {
-    let text: String
+    let text: LocalizedStringResource
     var color: Color = ZTheme.Palette.text(0.30)
-    let actionTitle: String
+    let actionTitle: LocalizedStringResource
     var tone: Color = ZTheme.Palette.tone
     let action: () -> Void
 
@@ -235,7 +236,7 @@ struct QuietHelperRow: View {
                 .lineSpacing(2)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            Button(actionTitle) { Haptics.light(); action() }
+            Button { Haptics.light(); action() } label: { Text(actionTitle) }
                 .font(ZTheme.Font.body(QuietMetrics.helperSize, weight: .semibold))
                 .foregroundStyle(tone.readable)
                 .buttonStyle(.plain)
@@ -260,7 +261,7 @@ struct QuietHairline: View {
 /// The footer's status line: a small alert dot appears only once a save was
 /// blocked, so the neutral state stays a plain grey sentence.
 struct QuietStatusLine: View {
-    let text: String
+    let text: LocalizedStringResource
     var isAlert: Bool
 
     var body: some View {
@@ -277,7 +278,7 @@ struct QuietStatusLine: View {
                 // sentence into another leaves both legible at once, which
                 // reads as a rendering fault.
                 .contentTransition(.identity)
-                .animation(nil, value: text)
+                .animation(nil, value: String(localized: text))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 2)
@@ -288,13 +289,13 @@ struct QuietStatusLine: View {
 
 /// The 22pt underlined value field (profile name, schedule title).
 struct QuietTextField: View {
-    let placeholder: String
+    let placeholder: LocalizedStringResource
     @Binding var text: String
     var lineColor: Color = ZTheme.Palette.glassStroke
 
     var body: some View {
         VStack(spacing: 0) {
-            TextField(placeholder, text: $text)
+            TextField(String(localized: placeholder), text: $text)
                 .textFieldStyle(.plain)
                 .font(ZTheme.Font.display(QuietMetrics.valueSize, weight: .regular))
                 .foregroundStyle(ZTheme.Palette.textPrimary)
@@ -308,7 +309,7 @@ struct QuietTextField: View {
 
 /// A pill for a discrete choice — weekday letters, profile names, domains.
 struct QuietChip: View {
-    let title: String
+    let title: LocalizedStringResource
     var isSelected: Bool
     var tone: Color = ZTheme.Palette.tone
     /// Background when unselected — normally the neutral raise, or the alert
@@ -340,8 +341,8 @@ struct QuietChip: View {
 
 /// Label + optional sub-label on the left, a tone-tinted switch on the right.
 struct QuietToggleRow: View {
-    let title: String
-    var subtitle: String? = nil
+    let title: LocalizedStringResource
+    var subtitle: LocalizedStringResource? = nil
     @Binding var isOn: Bool
     var tone: Color = ZTheme.Palette.tone
 
@@ -369,8 +370,8 @@ struct QuietToggleRow: View {
 /// Label on the left, a dim value and a chevron on the right — the row that
 /// pushes to a picker.
 struct QuietDisclosureRow: View {
-    let title: String
-    let value: String
+    let title: LocalizedStringResource
+    let value: LocalizedStringResource
     var action: () -> Void
 
     var body: some View {
@@ -396,7 +397,7 @@ struct QuietDisclosureRow: View {
 
 /// A big tabular value with − / + squares — the comp's session-length control.
 struct QuietStepperRow: View {
-    let value: String
+    let value: LocalizedStringResource
     var canDecrement: Bool
     var canIncrement: Bool
     let onDecrement: () -> Void
@@ -580,8 +581,8 @@ struct QuietFlowLayout: Layout {
 /// the difference between a gate and a trap.
 struct QuietHoldToEnd: View {
     var tone: Color = ZTheme.Palette.tone
-    var idleLabel: String = "Hold to end early"
-    var holdingLabel: String = "Keep holding…"
+    var idleLabel: LocalizedStringResource = "Hold to end early"
+    var holdingLabel: LocalizedStringResource = "Keep holding…"
     /// Seconds of continuous hold required.
     var duration: TimeInterval = 3
     /// VoiceOver cannot express a hold, so by default a direct activation ends
@@ -603,17 +604,19 @@ struct QuietHoldToEnd: View {
         max(0, Int((duration * (1 - progress)).rounded(.up)))
     }
     private var label: String {
-        guard progress > 0 else { return idleLabel }
-        return showsCountdown ? "\(holdingLabel) · \(remainingSeconds) s" : holdingLabel
+        guard progress > 0 else { return String(localized: idleLabel) }
+        return showsCountdown
+            ? String(localized: "\(String(localized: holdingLabel)) · \(remainingSeconds) s")
+            : String(localized: holdingLabel)
     }
     private var hint: String {
         allowsAccessibilityShortcut
-            ? "Press and hold for \(Int(duration)) seconds"
-            : "Double-tap and hold for \(Int(duration)) seconds"
+            ? String(localized: "Press and hold for \(Int(duration)) seconds")
+            : String(localized: "Double-tap and hold for \(Int(duration)) seconds")
     }
 
     var body: some View {
-        let base = Text(label)
+        let base = Text(verbatim: label)
             .font(ZTheme.Font.body(14))
             .foregroundStyle(ZTheme.Palette.text(0.30))
             .monospacedDigit()
@@ -644,7 +647,7 @@ struct QuietHoldToEnd: View {
                 if phase != .active { cancel() }
             }
             .onDisappear(perform: cancel)
-            .accessibilityLabel(idleLabel)
+            .accessibilityLabel(Text(idleLabel))
             .accessibilityHint(hint)
             .accessibilityAddTraits(.isButton)
             .accessibilityIdentifier("session-hold-to-end")
@@ -692,7 +695,7 @@ struct QuietHoldToEnd: View {
 /// A 64pt hairline circle holding one glyph — the comp's pause control.
 struct QuietCircleButton: View {
     let systemImage: String
-    var label: String
+    var label: LocalizedStringResource
     var action: () -> Void
 
     var body: some View {
@@ -706,7 +709,7 @@ struct QuietCircleButton: View {
                 )
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(label)
+        .accessibilityLabel(Text(label))
     }
 }
 
@@ -715,18 +718,19 @@ struct QuietCircleButton: View {
 /// The "Couldn't save" sheet from comp 12 — a bottom card over a dimmed form.
 /// Reused for schedules, which hit the same Screen Time gate.
 struct QuietBlockedSaveSheet: View {
-    let eyebrow: String
-    let title: String
-    let message: String
-    let primaryTitle: String
-    let secondaryTitle: String
+    let eyebrow: LocalizedStringResource
+    let title: LocalizedStringResource
+    let message: LocalizedStringResource
+    let primaryTitle: LocalizedStringResource
+    let secondaryTitle: LocalizedStringResource
     var tone: Color = ZTheme.Palette.tone
     let onPrimary: () -> Void
     let onSecondary: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(eyebrow.uppercased())
+            Text(eyebrow)
+                .textCase(.uppercase)
                 .font(ZTheme.Font.body(11))
                 .tracking(3.08)                       // .28em at 11pt
                 .foregroundStyle(ZTheme.Palette.alert)
@@ -743,9 +747,9 @@ struct QuietBlockedSaveSheet: View {
                 .padding(.top, 10)
 
             VStack(spacing: 4) {
-                Button(primaryTitle) { onPrimary() }
+                Button { onPrimary() } label: { Text(primaryTitle) }
                     .buttonStyle(QuietCTAStyle(tone: tone, isReady: true))
-                Button(secondaryTitle) { Haptics.light(); onSecondary() }
+                Button { Haptics.light(); onSecondary() } label: { Text(secondaryTitle) }
                     .font(ZTheme.Font.body(14))
                     .foregroundStyle(ZTheme.Palette.text(0.55))
                     .frame(maxWidth: .infinity, minHeight: 44)

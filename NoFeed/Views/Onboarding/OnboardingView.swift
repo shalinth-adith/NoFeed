@@ -59,10 +59,10 @@ struct OnboardingView: View {
 
     // MARK: - Pages
 
-    private func infoPage(icon: String, title: String, message: String,
-                          button: String, advancesTo next: Int) -> some View {
+    private func infoPage(icon: String, title: LocalizedStringResource, message: LocalizedStringResource,
+                          button: LocalizedStringResource, advancesTo next: Int) -> some View {
         scaffold(icon: icon, title: title, message: message) {
-            Button(button) { withAnimation { step = next } }
+            Button { withAnimation { step = next } } label: { Text(button) }
                 .buttonStyle(.zenlyPrimary)
         }
     }
@@ -146,7 +146,7 @@ struct OnboardingView: View {
         }
     }
 
-    private func scaffold<Buttons: View>(icon: String, title: String, message: String,
+    private func scaffold<Buttons: View>(icon: String, title: LocalizedStringResource, message: LocalizedStringResource,
                                          @ViewBuilder buttons: () -> Buttons) -> some View {
         VStack(spacing: ZTheme.Spacing.xl) {
             Spacer()

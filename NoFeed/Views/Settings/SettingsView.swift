@@ -155,7 +155,7 @@ struct SettingsView: View {
                     Text("Focus profiles")
                         .foregroundStyle(ZTheme.Palette.textPrimary)
                     Spacer()
-                    Text("\(profiles.profiles.count)")
+                    Text(profiles.profiles.count, format: .number)
                         .foregroundStyle(ZTheme.Palette.text(0.5))
                     Image(systemName: "chevron.right")
                         .font(.footnote.weight(.semibold))
@@ -391,7 +391,7 @@ struct SettingsView: View {
         }
     }
 
-    private func settingsLinkLabel(_ title: String) -> some View {
+    private func settingsLinkLabel(_ title: LocalizedStringResource) -> some View {
         HStack {
             Text(title)
                 .foregroundStyle(ZTheme.Palette.textPrimary)
@@ -404,7 +404,7 @@ struct SettingsView: View {
 
     /// Section headers and footers in the Quiet ink rather than the system's
     /// secondary grey, which measured about 3:1 on the cream ground.
-    private func sectionHeader(_ title: String) -> some View {
+    private func sectionHeader(_ title: LocalizedStringResource) -> some View {
         Text(title).foregroundStyle(ZTheme.Palette.text(0.72))
     }
 

@@ -118,7 +118,7 @@ struct WeeklyRecapShareCard: View {
     /// A first week says only what it did, because "0m more than the week
     /// before" is not a fact about anything.
     private var metaLine: String {
-        let sessions = "\(recap.sessionCount) \(recap.sessionCount == 1 ? "session" : "sessions")"
+        let sessions = String(localized: "\(recap.sessionCount) sessions")
         guard let comparison = recap.comparisonLine else { return sessions }
         return "\(sessions) · \(comparison.replacingOccurrences(of: ".", with: ""))"
     }

@@ -353,9 +353,9 @@ struct NoFeedWidgetEntryView: View {
 
     private var label: String {
         switch entry.metric {
-        case .streak: return "day streak"
-        case .minutes: return "min focused today"
-        case .attempts: return "distractions blocked"
+        case .streak: return String(localized: "day streak")
+        case .minutes: return String(localized: "min focused today")
+        case .attempts: return String(localized: "distractions blocked")
         }
     }
 }

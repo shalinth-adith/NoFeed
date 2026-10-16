@@ -1,0 +1,124 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Check my ${applicationName} challenge" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Meine ${applicationName}-Challenge prüfen",
+              "Was ist meine ${applicationName}-Fokus-Challenge"
+            ]
+          }
+        },
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Check my ${applicationName} challenge",
+              "What's my ${applicationName} focus challenge"
+            ]
+          }
+        },
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Revisa mi reto de ${applicationName}",
+              "Cuál es mi reto de ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Consulter mon défi ${applicationName}",
+              "Quel est mon défi de concentration ${applicationName}"
+            ]
+          }
+        },
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}のチャレンジを確認",
+              "${applicationName}の集中チャレンジは？"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Ver meu desafio no ${applicationName}",
+              "Qual é meu desafio de foco no ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
+    "Start a focus session in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Starte eine Fokussitzung in ${applicationName}",
+              "Starte ${applicationName}-Fokus"
+            ]
+          }
+        },
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Start a focus session in ${applicationName}",
+              "Start ${applicationName} focus"
+            ]
+          }
+        },
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Inicia una sesión de concentración en ${applicationName}",
+              "Empieza a concentrarte con ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Lancer une session de concentration dans ${applicationName}",
+              "Lancer la concentration ${applicationName}"
+            ]
+          }
+        },
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}で集中セッションを開始",
+              "${applicationName}で集中を開始"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Iniciar uma sessão de foco no ${applicationName}",
+              "Começar a focar no ${applicationName}"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

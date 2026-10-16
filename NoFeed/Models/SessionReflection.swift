@@ -24,10 +24,10 @@ enum SessionReflection: Int16, CaseIterable, Codable {
 
     var title: String {
         switch self {
-        case .none: return "Not reflected"
-        case .focused: return "Focused"
-        case .distracted: return "Distracted"
-        case .interrupted: return "Interrupted"
+        case .none: return String(localized: "Not reflected")
+        case .focused: return String(localized: "Focused")
+        case .distracted: return String(localized: "Distracted")
+        case .interrupted: return String(localized: "Interrupted")
         }
     }
 
@@ -43,10 +43,10 @@ enum SessionReflection: Int16, CaseIterable, Codable {
     /// Past tense, for a row in History: "Felt focused".
     var feltLabel: String {
         switch self {
-        case .none: return "Not reflected"
-        case .focused: return "Felt focused"
-        case .distracted: return "Felt distracted"
-        case .interrupted: return "Was interrupted"
+        case .none: return String(localized: "Not reflected")
+        case .focused: return String(localized: "Felt focused")
+        case .distracted: return String(localized: "Felt distracted")
+        case .interrupted: return String(localized: "Was interrupted")
         }
     }
 

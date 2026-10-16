@@ -25,9 +25,9 @@ struct SessionView: View {
 
     /// "Focusing · Work", or the state the session is actually in.
     private var eyebrow: String {
-        if isBreak { return "BREAK" }
-        if session.isPaused { return "HELD · \(session.profileName.uppercased())" }
-        return "FOCUSING · \(session.profileName.uppercased())"
+        if isBreak { return String(localized: "BREAK") }
+        if session.isPaused { return String(localized: "HELD · \(session.profileName.uppercased())") }
+        return String(localized: "FOCUSING · \(session.profileName.uppercased())")
     }
 
     var body: some View {
@@ -100,7 +100,7 @@ struct SessionView: View {
                     // The VoiceOver shortcut is off for strict for the same
                     // reason — an instant activation would be a side door.
                     QuietHoldToEnd(tone: tint,
-                                   idleLabel: holdLabel,
+                                   idleLabel: .verbatim(holdLabel),
                                    duration: session.strictLockActive ? 60 : 3,
                                    allowsAccessibilityShortcut: !session.strictLockActive,
                                    action: endTapped)
@@ -143,14 +143,14 @@ struct SessionView: View {
     }
 
     private var sessionMessage: String {
-        if session.isPaused { return "Held for you. Nothing is blocked while you\u{2019}re away." }
-        return isBreak ? "Take a breath." : "Stay with it."
+        if session.isPaused { return String(localized: "Held for you. Nothing is blocked while you\u{2019}re away.") }
+        return isBreak ? String(localized: "Take a breath.") : String(localized: "Stay with it.")
     }
 
     private var holdLabel: String {
-        if isBreak { return "Hold to end the break" }
-        if session.strictLockActive { return "Hold for a minute to end early — it won\u{2019}t count" }
-        return "Hold to end early"
+        if isBreak { return String(localized: "Hold to end the break") }
+        if session.strictLockActive { return String(localized: "Hold for a minute to end early — it won\u{2019}t count") }
+        return String(localized: "Hold to end early")
     }
 
     private func endTapped() {

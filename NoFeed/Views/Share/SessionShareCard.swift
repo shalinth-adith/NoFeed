@@ -73,7 +73,7 @@ struct SessionShareCard: View {
                     .padding(.top, 12)
 
                 HStack(alignment: .firstTextBaseline, spacing: 5) {
-                    Text("\(summary.completedMinutes)")
+                    Text(summary.completedMinutes, format: .number)
                         .font(ZTheme.Font.numeral(72, weight: .regular))
                         .foregroundStyle(ink)
                     Text("min")
@@ -122,7 +122,7 @@ struct SessionShareCard: View {
 
     private var metaLine: String {
         summary.streak > 1
-            ? "\(summary.profileName) · \(summary.streak)-day streak"
+            ? String(localized: "\(summary.profileName) · \(summary.streak)-day streak")
             : summary.profileName
     }
 }

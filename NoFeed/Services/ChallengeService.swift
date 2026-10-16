@@ -23,9 +23,9 @@ struct DailyChallenge: Codable {
 
     var title: String {
         switch kind {
-        case .minutes: return "Focus for \(target) minutes today"
-        case .sessions: return "Complete \(target) focus sessions"
-        case .longSession: return "Complete a \(target)-minute session"
+        case .minutes: return String(localized: "Focus for \(target) minutes today")
+        case .sessions: return String(localized: "Complete \(target) focus sessions")
+        case .longSession: return String(localized: "Complete a \(target)-minute session")
         }
     }
 

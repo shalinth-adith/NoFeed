@@ -93,10 +93,10 @@ struct HomeView: View {
 
     private var greeting: String {
         switch Calendar.current.component(.hour, from: Date()) {
-        case 5..<12: return "Good morning"
-        case 12..<17: return "Good afternoon"
-        case 17..<22: return "Good evening"
-        default: return "Good night"
+        case 5..<12: return String(localized: "Good morning")
+        case 12..<17: return String(localized: "Good afternoon")
+        case 17..<22: return String(localized: "Good evening")
+        default: return String(localized: "Good night")
         }
     }
 
@@ -261,7 +261,7 @@ struct HomeView: View {
             FocusOrb(state: .idle, diameter: diameter, ringTint: tint,
                      living: false, breathes: true) {
                 VStack(spacing: 8) {
-                    Text("\(selectedMinutes)")
+                    Text(selectedMinutes, format: .number)
                         .font(ZTheme.Font.numeral(min(86, diameter * 0.4), weight: .regular))
                         .foregroundStyle(ZTheme.Palette.textPrimary)
                     Text("MINUTES")

@@ -226,16 +226,18 @@ final class ProfileStore {
 
     /// The four Quiet-spec default profiles (Work periwinkle, Study amber, Gym
     /// green, Sleep purple) — the profile row on the Focus screen.
-    private static let defaultProfiles: [ProfileDraft] = [
-        ProfileDraft(name: "Work", iconName: "briefcase.fill", accentHex: "7C93E8",
+    /// Named in the user's language when they are first created; after that
+    /// they are the user's own data and never change with the language.
+    private static var defaultProfiles: [ProfileDraft] { [
+        ProfileDraft(name: String(localized: "Work", comment: "Default profile name."), iconName: "briefcase.fill", accentHex: "7C93E8",
                      focusMinutes: 25, breakMinutes: 5),
-        ProfileDraft(name: "Study", iconName: "book.fill", accentHex: "D6A85C",
+        ProfileDraft(name: String(localized: "Study", comment: "Default profile name."), iconName: "book.fill", accentHex: "D6A85C",
                      focusMinutes: 50, breakMinutes: 10),
-        ProfileDraft(name: "Gym", iconName: "dumbbell.fill", accentHex: "7FBE9A",
+        ProfileDraft(name: String(localized: "Gym", comment: "Default profile name."), iconName: "dumbbell.fill", accentHex: "7FBE9A",
                      focusMinutes: 60, breakMinutes: 0),
-        ProfileDraft(name: "Sleep", iconName: "moon.fill", accentHex: "9B8AD6",
+        ProfileDraft(name: String(localized: "Sleep", comment: "Default profile name."), iconName: "moon.fill", accentHex: "9B8AD6",
                      focusMinutes: 480, breakMinutes: 0)
-    ]
+    ] }
 
     /// One-time migration for installs seeded before "Sleep" existed: append it
     /// once (guarded by a flag so it never re-adds if the user deletes it).

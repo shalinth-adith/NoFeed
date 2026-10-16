@@ -244,15 +244,15 @@ private enum Copy {
         let name = context.attributes.profileName.uppercased()
         switch context.state.phase {
         case .paused:
-            return "\(name) · PAUSED"
+            return String(localized: "\(name) · PAUSED")
         case .finished:
             let from = time(context.state.startDate)
             let to = time(context.state.endDate)
-            return "\(name) · \(from) TO \(to)"
+            return String(localized: "\(name) · \(from) TO \(to)")
         case .breakTime:
-            return "BREAK"
+            return String(localized: "BREAK")
         case .upcoming:
-            return "\(name) · SOON"
+            return String(localized: "\(name) · SOON")
         case .focus:
             return name
         }
@@ -262,7 +262,7 @@ private enum Copy {
     static func trailing(_ context: ActivityViewContext<FocusActivityAttributes>) -> String? {
         switch context.state.phase {
         case .focus, .breakTime, .upcoming:
-            return "until \(time(context.state.endDate))"
+            return String(localized: "until \(time(context.state.endDate))")
         case .paused, .finished:
             return nil
         }
@@ -270,19 +270,18 @@ private enum Copy {
 
     static func beside(_ context: ActivityViewContext<FocusActivityAttributes>) -> String {
         switch context.state.phase {
-        case .paused:   return "held for you"
-        case .finished: return "kept, start to end"
-        case .breakTime: return "left of your break"
-        case .upcoming: return "until it begins"
+        case .paused:   return String(localized: "held for you")
+        case .finished: return String(localized: "kept, start to end")
+        case .breakTime: return String(localized: "left of your break")
+        case .upcoming: return String(localized: "until it begins")
         case .focus:
-            return context.state.isLastStretch ? "don\u{2019}t stop now" : "left of a quiet hour"
+            return context.state.isLastStretch ? String(localized: "don\u{2019}t stop now") : String(localized: "left of a quiet hour")
         }
     }
 
     static func time(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm"
-        return formatter.string(from: date)
+        // The user's own clock, without AM/PM: "9:40" or "21:40".
+        date.formatted(.dateTime.hour(.defaultDigits(amPM: .omitted)).minute())
     }
 }
 

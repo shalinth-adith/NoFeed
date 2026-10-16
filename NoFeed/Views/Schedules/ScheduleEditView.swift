@@ -50,9 +50,10 @@ struct ScheduleEditView: View {
         var id: String { rawValue }
     }
 
-    private let weekdaySymbols: [(day: Int, label: String)] = [
-        (1, "S"), (2, "M"), (3, "T"), (4, "W"), (5, "T"), (6, "F"), (7, "S")
-    ]
+    /// One-letter day names in the user's language, Sunday-first to match
+    /// `Calendar.weekday` numbering.
+    private let weekdaySymbols: [(day: Int, label: String)] =
+        Calendar.current.veryShortStandaloneWeekdaySymbols.enumerated().map { ($0.offset + 1, $0.element) }
 
     init(schedule: FocusSchedule?,
          draft: ScheduleDraft,
@@ -79,7 +80,7 @@ struct ScheduleEditView: View {
             QuietEditorScaffold(
                 title: schedule == nil ? "New schedule" : "Edit schedule",
                 cancelTitle: "Cancel",
-                status: status,
+                status: .verbatim(status),
                 statusIsAlert: statusIsAlert,
                 ctaTitle: schedule == nil ? "Add to schedule" : "Save changes",
                 ctaIdentifier: "schedule-save",
@@ -110,7 +111,7 @@ struct ScheduleEditView: View {
     private var titleSection: some View {
         VStack(alignment: .leading, spacing: 0) {
             QuietFieldLabel(text: "Title")
-            QuietTextField(placeholder: draft.profileName.isEmpty ? "Untitled" : draft.profileName,
+            QuietTextField(placeholder: draft.profileName.isEmpty ? "Untitled" : .verbatim(draft.profileName),
                            text: $draft.title)
                 .focused($titleFocused)
                 .submitLabel(.done)
@@ -156,7 +157,7 @@ struct ScheduleEditView: View {
         }
     }
 
-    private func timeRow(_ label: String, field: TimeField, minutes: Int, isAlert: Bool) -> some View {
+    private func timeRow(_ label: LocalizedStringResource, field: TimeField, minutes: Int, isAlert: Bool) -> some View {
         Button {
             Haptics.light()
             editingTime = editingTime == field ? nil : field
@@ -241,7 +242,7 @@ struct ScheduleEditView: View {
                 }
                 .padding(.bottom, 14)
 
-                QuietHelper(text: conflictExplanation(conflict), color: ZTheme.Palette.warn)
+                QuietHelper(text: .verbatim(conflictExplanation(conflict)), color: ZTheme.Palette.warn)
 
                 HStack(spacing: 8) {
                     repairButton("Start at \(Self.timeText(conflict.existingEndMinutes))") {
@@ -256,7 +257,7 @@ struct ScheduleEditView: View {
         }
     }
 
-    private func repairButton(_ title: String, action: @escaping () -> Void) -> some View {
+    private func repairButton(_ title: LocalizedStringResource, action: @escaping () -> Void) -> some View {
         Button(action: { Haptics.light(); action() }) {
             Text(title)
                 .font(ZTheme.Font.display(14, weight: .semibold))
@@ -276,12 +277,12 @@ struct ScheduleEditView: View {
     }
 
     private func conflictExplanation(_ conflict: ScheduleStore.ScheduleConflict) -> String {
-        let base = "Two sessions can\u{2019}t hold the same hour."
+        let base = String(localized: "Two sessions can\u{2019}t hold the same hour.")
         let days = conflict.days.sorted().map(Self.dayName)
         switch days.count {
-        case 1:  return "\(base) \(days[0]) is the only day they collide."
-        case 2:  return "\(base) They collide on \(days[0]) and \(days[1])."
-        default: return "\(base) They collide on \(days.count) of the days you picked."
+        case 1:  return String(localized: "\(base) \(days[0]) is the only day they collide.")
+        case 2:  return String(localized: "\(base) They collide on \(days[0]) and \(days[1]).")
+        default: return String(localized: "\(base) They collide on \(days.count) of the days you picked.")
         }
     }
 
@@ -296,7 +297,7 @@ struct ScheduleEditView: View {
 
             HStack(spacing: 7) {
                 ForEach(Array(weekdaySymbols.enumerated()), id: \.offset) { _, item in
-                    QuietChip(title: item.label,
+                    QuietChip(title: .verbatim(item.label),
                               isSelected: draft.weekdays.contains(item.day),
                               tone: tone,
                               restingFill: validation.emptyFill(draft.weekdays.isEmpty),
@@ -320,7 +321,7 @@ struct ScheduleEditView: View {
             } else {
                 QuietHelper(text: draft.weekdays.isEmpty
                             ? "Tap the days it should repeat."
-                            : "Repeats \(ScheduleStore.summary(for: draft.weekdays).lowercased()).")
+                            : .verbatim(ScheduleStore.repeatSentence(for: draft.weekdays)))
             }
         }
     }
@@ -337,7 +338,7 @@ struct ScheduleEditView: View {
             QuietFlowLayout(spacing: 8, lineSpacing: 8) {
                 ForEach(profiles.profiles, id: \.objectID) { profile in
                     let name = profile.name ?? ""
-                    QuietChip(title: name,
+                    QuietChip(title: .verbatim(name),
                               isSelected: draft.profileName == name,
                               tone: ZTheme.tone(forHex: profile.accentHex),
                               restingFill: validation.emptyFill(draft.profileName.isEmpty)) {
@@ -371,12 +372,12 @@ struct ScheduleEditView: View {
 
             if !draft.blockAllApps {
                 QuietDisclosureRow(title: "Blocked apps & sites",
-                                   value: countText(blockCount)) { showBlockPicker = true }
+                                   value: .verbatim(countText(blockCount))) { showBlockPicker = true }
                 QuietHairline(color: ZTheme.Palette.glassFill)
             }
 
             QuietDisclosureRow(title: draft.blockAllApps ? "Allowed apps" : "Always allowed",
-                               value: countText(draft.allow.applicationTokens.count)) {
+                               value: .verbatim(countText(draft.allow.applicationTokens.count))) {
                 showAllowPicker = true
             }
         }
@@ -404,9 +405,9 @@ struct ScheduleEditView: View {
     private var windowLengthText: String {
         let mins = ScheduleStore.duration(startMinutes: startMinutes, endMinutes: endMinutes)
         let h = mins / 60, m = mins % 60
-        if h == 0 { return "\(m) minutes" }
-        if m == 0 { return h == 1 ? "One hour" : "\(h) hours" }
-        return "\(h)h \(m)m"
+        if h == 0 { return String(localized: "\(m) minutes") }
+        if m == 0 { return h == 1 ? String(localized: "One hour") : String(localized: "\(h) hours") }
+        return String(localized: "\(h)h \(m)m")
     }
 
     /// End the window after the chosen profile's own session length — the
@@ -435,14 +436,14 @@ struct ScheduleEditView: View {
 
     private var status: String {
         guard statusIsAlert else {
-            return isReady ? "Ready when you are" : "Days and a profile is all it takes"
+            return isReady ? String(localized: "Ready when you are") : String(localized: "Days and a profile is all it takes")
         }
         let missing = (draft.weekdays.isEmpty ? 1 : 0) + (draft.profileName.isEmpty ? 1 : 0)
-        if missing == 0 && sameTime { return "The end time needs a nudge" }
+        if missing == 0 && sameTime { return String(localized: "The end time needs a nudge") }
         if missing == 0 && !conflicts.isEmpty {
-            return "One clash to settle, and it\u{2019}s yours to pick"
+            return String(localized: "One clash to settle, and it\u{2019}s yours to pick")
         }
-        return missing == 2 ? "Two choices left — days, then profile" : "One choice left, just above"
+        return missing == 2 ? String(localized: "Two choices left — days, then profile") : String(localized: "One choice left, just above")
     }
 
     private var blockCount: Int {
@@ -451,7 +452,7 @@ struct ScheduleEditView: View {
             + draft.block.webDomainTokens.count
     }
 
-    private func countText(_ count: Int) -> String { count == 0 ? "None" : "\(count)" }
+    private func countText(_ count: Int) -> String { count == 0 ? String(localized: "None") : "\(count)" }
 
     // MARK: - Actions
 
@@ -473,7 +474,7 @@ struct ScheduleEditView: View {
     }
 
     private func moveStart(to minutes: Int) {
-        rememberForUndo("Moved to \(Self.timeText(minutes)) to clear the clash.")
+        rememberForUndo(String(localized: "Moved to \(Self.timeText(minutes)) to clear the clash."))
         let length = ScheduleStore.duration(startMinutes: startMinutes, endMinutes: endMinutes)
         draft.startHour = minutes / 60
         draft.startMinute = minutes % 60
@@ -482,7 +483,7 @@ struct ScheduleEditView: View {
     }
 
     private func skip(_ day: Int) {
-        rememberForUndo("\(Self.dayName(day)) left out to clear the clash.")
+        rememberForUndo(String(localized: "\(Self.dayName(day)) left out to clear the clash."))
         draft.weekdays.remove(day)
     }
 
@@ -526,18 +527,27 @@ struct ScheduleEditView: View {
 
     // MARK: - Formatting
 
+    /// A time of day in the user's own clock: "9:00 AM", "09:00", "9:00 PM".
+    /// `withMeridiem: false` drops the AM/PM so it can be drawn separately.
     static func timeText(_ minutes: Int, withMeridiem: Bool = true) -> String {
         let normalized = ((minutes % (24 * 60)) + 24 * 60) % (24 * 60)
-        let hour24 = normalized / 60
-        let hour12 = hour24 % 12 == 0 ? 12 : hour24 % 12
-        let clock = String(format: "%d:%02d", hour12, normalized % 60)
-        return withMeridiem ? "\(clock) \(meridiem(hour24))" : clock
+        let date = date(from: normalized)
+        if withMeridiem { return date.formatted(date: .omitted, time: .shortened) }
+        return date.formatted(.dateTime.hour(.defaultDigits(amPM: .omitted)).minute())
     }
 
-    static func meridiem(_ hour24: Int) -> String { hour24 < 12 ? "AM" : "PM" }
+    /// "AM" / "PM" in the user's language, or nothing on a 24-hour clock.
+    static func meridiem(_ hour24: Int) -> String {
+        let pattern = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: .current) ?? ""
+        guard pattern.contains("a") else { return "" }
+        let calendar = Calendar.current
+        return hour24 < 12 ? calendar.amSymbol : calendar.pmSymbol
+    }
 
+    /// The full weekday name in the user's language. `weekday` is 1 = Sunday.
     static func dayName(_ weekday: Int) -> String {
-        ["", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][weekday]
+        let names = Calendar.current.standaloneWeekdaySymbols
+        return names.indices.contains(weekday - 1) ? names[weekday - 1] : ""
     }
 
     private static func date(from minutes: Int) -> Date {

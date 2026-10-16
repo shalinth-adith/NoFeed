@@ -57,17 +57,17 @@ struct StoreProblemBanner: View {
 
     private var title: String {
         switch problem {
-        case .unavailable: return "NoFeed can\u{2019}t save right now"
-        case .saveFailed: return "A change wasn\u{2019}t saved"
+        case .unavailable: return String(localized: "NoFeed can\u{2019}t save right now")
+        case .saveFailed: return String(localized: "A change wasn\u{2019}t saved")
         }
     }
 
     private var message: String {
         switch problem {
         case .unavailable:
-            return "Its data couldn\u{2019}t be opened, so sessions and changes won\u{2019}t be kept until it restarts. Close NoFeed from the app switcher and open it again. If this keeps happening, use Settings \u{203A} Send feedback."
+            return String(localized: "Its data couldn\u{2019}t be opened, so sessions and changes won\u{2019}t be kept until it restarts. Close NoFeed from the app switcher and open it again. If this keeps happening, use Settings \u{203A} Send feedback.")
         case .saveFailed:
-            return "Your last change may not have been kept. Try it again; if it keeps failing, restart NoFeed."
+            return String(localized: "Your last change may not have been kept. Try it again; if it keeps failing, restart NoFeed.")
         }
     }
 }

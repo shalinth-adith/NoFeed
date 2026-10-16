@@ -36,12 +36,13 @@ final class SessionHistory {
         session.endedEarly = endedEarly
         session.startedAt = startedAt
         session.endedAt = endedAt
-        try? context.save()
+        save()
         return session
     }
 
     func save() {
-        try? context.save()
+        do { try context.save() }
+        catch { StoreHealth.shared.saveFailed(error, in: "SessionHistory") }
     }
 
     /// The three numbers the Home Screen widget shows, written to the App
@@ -69,7 +70,7 @@ final class SessionHistory {
         if let session = try? context.fetch(request).first {
             if session.reflection == .none {
                 session.reflection = pending.reflection
-                try? context.save()
+                save()
             }
             ReflectionInbox.clear()
         } else if Date().timeIntervalSince(pending.startedAt) > 86_400 {

@@ -76,7 +76,7 @@ final class AchievementService {
         badge.key = key
         badge.earnedAt = Date()
         do { try context.save() }
-        catch { print("[NoFeed] AchievementService save failed: \(error)") }
+        catch { StoreHealth.shared.saveFailed(error, in: "AchievementService") }
     }
 
     private func load() {

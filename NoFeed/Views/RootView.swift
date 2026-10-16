@@ -20,6 +20,10 @@ extension Notification.Name {
     /// Insights first-run "Begin your first focus" call).
     static let noFeedOpenFocus = Notification.Name("noFeedOpenFocus")
 
+    /// Posted by `ProfileStore` after a profile's name changes, so stores that
+    /// keep their own lists of rows naming it can refetch.
+    static let noFeedProfileRenamed = Notification.Name("noFeedProfileRenamed")
+
     /// Posted when the weekly recap notification is tapped. Handled here rather
     /// than on a tab for the same reason the session cover is (see below): the
     /// tap can arrive with any tab selected.

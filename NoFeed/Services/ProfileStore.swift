@@ -109,9 +109,37 @@ final class ProfileStore {
     }
 
     func update(_ profile: FocusProfile, with draft: ProfileDraft) {
+        let oldName = profile.name ?? ""
         apply(draft, to: profile)
+        let newName = profile.name ?? ""
+        if !oldName.isEmpty, !newName.isEmpty, oldName != newName {
+            renameReferences(from: oldName, to: newName)
+        }
         save()
         fetch()
+        if oldName != newName {
+            NotificationCenter.default.post(name: .noFeedProfileRenamed, object: nil)
+        }
+    }
+
+    /// Sessions and schedules refer to a profile by name. Renaming only the
+    /// profile split its history in two and left its schedules pointing at a
+    /// name nothing answers to, so a scheduled session stopped starting
+    /// itself. Done here, in the same save, so every editor gets it.
+    private func renameReferences(from oldName: String, to newName: String) {
+        let sessions = FocusSession.fetchRequest()
+        sessions.predicate = NSPredicate(format: "profileName == %@", oldName)
+        for session in (try? context.fetch(sessions)) ?? [] {
+            session.profileName = newName
+        }
+
+        let schedules = FocusSchedule.fetchRequest()
+        schedules.predicate = NSPredicate(format: "profileName == %@", oldName)
+        for schedule in (try? context.fetch(schedules)) ?? [] {
+            schedule.profileName = newName
+            // A title that was just the old name follows it too.
+            if (schedule.title ?? "") == oldName { schedule.title = newName }
+        }
     }
 
     func delete(_ profile: FocusProfile) {
@@ -165,7 +193,7 @@ final class ProfileStore {
     private func save() {
         guard context.hasChanges else { return }
         do { try context.save() }
-        catch { print("[NoFeed] ProfileStore save failed: \(error)") }
+        catch { StoreHealth.shared.saveFailed(error, in: "ProfileStore") }
     }
 
     #if DEBUG

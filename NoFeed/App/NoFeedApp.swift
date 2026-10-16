@@ -35,6 +35,7 @@ struct NoFeedApp: App {
         DebugSeed.clearSessionIfRequested()
         DebugSeed.resetOnboardingIfRequested()
         DebugSeed.completeOnboardingIfRequested()
+        DebugSeed.simulateStoreFailureIfRequested()
         DebugSeed.skipNotificationRationaleIfTesting()
         MainActor.assumeIsolated {
             DebugSeed.clearHistoryIfRequested()

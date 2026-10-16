@@ -136,6 +136,14 @@ enum DebugSeed {
         AppGroup.defaults.set(true, forKey: "hasCompletedOnboarding")
     }
 
+    /// Raise the storage-failure banner without breaking a real store.
+    static func simulateStoreFailureIfRequested() {
+        guard ProcessInfo.processInfo.arguments.contains("NoFeedUITestSimulateStoreFailure")
+        else { return }
+        struct Simulated: LocalizedError { var errorDescription: String? { "Simulated failure" } }
+        StoreHealth.shared.storeUnavailable(Simulated())
+    }
+
     /// Show onboarding again on this launch, so a review can look at it
     /// without erasing the simulator.
     static func resetOnboardingIfRequested() {

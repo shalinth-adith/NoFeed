@@ -20,9 +20,12 @@ final class PersistenceController {
     /// Load the model exactly once so repeated container inits (e.g. tests) don't
     /// register duplicate NSEntityDescriptions for the same model.
     private static let model: NSManagedObjectModel = {
+        // A missing model is a broken build, not a runtime condition. An empty
+        // model used to stand in, which crashed later on the first entity
+        // created, far from the cause.
         guard let url = Bundle.main.url(forResource: "Zenly", withExtension: "momd"),
               let model = NSManagedObjectModel(contentsOf: url) else {
-            return NSManagedObjectModel()
+            fatalError("Zenly.momd is missing from the app bundle")
         }
         return model
     }()
@@ -49,10 +52,19 @@ final class PersistenceController {
 
         container.persistentStoreDescriptions = [description]
 
-        container.loadPersistentStores { _, error in
-            if let error {
-                // Loud, but non-fatal: surface during on-device testing rather than crash.
-                print("[NoFeed] Core Data failed to load store: \(error)")
+        var loadError: Error?
+        container.loadPersistentStores { _, error in loadError = error }
+
+        if let loadError {
+            // Don't crash, and don't run without a store: every save would then
+            // fail and be lost unseen. Report it, and fall back to an in-memory
+            // store so the app still works for this launch.
+            StoreHealth.shared.storeUnavailable(loadError)
+            let fallback = NSPersistentStoreDescription()
+            fallback.url = URL(fileURLWithPath: "/dev/null")
+            container.persistentStoreDescriptions = [fallback]
+            container.loadPersistentStores { _, error in
+                if let error { StoreHealth.shared.storeUnavailable(error) }
             }
         }
 
@@ -67,7 +79,7 @@ final class PersistenceController {
         do {
             try context.save()
         } catch {
-            print("[NoFeed] Core Data save failed: \(error)")
+            StoreHealth.shared.saveFailed(error, in: "PersistenceController")
         }
     }
 }

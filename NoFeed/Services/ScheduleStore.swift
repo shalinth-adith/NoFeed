@@ -42,6 +42,12 @@ final class ScheduleStore {
         self.context = context
         fetch()
         reactivateAll()
+        // ProfileStore renames schedules' profile names in the shared context;
+        // refetch so the list shows the new name.
+        NotificationCenter.default.addObserver(forName: .noFeedProfileRenamed, object: nil,
+                                               queue: .main) { [weak self] _ in
+            MainActor.assumeIsolated { self?.fetch() }
+        }
     }
 
     func fetch() {
@@ -463,7 +469,7 @@ final class ScheduleStore {
     private func save() {
         guard context.hasChanges else { return }
         do { try context.save() }
-        catch { print("[NoFeed] ScheduleStore save failed: \(error)") }
+        catch { StoreHealth.shared.saveFailed(error, in: "ScheduleStore") }
     }
 }
 

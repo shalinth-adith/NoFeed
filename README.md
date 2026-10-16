@@ -1,65 +1,118 @@
 # NoFeed
 
-An iOS focus app that blocks distracting apps and websites during focus sessions —
-like Screen Time, but more powerful and user-friendly. Built with SwiftUI on Apple's
-ScreenTime stack (FamilyControls + ManagedSettings + DeviceActivity).
+An iPhone app that blocks distracting apps and websites while you focus. Built in
+SwiftUI on Apple's Screen Time frameworks (FamilyControls, ManagedSettings,
+DeviceActivity). No account, no server: everything stays on the device.
 
-## Status
+**Current version:** 2.3, on the App Store.
 
-**Phase 1 — plumbing.** The multi-target ScreenTime architecture is scaffolded and a
-minimal manual "Block Now" flow proves the picker → shield path end-to-end. Custom shield
-UI, category/website blocking polish, strict mode, sessions, analytics, and gamification
-follow in later phases.
+## What it does
+
+- **Focus sessions.** Pick a profile, set a length, and NoFeed shields the apps it
+  blocks until the timer ends. Sessions can pause, take a break, and end early
+  with a three-second hold.
+- **Profiles.** Work, Study, Gym and Sleep ship by default. Each blocks everything
+  or a chosen set of apps, keeps an allowlist, and sets its own length. **Strict
+  mode** removes pause and makes ending early a 60-second hold.
+- **Schedules.** Recurring focus windows that block on their own, with clash
+  detection.
+- **The block screen.** A custom shield ("Instagram is behind this door") with an
+  optional timed **unlock window** (15, 30 or 60 minutes, off by default, never
+  offered during anything strict).
+- **Insights.** The calendar week, sessions, how often a blocked app was reached
+  for, daily goals, a weekly recap with a shareable card, and "What works for you"
+  rules once ten sessions have a reflection (Focused / Distracted / Interrupted).
+- **Outside the app.** A Home Screen and Lock Screen widget with a Start button
+  and live countdown, a Live Activity, a Control Center button, Siri and
+  Shortcuts intents, and actions on the session-end notification.
 
 ## Requirements
 
-- Xcode 26+
-- A **paid** Apple Developer account (the Family Controls capability requires one)
-- A **physical iPhone** — FamilyControls / ManagedSettings / DeviceActivity do **not**
-  run on the iOS Simulator. The app compiles for the simulator, but blocking only works on-device.
-- [XcodeGen](https://github.com/yonaskolb/XcodeGen): `brew install xcodegen`
+- Xcode 26 or later.
+- A **paid** Apple Developer account. The Family Controls capability requires one.
+- A **physical iPhone** to see anything blocked. Screen Time does nothing in the
+  Simulator; the app builds and runs there, but no shield ever appears.
+- [XcodeGen](https://github.com/yonaskolb/XcodeGen): `brew install xcodegen`.
 
-## Bootstrap
+## Building
 
-The Xcode project is **generated** from `project.yml` — it is not committed.
+The Xcode project is generated from `project.yml` and is not committed.
 
 ```bash
-xcodegen generate      # creates NoFeed.xcodeproj
+xcodegen generate
 open NoFeed.xcodeproj
 ```
 
-After changing targets, capabilities, or build settings, edit `project.yml` and re-run
-`xcodegen generate`. **Never edit the generated `.xcodeproj` by hand.**
+Change targets, capabilities, versions or build settings in `project.yml`, then
+regenerate. Never edit the generated project by hand. Raise `MARKETING_VERSION`
+after every approved release; App Store Connect refuses builds on a closed train.
 
-## Architecture
+## Targets
 
-Four targets sharing one App Group (`group.me.adithyan.shalinth.Zenly`):
+Five targets share the App Group `group.me.adithyan.shalinth.Zenly`.
 
-| Target | Type | Role |
+| Target | Kind | Role |
 |---|---|---|
-| `NoFeed` | app | UI, authorization, app picker, block toggle |
-| `NoFeedMonitor` | DeviceActivityMonitor extension | Schedule-driven blocking (Phase 2) |
-| `NoFeedShield` | ShieldConfiguration extension | Custom shield UI shown over blocked apps |
-| `NoFeedShieldAction` | ShieldAction extension | Shield button handling / override (strict mode) |
+| `NoFeed` | App | All UI, sessions, profiles, schedules, Insights, settings |
+| `NoFeedMonitor` | DeviceActivityMonitor extension | Applies and lifts shields when scheduled windows start and end |
+| `NoFeedShield` | ShieldConfiguration extension | Draws the block screen and counts each reach for a blocked app |
+| `NoFeedShieldAction` | ShieldAction extension | Handles "Back to focus" and the unlock window |
+| `NoFeedWidget` | WidgetKit extension | Widget, Live Activity and Control Center button |
 
-The app target follows **MVVM**:
+The processes cannot call each other. They coordinate only through App Group
+`UserDefaults`, and `ShieldReconciler` rebuilds the shield state from what is
+registered there on every wake. Any code path that applies shields must register
+itself first, or the next reconcile clears them.
+
+**Identifiers say "Zenly" on purpose.** The app was renamed to NoFeed, but the bundle
+id, App Group, Core Data model (`Zenly.xcdatamodeld`) and some notification and
+activity ids keep the old name. They are the App Store identity and are already on
+users' devices; renaming them would strand existing data.
+
+## Layout
 
 ```
 NoFeed/
-├── App/         NoFeedApp.swift — composition root, injects services
-├── Views/       SwiftUI views (ContentView, BlockingView) — UI only
-├── ViewModels/  @Observable presentation logic (BlockingViewModel)
-├── Services/    System-framework wrappers (AuthorizationService, BlockingService)
-├── Models/      Persistence / data (SelectionStore)
-└── Core/        Shared constants (AppGroup, named ManagedSettingsStore)
+├── App/           NoFeedApp.swift: composition root, scene-phase handling, URL handling
+├── DesignSystem/  The "Quiet" theme (ZTheme), form components, orb, buttons, readable colours
+├── Intents/       Siri / Shortcuts / Focus filter intents
+├── Models/        Core Data model and value types (WeeklyRecap, InsightRules, SessionReflection)
+├── Services/      Session controller, stores, analytics, notifications, persistence, store health
+├── Support/       Haptics, feedback mail, DEBUG-only seeding and test hooks
+└── Views/         SwiftUI screens by area
+Shared/            Code compiled into the app and one or more extensions
+NoFeedMonitor/     NoFeedShield/     NoFeedShieldAction/     NoFeedWidget/
+NoFeedTests/       Unit tests (Swift Testing, in-memory Core Data)
+NoFeedUITests/     UI tests, screenshot tours and the accessibility audit
+docs/              Review notes, test reports, evidence, the support site
 ```
 
-The app writes the user's `FamilyActivitySelection` into App-Group `UserDefaults` and applies
-shields via a **named** `ManagedSettingsStore`, so the extensions can manage the same shield set.
+## Testing
 
-## Verifying the blocking engine (on-device)
+```bash
+xcodebuild test -project NoFeed.xcodeproj -scheme NoFeed \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -only-testing:NoFeedTests
+```
 
-1. Run `NoFeed` on a physical iPhone from Xcode.
-2. Grant Screen Time access (system Face ID / passcode prompt).
-3. Choose apps/websites to block, then tap **Block Now**.
-4. Try to open a blocked app → it's shielded. Tap **Stop Blocking** → it opens normally.
+- **Unit tests** cover the pure logic: streaks, analytics, the weekly recap, insight
+  rules, reflections, the unlock window, short-session shields, strict mode
+  across processes, widget hand-off, profile renames and storage-failure
+  reporting.
+- **UI tests** run on the Simulator with DEBUG-only launch arguments that bypass
+  Screen Time and reset state (`NoFeedUITestBypassScreenTime`,
+  `NoFeedUITestResetSession`, `NoFeedUITestResetProfiles`,
+  `NoFeedUITestResetSchedules`, `NoFeedUITestResetHistory`,
+  `NoFeedUITestSkipOnboarding`). None of these exist in a Release build.
+- **`AccessibilityAudit`** runs Apple's accessibility audit on 24 screens and
+  checks every contrast flag against the rendered pixels. Set
+  `TEST_RUNNER_QUIET_SHOT_DIR` to keep its screenshots and findings.
+- **On a device** is the only way to test blocking itself. See
+  `docs/DEVICE_TEST_PLAN.md`.
+
+## Documents
+
+- `docs/APP_REVIEW_NOTES.md`: what to paste into App Store Connect. Update it in
+  the same commit as any change to onboarding, tab names or the blocking flow.
+- `docs/test-evidence/ux-review-2.3/REPORT.md`: the 2.3 UI/UX and accessibility review.
+- `docs/SECURITY_REVIEW_2.3.md`: the 2.3 security review.
+- `docs/privacy-policy.html`, `docs/support.html`: served by GitHub Pages.

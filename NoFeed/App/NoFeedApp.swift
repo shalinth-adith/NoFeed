@@ -15,11 +15,9 @@ struct NoFeedApp: App {
     @State private var profiles = ProfileStore()
     @State private var schedules = ScheduleStore()
     @State private var session = FocusSessionController()
-    @State private var suggestions = SmartSuggestionService()
     @State private var analytics = AnalyticsService()
     @State private var achievements = AchievementService()
     @State private var challenges = ChallengeService()
-    @State private var accountability = AccountabilityService()
 
     @Environment(\.scenePhase) private var scenePhase
 
@@ -132,11 +130,9 @@ struct NoFeedApp: App {
             .environment(profiles)
             .environment(schedules)
             .environment(session)
-            .environment(suggestions)
             .environment(analytics)
             .environment(achievements)
             .environment(challenges)
-            .environment(accountability)
             // The widget's "Start Work" tap. A widget cannot run an intent that
             // opens the app, so it sends a URL instead; this turns it into the
             // same request the intents make and starts straight away — the

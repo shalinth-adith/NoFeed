@@ -54,7 +54,6 @@ targets:
       - target: NoFeedMonitor
       - target: NoFeedShield
       - target: NoFeedShieldAction
-      - target: NoFeedReport
       - target: NoFeedWidget
     settings:
       base:
@@ -234,39 +233,7 @@ targets:
         com.apple.security.application-groups:
           - group.me.adithyan.shalinth.Zenly
 
-  # ─────────────── DeviceActivityReport extension (app usage) ───────────────
-  NoFeedReport:
-    type: extensionkit-extension
-    platform: iOS
-    sources:
-      - path: NoFeedReport
-      - path: Shared/ReportContext.swift
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: me.adithyan.shalinth.Zenly.ZenlyReport
-        TARGETED_DEVICE_FAMILY: "1"
-        GENERATE_INFOPLIST_FILE: NO
-    info:
-      path: NoFeedReport/Info.plist
-      properties:
-        # Version pair comes from the build settings above, so project.yml stays
-        # the single source of truth. Every extension must carry the SAME pair as
-        # the app or App Store Connect rejects the upload outright.
-        CFBundleShortVersionString: "$(MARKETING_VERSION)"
-        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
-        CFBundleDisplayName: NoFeedReport
-        # DeviceActivityReport is an ExtensionKit extension (must live in
-        # Extensions/, not PlugIns/, with EXAppExtensionAttributes).
-        EXAppExtensionAttributes:
-          EXExtensionPointIdentifier: com.apple.deviceactivityui.report-extension
-    entitlements:
-      path: NoFeedReport/NoFeedReport.entitlements
-      properties:
-        com.apple.developer.family-controls: true
-        com.apple.security.application-groups:
-          - group.me.adithyan.shalinth.Zenly
-
-  # ───────────────────────── WidgetKit widget ─────────────────────────
+  # ─────────────────────── Widget, Live Activity, control ───────────────────────
   NoFeedWidget:
     type: app-extension
     platform: iOS

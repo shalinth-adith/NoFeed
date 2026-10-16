@@ -591,19 +591,6 @@ final class NoFeedQuietSuite: XCTestCase {
         XCTAssertNotEqual(after, before, "Schedule toggle did not change state")
     }
 
-    /// TC-5.4 — a suggested-schedule card opens the editor prefilled.
-    func testSuggestedScheduleOpensEditor() throws {
-        let app = try launchToHome()
-        openTab(app, "Schedule")
-
-        let suggested = app.staticTexts.matching(
-            NSPredicate(format: "label CONTAINS[c] 'Suggest'")).firstMatch
-        if !suggested.waitForExistence(timeout: 5) {
-            throw XCTSkip("No 'Suggested' section rendered")
-        }
-        snap(app, "TC-5.4-suggestions")
-    }
-
     // MARK: - TC-6.x Insights
 
     /// TC-6.1 / TC-6.2 — Insights renders its chart and score without crashing.
@@ -614,41 +601,6 @@ final class NoFeedQuietSuite: XCTestCase {
                         || app.collectionViews.firstMatch.exists,
                       "Insights did not render any scrollable content")
         snap(app, "TC-6.1-insights")
-    }
-
-    /// TC-6.5 / TC-6.6 — History and Badges are reachable from Insights.
-    ///
-    /// Insights renders a first-run empty state until at least one focus session
-    /// has completed. A session cannot be started on Simulator (Begin focus stays
-    /// disabled without FamilyControls authorization), so on Simulator this case
-    /// is genuinely blocked rather than failing.
-    func testHistoryAndBadgesReachable() throws {
-        let app = try launchToHome()
-        openTab(app, "Insights")
-
-        let emptyState = app.descendants(matching: .any).matching(
-            NSPredicate(format: "label CONTAINS[c] 'focus story starts here'"
-                        + " OR label CONTAINS[c] 'Begin your first focus'")).firstMatch
-        if emptyState.waitForExistence(timeout: 6) {
-            snap(app, "TC-6.x-insights-empty-state")
-            throw XCTSkip("Insights is in its empty state — no completed sessions are "
-                          + "possible on Simulator, so History/Badges cannot be reached.")
-        }
-
-        for destination in ["History", "Badges"] {
-            let link = app.buttons.matching(
-                NSPredicate(format: "label CONTAINS[c] %@", destination)).firstMatch
-            if link.waitForExistence(timeout: 4) {
-                link.tap()
-                snap(app, "TC-6.x-\(destination)")
-                let back = app.navigationBars.buttons.element(boundBy: 0)
-                if back.exists { back.tap() }
-            } else {
-                throw XCTSkip("'\(destination)' is not present — Insights has no "
-                              + "completed-session data, which cannot be produced on "
-                              + "Simulator (Begin focus requires FamilyControls auth).")
-            }
-        }
     }
 
     // MARK: - TC-11.x Accessibility

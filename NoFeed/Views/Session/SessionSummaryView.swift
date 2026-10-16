@@ -163,8 +163,8 @@ struct SessionSummaryView: View {
 
             // At most two. The comp leaves this band empty, and a first-ever
             // session can unlock four badges at once — four stacked lines turn
-            // the calmest screen in the app into a list. The rest are not lost;
-            // every badge lives permanently on the Badges screen.
+            // the calmest screen in the app into a list. The rest are still
+            // earned and stored; there is no screen that lists them yet.
             ForEach(newBadges.prefix(2)) { badge in
                 badgeLine(badge, tone: tone(summary))
                     .padding(.top, 16)

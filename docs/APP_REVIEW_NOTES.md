@@ -5,7 +5,7 @@ reviewer sent looking for something that does not exist is how both previous
 rejections started. Update this file in the same commit as any change to the
 onboarding, the tab names, or the blocking flow.
 
-Everything below is checked against the build at `35882ef`.
+Everything below is checked against version 2.3 (1).
 
 ---
 
@@ -23,11 +23,17 @@ Time must be granted on whichever device is used.
 1. Launch the app and step through onboarding. On the "Screen Time Access"
    page, tap **Grant Screen Time Access** and allow the system prompt. (The
    device must not already have a Screen Time passcode set by someone else.)
-2. Tap **Start Focusing** to reach the app.
+2. Tap **Start Focusing** to reach the app. (If Screen Time was not granted,
+   this page reads **Almost there** instead, with a second chance to grant it
+   and a **Continue without blocking** option. Without the permission the app
+   can time a session but cannot block anything.)
 3. You land on the **Focus** tab with the **Work** profile selected. Use the
    **−** button to shorten the session if you like; five minutes is the
    minimum.
-4. Tap **Begin focus**.
+4. Tap **Begin focus**. The first time only, a short alert explains that
+   NoFeed will ask to send notifications (one when a session ends, one before
+   a scheduled session). Tap **Continue**, then allow or decline the system
+   prompt; the session starts either way.
 5. Leave NoFeed and open any other app. NoFeed's block screen appears in its
    place: *"<App> is behind this door."* with a **Back to focus** button.
 
@@ -36,12 +42,19 @@ Sleep — block everything by default, so step 1 to step 5 is the whole path.
 
 ### Choosing specific apps to block
 
-1. **Settings** tab → **Focus profiles**.
+1. **Settings** tab → **Focus profiles**. (The same list also opens from the
+   **Schedule** tab → **All profiles**.)
 2. Tap any profile (for example **Gym**) to open it.
 3. Tap **Edit** at the top right.
 4. Turn **Block everything** off. A **Blocked apps** row appears.
 5. Tap the **Choose** row and pick apps in the system picker.
 6. Tap **Save**.
+
+### Ending a session
+
+Hold **Hold to end early** at the bottom of the session screen for three
+seconds. If the profile has **Strict mode** on, the hold is a full minute and
+the label says so. There is no confirmation dialog in either case.
 
 ### The four tabs
 
@@ -68,6 +81,8 @@ Each of these was wrong in a previous version and cost a submission:
 - **There is no "I need it for 5 minutes" button.** It was removed at `bffd52c`:
   Screen Time withholds the `ApplicationToken` from a category shield, so the
   pass had no app to name and the button could never work.
+- **There is no 5-second wait screen for strict sessions.** It was replaced
+  in 2.3 by a 60-second hold on the session screen.
 - **The CTA is "Begin focus", not "Start Focus".** The tabs are "Focus /
   Insights / Schedule / Settings" — not "Home", not "Profiles", not
   "Schedules". The onboarding button is "Grant Screen Time Access".

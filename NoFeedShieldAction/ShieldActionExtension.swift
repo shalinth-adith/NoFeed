@@ -50,7 +50,12 @@ final class ShieldActionExtension: ShieldActionDelegate {
     /// never be treated as consent to unblock.
     private func respond(to action: ShieldAction,
                          _ completionHandler: @escaping (ShieldActionResponse) -> Void) {
-        DistractionLog.recordAttempt()
+        // No attempt is recorded here. The shield extension already counted
+        // this reach when the block screen appeared, and recording it again on
+        // the button tap counted it twice whenever someone read the screen for
+        // longer than the log's 1.5s dedupe window — which is most of the time.
+        // That inflated the "you reached for a blocked app N times" number on
+        // Insights and in the weekly recap.
 
         guard action == .secondaryButtonPressed else {
             completionHandler(.close)

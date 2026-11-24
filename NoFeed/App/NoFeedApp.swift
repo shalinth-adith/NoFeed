@@ -48,6 +48,13 @@ struct NoFeedApp: App {
             if DebugSeed.wantsProfileReset { profiles.resetToDefaultsForUITests() }
             // Same reason for the schedule list after a UI-test reset.
             schedules.fetch()
+            // App Store screenshot 4: one weekday-morning schedule.
+            if DebugSeed.wantsDemoSchedule, schedules.schedules.isEmpty {
+                var draft = ScheduleDraft()
+                draft.title = "Morning focus"
+                draft.endHour = 11
+                _ = schedules.create(from: draft)
+            }
         }
         DebugSeed.primeShieldPreviewSession()
         #endif

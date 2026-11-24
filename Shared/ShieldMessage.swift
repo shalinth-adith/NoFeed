@@ -65,10 +65,21 @@ enum ShieldMessage {
     /// Nil when nothing is running: a door that has already opened should not
     /// still be announcing a time.
     private static var opensAt: String? {
-        guard let endsAt = ActiveSessionInfo.endsAt else { return nil }
+        guard var endsAt = ActiveSessionInfo.endsAt else { return nil }
+        #if DEBUG
+        endsAt += previewClockShift
+        #endif
         let clock = DateFormatter()
         clock.locale = .autoupdatingCurrent
         clock.setLocalizedDateFormatFromTemplate("jm")
-        return "Opens at \(clock.string(from: endsAt))"
+        return String(localized: "Opens at \(clock.string(from: endsAt))")
     }
+
+    #if DEBUG
+    /// Screenshot hook: moves only the quoted clock ("Opens at 9:40 AM"), so a
+    /// preview can read as a weekday morning whenever it is captured. The
+    /// countdown still comes from the real clock. Set by the app's DebugSeed;
+    /// the shield extension never sets it.
+    nonisolated(unsafe) static var previewClockShift: TimeInterval = 0
+    #endif
 }

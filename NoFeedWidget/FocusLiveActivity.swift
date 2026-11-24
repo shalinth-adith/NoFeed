@@ -281,7 +281,7 @@ private enum Copy {
 
     static func time(_ date: Date) -> String {
         // The user's own clock, without AM/PM: "9:40" or "21:40".
-        date.formatted(.dateTime.hour(.defaultDigits(amPM: .omitted)).minute())
+        Date.removingMeridiem(from: date.formatted(date: .omitted, time: .shortened))
     }
 }
 

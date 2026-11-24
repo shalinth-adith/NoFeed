@@ -42,6 +42,14 @@ struct LocalizationTests {
         #expect(one != many.replacingOccurrences(of: "4", with: "1"))
     }
 
+    @Test func meridiemIsRemovedWithoutPaddingTheHour() {
+        var us = Calendar(identifier: .gregorian); us.locale = Locale(identifier: "en_US")
+        #expect(Date.removingMeridiem(from: "9:00\u{202F}AM", calendar: us) == "9:00")
+        #expect(Date.removingMeridiem(from: "11:30 PM", calendar: us) == "11:30")
+        var de = Calendar(identifier: .gregorian); de.locale = Locale(identifier: "de_DE")
+        #expect(Date.removingMeridiem(from: "21:00", calendar: de) == "21:00")
+    }
+
     @Test(arguments: ["es", "fr", "de", "ja", "pt-BR"])
     func everyShippedLanguageIsBundled(_ language: String) {
         #expect(Bundle.main.localizations.contains(language))

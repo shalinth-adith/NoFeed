@@ -532,8 +532,8 @@ struct ScheduleEditView: View {
     static func timeText(_ minutes: Int, withMeridiem: Bool = true) -> String {
         let normalized = ((minutes % (24 * 60)) + 24 * 60) % (24 * 60)
         let date = date(from: normalized)
-        if withMeridiem { return date.formatted(date: .omitted, time: .shortened) }
-        return date.formatted(.dateTime.hour(.defaultDigits(amPM: .omitted)).minute())
+        let full = date.formatted(date: .omitted, time: .shortened)
+        return withMeridiem ? full : Date.removingMeridiem(from: full)
     }
 
     /// "AM" / "PM" in the user's language, or nothing on a 24-hour clock.

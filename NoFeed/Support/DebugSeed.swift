@@ -61,6 +61,17 @@ enum DebugSeed {
 
     /// `NoFeedSeedDemoHistory` — fill this calendar week with focus sessions so
     /// Insights renders its populated state instead of its first-run state.
+    /// `NoFeedSeedDemoSchedule` — one Mon–Fri 9:00–11:00 schedule for the
+    /// first profile, for the App Store Schedules screenshot. Only seeds into an
+    /// empty list, so pair it with `NoFeedUITestResetSchedules`.
+    static var wantsDemoSchedule: Bool {
+        ProcessInfo.processInfo.arguments.contains("NoFeedSeedDemoSchedule")
+    }
+
+    static var wantsPlainNotes: Bool {
+        ProcessInfo.processInfo.arguments.contains("NoFeedSeedPlainNotes")
+    }
+
     static var wantsDemoHistory: Bool {
         ProcessInfo.processInfo.arguments.contains("NoFeedSeedDemoHistory")
     }
@@ -86,8 +97,18 @@ enum DebugSeed {
     /// Sixteen minutes because that is what the comp shows.
     static func primeShieldPreviewSession() {
         guard shieldPreviewSubject != nil || blockScreenPreviewSubject != nil else { return }
-        ActiveSessionInfo.set(profileName: "Work",
-                              endsAt: Date().addingTimeInterval(16 * 60))
+        let endsAt = Date().addingTimeInterval(16 * 60)
+        ActiveSessionInfo.set(profileName: "Work", endsAt: endsAt)
+        // `NoFeedPreviewClock 9:24` makes the screen quote a 9:24 start
+        // ("Opens at 9:40 AM") whatever the time of capture.
+        if let raw = argument(after: "NoFeedPreviewClock") {
+            let parts = raw.split(separator: ":").compactMap { Int($0) }
+            if parts.count == 2,
+               let target = Calendar.current.date(bySettingHour: parts[0], minute: parts[1], second: 0, of: Date()) {
+                // Measured from the end time itself, so it lands on the minute.
+                ShieldMessage.previewClockShift = target.addingTimeInterval(16 * 60).timeIntervalSince(endsAt)
+            }
+        }
     }
 
     /// Drop any persisted session so the app launches idle.
@@ -253,7 +274,10 @@ enum DebugSeed {
             session.endedEarly = false
             session.startedAt = started
             session.endedAt = ended
-            session.note = "\(demoMarker) · \(what)"
+            // `NoFeedSeedPlainNotes` drops the marker for App Store screenshots.
+            // Those runs pair it with `NoFeedUITestResetHistory`, so the
+            // idempotence check that reads the marker is never needed.
+            session.note = wantsPlainNotes ? what : "\(demoMarker) · \(what)"
             // Mostly focused, so "What works for you" has something to say,
             // with a couple of the other answers so the rows are not uniform.
             session.reflection = offset % 4 == 3 ? .distracted

@@ -4,7 +4,7 @@ An iPhone app that blocks distracting apps and websites while you focus. Built i
 SwiftUI on Apple's Screen Time frameworks (FamilyControls, ManagedSettings,
 DeviceActivity). No account, no server: everything stays on the device.
 
-**Current version:** 2.3, on the App Store.
+**Current version:** 2.3, in TestFlight.
 
 ## What it does
 

@@ -149,6 +149,7 @@ targets:
       - path: Shared/AppGroup.swift
       - path: Shared/DistractionLog.swift
       - path: Shared/ShieldMessage.swift
+      - path: Shared/AppLimit.swift
       - path: Shared/ActiveSessionInfo.swift
       - path: Shared/PausedApp.swift
       # Read only to decide whether the block screen draws its second button.
@@ -201,6 +202,7 @@ targets:
       - path: Shared/DistractionLog.swift
       - path: Shared/UnlockWindow.swift
       - path: Shared/UnlockActivity.swift
+      - path: Shared/AppLimit.swift
       - path: Shared/ShieldApplier.swift
       # Re-checks strictness at the moment the pass is granted, not only where
       # the button was drawn — the two happen in different processes. Both

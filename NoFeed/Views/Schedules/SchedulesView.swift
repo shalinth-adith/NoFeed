@@ -19,6 +19,7 @@ import CoreData
 
 struct SchedulesView: View {
     @Environment(ScheduleStore.self) private var store
+    @Environment(LimitStore.self) private var limitStore
     @Environment(ProfileStore.self) private var profiles
     @Environment(AuthorizationService.self) private var authorization
     @State private var editing: EditTarget?
@@ -32,6 +33,7 @@ struct SchedulesView: View {
     /// The same Profiles list Settings opens. A profile made here used to land
     /// in a list reachable only from another tab (review 2.3, M3).
     @State private var showAllProfiles = false
+    @State private var showLimits = false
 
     /// What the editor changed on the user's behalf, and how to put it back.
     struct ScheduleToast: Identifiable {
@@ -80,6 +82,11 @@ struct SchedulesView: View {
                                 .padding(.bottom, 2)
                             newProfileButton
                             allProfilesRow
+
+                            sectionLabel("Limits")
+                                .padding(.top, 20)
+                                .padding(.bottom, 2)
+                            limitsRow
                         }
                         .padding(.horizontal, 28)
                         .padding(.top, 20)
@@ -91,6 +98,7 @@ struct SchedulesView: View {
             .toolbar(.hidden, for: .navigationBar)
             .safeAreaInset(edge: .bottom) { toastBar }
             .sheet(isPresented: $showAllProfiles) { ProfilesView() }
+            .sheet(isPresented: $showLimits) { LimitsView() }
             .sheet(item: $editing, onDismiss: { prefilledProfileName = nil }) { target in
                 switch target {
                 case .newSchedule:
@@ -290,6 +298,34 @@ struct SchedulesView: View {
             .buttonStyle(.plain)
             .accessibilityIdentifier("add-schedule")
         }
+    }
+
+    private var limitsRow: some View {
+        Button {
+            Haptics.light()
+            showLimits = true
+        } label: {
+            HStack {
+                Text("Daily limits")
+                    .font(ZTheme.Font.body(15))
+                    .foregroundStyle(ZTheme.Palette.textPrimary)
+                if !limitStore.limits.isEmpty {
+                    Text(limitStore.limits.count, format: .number)
+                        .font(ZTheme.Font.numeral(15))
+                        .foregroundStyle(ZTheme.Palette.text(0.55))
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(ZTheme.Palette.text(0.30))
+            }
+            .padding(.vertical, 14)
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("daily-limits")
+        .accessibilityHint("Opens the apps you limit to a set time each day")
     }
 
     private var allProfilesRow: some View {

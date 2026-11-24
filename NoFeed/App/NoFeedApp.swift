@@ -18,6 +18,7 @@ struct NoFeedApp: App {
     @State private var analytics = AnalyticsService()
     @State private var achievements = AchievementService()
     @State private var challenges = ChallengeService()
+    @State private var limits = LimitStore()
 
     @Environment(\.scenePhase) private var scenePhase
 
@@ -113,6 +114,7 @@ struct NoFeedApp: App {
                 // registered right now, so it re-asserts a live session or an
                 // open schedule window and clears when neither applies.
                 session.reapplyEnforcement()
+                limits.armAll()
                 applyFocusFilterProfile()
                 startPendingFocusIfNeeded()
                 ScheduleAutoStart.run(schedules: schedules, session: session, profiles: profiles)
@@ -140,6 +142,7 @@ struct NoFeedApp: App {
             .environment(analytics)
             .environment(achievements)
             .environment(challenges)
+            .environment(limits)
             // The widget's "Start Work" tap. A widget cannot run an intent that
             // opens the app, so it sends a URL instead; this turns it into the
             // same request the intents make and starts straight away — the

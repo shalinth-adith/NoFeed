@@ -500,7 +500,9 @@ final class NoFeedQuietSuite: XCTestCase {
 
     /// TC-5.1 — create a schedule; Save is usable without typing a title.
     func testCreateSchedule() throws {
-        let app = try launchToHome()
+        // Start from no schedules: every earlier run leaves one behind, and two
+        // leftovers on the same day clash more than the editor's one repair fixes.
+        let app = try launchToHome(arguments: ["NoFeedUITestResetSchedules"])
         openTab(app, "Schedule")
 
         let addSchedule = app.buttons["add-schedule"]

@@ -46,6 +46,9 @@ enum ShieldMessage {
         if let minutes = ActiveSessionInfo.remainingMinutes {
             let time = String(localized: "\(minutes) minutes")
             lines.append(String(localized: "It opens on its own in \(time). Nothing inside will have moved."))
+        } else if AppLimitStore.anyReachedNow() {
+            // A daily limit, not a session: say what happened and when it ends.
+            lines.append(String(localized: "Today's limit is used up. It opens again tomorrow."))
         } else {
             // No session, so no honest number to give. The reassurance still
             // holds and is the half worth keeping.

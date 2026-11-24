@@ -12,12 +12,23 @@
 import Foundation
 import DeviceActivity
 import ManagedSettings
+import UserNotifications
 
 final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     private let store = ManagedSettingsStore(named: .noFeed)
 
     override func intervalDidStart(for activity: DeviceActivityName) {
         super.intervalDidStart(for: activity)
+
+        // A daily limit's new day: yesterday's used-up allowance is lifted. The
+        // enforcer would expire at midnight on its own; clearing it here just
+        // makes that exact. Its counting activity is not an enforcer, so there
+        // is nothing to apply.
+        if let id = AppLimitStore.limitID(fromMonitor: activity.rawValue) {
+            AppLimitStore.clearReached(id)
+            ShieldReconciler.reconcile(store)
+            return
+        }
 
         // Weekday filtering: recurring schedules monitor daily but only apply on
         // selected weekdays (mask 0 = every day, used by one-off sessions).
@@ -41,6 +52,30 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         // overwriting the store, so a newly-started window composes with any that
         // are already open instead of clobbering them.
         ShieldReconciler.reconcile(store)
+    }
+
+    // MARK: - Daily limits
+
+    override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name,
+                                         activity: DeviceActivityName) {
+        super.eventDidReachThreshold(event, activity: activity)
+        guard let id = AppLimitStore.limitID(fromMonitor: activity.rawValue) else { return }
+        AppLimitStore.markReached(id)
+        ShieldReconciler.reconcile(store)
+    }
+
+    override func eventWillReachThresholdWarning(_ event: DeviceActivityEvent.Name,
+                                                 activity: DeviceActivityName) {
+        super.eventWillReachThresholdWarning(event, activity: activity)
+        guard let id = AppLimitStore.limitID(fromMonitor: activity.rawValue),
+              let limit = AppLimitStore.limit(id: id), limit.isEnabled else { return }
+        let content = UNMutableNotificationContent()
+        content.title = limit.displayName
+        content.body = String(localized: "\(AppLimitStore.warningMinutes) minutes left for today.")
+        content.sound = .default
+        let request = UNNotificationRequest(identifier: "nofeed.limit.warning.\(id.uuidString)",
+                                            content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request)
     }
 
     override func intervalDidEnd(for activity: DeviceActivityName) {

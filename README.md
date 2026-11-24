@@ -109,7 +109,9 @@ Rules for new copy:
 - Format dates and times with `formatted(...)` styles, not fixed `dateFormat`
   patterns, so order and the 12/24-hour clock follow the user's region.
 - Building in Xcode adds new keys to the catalog. A key without translations
-  falls back to English at runtime.
+  falls back to English at runtime. `scripts/l10n.py` syncs keys from a build,
+  lists the ones missing a translation, and merges new translations after
+  checking every format specifier.
 
 ## Testing
 

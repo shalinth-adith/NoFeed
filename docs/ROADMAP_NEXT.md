@@ -21,10 +21,13 @@ stays exactly as it is.
 
 ## Build order
 
+One phase at a time: each is built, tested on a device, and signed off before
+the next starts. ✅ marks a phase that is built and waiting for, or past, that test.
+
 | # | Feature | Tier | How |
 |---|---|---|---|
-| 1 | Show the score | 3 | `AnalyticsService.productivityScore()` on Insights, with what it is made of |
-| 2 | Daily app limits | 2 | A daily `DeviceActivitySchedule` with a `DeviceActivityEvent` threshold per limit. The monitor's `eventDidReachThreshold` registers a limit enforcer until midnight. |
+| 1 ✅ | Show the score | 3 | `FocusScore` on Insights: time, consistency and follow-through, each shown |
+| 2 ✅ | Daily app limits | 2 | A daily `DeviceActivitySchedule` with a `DeviceActivityEvent` threshold per limit. The monitor's `eventDidReachThreshold` registers a limit enforcer until midnight. |
 | 3 | Mindful pause | 1 | A per-profile "pause, don't block" mode. The shield's second button asks once, makes you wait ten seconds (`.defer` redraws the shield), then opens the unlock window. |
 | 4 | Focus mode link | 2 | `ApplyFocusProfileIntent` registers an enforcer while the iOS Focus is on, capped at 12 hours so a missed "off" can't strand a shield. |
 | 5 | Locked sessions | 2 | A strict option with no early end and `application.denyAppRemoval` for the session. One emergency exit a week, behind a five-minute hold. |

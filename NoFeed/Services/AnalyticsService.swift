@@ -169,6 +169,28 @@ final class AnalyticsService {
 
     // MARK: - Score
 
+    /// The last seven days, today included. Minutes count every session's real
+    /// focus time, including the part of one that ended early.
+    func focusScore(dailyGoalMinutes: Int, now: Date = Date()) -> FocusScore {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: now)
+        guard let start = calendar.date(byAdding: .day, value: -6, to: today),
+              let end = calendar.date(byAdding: .day, value: 1, to: today) else {
+            return FocusScore.compute(minutesPerDay: [], dailyGoalMinutes: dailyGoalMinutes, started: 0, finished: 0)
+        }
+        let sessions = history.focusSessions(from: start, to: end)
+        let minutesPerDay = (0..<7).map { offset -> Int in
+            guard let day = calendar.date(byAdding: .day, value: offset, to: start) else { return 0 }
+            return sessions
+                .filter { $0.startedAt.map { calendar.isDate($0, inSameDayAs: day) } ?? false }
+                .reduce(0) { $0 + Int($1.completedMinutes) }
+        }
+        return FocusScore.compute(minutesPerDay: minutesPerDay,
+                                  dailyGoalMinutes: dailyGoalMinutes,
+                                  started: sessions.count,
+                                  finished: sessions.filter(\.wasCompleted).count)
+    }
+
     func streak() -> Int { history.currentStreak() }
     func todayMinutes() -> Int { history.todayFocusMinutes() }
 

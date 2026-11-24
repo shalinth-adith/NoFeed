@@ -33,6 +33,7 @@ struct AnalyticsView: View {
     @State private var unreflected: [FocusSession] = []
     @State private var pendingReflection: SessionReflection = .none
     @State private var rules: InsightRules = .empty
+    @State private var score = FocusScore.compute(minutesPerDay: [], dailyGoalMinutes: 1, started: 0, finished: 0)
 
     /// The single accent — the active profile's Quiet tone.
     private var tone: Color { ZTheme.tone(forHex: profiles.activeProfile?.accentHex) }
@@ -74,6 +75,13 @@ struct AnalyticsView: View {
                                 insightLines
                             }
 
+                            if !score.isEmpty {
+                                sectionLabel("Focus score")
+                                    .padding(.top, 34)
+                                    .padding(.bottom, 14)
+                                scoreBlock
+                            }
+
                             sectionLabel("Goals")
                                 .padding(.top, 34)
                                 .padding(.bottom, 18)
@@ -104,6 +112,7 @@ struct AnalyticsView: View {
         unreflected = analytics.unreflectedSessions()
         pendingReflection = .none
         rules = analytics.insightRules()
+        score = analytics.focusScore(dailyGoalMinutes: dailyGoalMinutes)
         analytics.updateSnapshot()
     }
 
@@ -397,6 +406,42 @@ struct AnalyticsView: View {
             }
             .padding(.vertical, 16)
         }
+    }
+
+    // MARK: - Focus score
+
+    /// The number, then what it is made of, so it is never a mystery grade.
+    private var scoreBlock: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text(score.total, format: .number)
+                    .font(ZTheme.Font.numeral(44, weight: .regular))
+                    .foregroundStyle(ZTheme.Palette.textPrimary)
+                Text("out of 100, last 7 days")
+                    .font(ZTheme.Font.body(14))
+                    .foregroundStyle(ZTheme.Palette.text(0.55))
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("insights-focus-score")
+            .padding(.bottom, 14)
+            scorePart("Time toward your goal", score.time, of: FocusScore.timeWeight)
+            hairline()
+            scorePart("Days you focused", score.consistency, of: FocusScore.consistencyWeight)
+            hairline()
+            scorePart("Sessions you finished", score.followThrough, of: FocusScore.followThroughWeight)
+            if let next = score.nextStep {
+                Text(verbatim: next)
+                    .font(ZTheme.Font.body(13))
+                    .foregroundStyle(ZTheme.Palette.text(0.55))
+                    .padding(.top, 12)
+            }
+        }
+    }
+
+    private func scorePart(_ title: LocalizedStringResource, _ points: Int, of weight: Int) -> some View {
+        goalRow(title: title, value: "\(points) / \(weight)",
+                progress: Double(points) / Double(weight), fill: tone)
+            .padding(.vertical, 12)
     }
 
     private func goalRow(title: LocalizedStringResource, value: String, progress: Double, fill: Color) -> some View {

@@ -21,6 +21,9 @@ struct ProfileDraft {
     var focusMinutes: Int = 25
     var breakMinutes: Int = 5
     var isStrict: Bool = false
+    /// "Pause, don't block". Kept in the App Group by name, not on the entity;
+    /// see `MindfulPause` for why.
+    var isMindful: Bool = false
     var blockAllApps: Bool = true
     var allowedWebDomains: String = ""
     var block = FamilyActivitySelection()
@@ -89,6 +92,7 @@ final class ProfileStore {
             focusMinutes: Int(profile.focusMinutes),
             breakMinutes: Int(profile.breakMinutes),
             isStrict: profile.isStrict,
+            isMindful: MindfulPause.isOn(forProfile: profile.name),
             blockAllApps: profile.blockAllApps,
             allowedWebDomains: profile.allowedWebDomains ?? "",
             block: SelectionCodec.decode(profile.blockSelectionData),
@@ -110,6 +114,11 @@ final class ProfileStore {
 
     func update(_ profile: FocusProfile, with draft: ProfileDraft) {
         let oldName = profile.name ?? ""
+        // The setting is keyed by name, so a rename takes it along before
+        // `apply` writes the new value under the new name.
+        if !oldName.isEmpty, oldName != draft.name {
+            MindfulPause.set(false, forProfile: oldName)
+        }
         apply(draft, to: profile)
         let newName = profile.name ?? ""
         if !oldName.isEmpty, !newName.isEmpty, oldName != newName {
@@ -144,6 +153,7 @@ final class ProfileStore {
 
     func delete(_ profile: FocusProfile) {
         let wasActive = profile.id == activeProfileID
+        MindfulPause.set(false, forProfile: profile.name ?? "")
         context.delete(profile)
         save()
         fetch()
@@ -184,6 +194,7 @@ final class ProfileStore {
         profile.focusMinutes = Int16(draft.focusMinutes)
         profile.breakMinutes = Int16(draft.breakMinutes)
         profile.isStrict = draft.isStrict
+        MindfulPause.set(draft.isMindful && !draft.isStrict, forProfile: draft.name)
         profile.blockAllApps = draft.blockAllApps
         profile.allowedWebDomains = draft.allowedWebDomains
         profile.blockSelectionData = SelectionCodec.encode(draft.block)
@@ -201,7 +212,11 @@ final class ProfileStore {
     /// ask for this on launch, so a leftover from an earlier run can never
     /// trip the duplicate-name rule or hide the profile a test expects.
     func resetToDefaultsForUITests() {
-        for profile in profiles { context.delete(profile) }
+        for profile in profiles {
+            // Kept outside Core Data, so deleting the entity does not clear it.
+            MindfulPause.set(false, forProfile: profile.name ?? "")
+            context.delete(profile)
+        }
         save()
         seedDefaultsIfNeeded()
         fetch()

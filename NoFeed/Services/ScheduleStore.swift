@@ -416,7 +416,11 @@ final class ScheduleStore {
             // so the block screen can honour it before the app has ever been
             // opened during the window. Without this a strict schedule read as
             // non-strict to the shield and was offered the unlock pass.
-            isStrict: schedule.isStrict
+            isStrict: schedule.isStrict,
+            // A schedule pauses rather than blocks when the profile it runs
+            // with does. Read live at every arm, so toggling the profile's
+            // setting reaches its schedules on the next `rearmEnabled()`.
+            isMindful: MindfulPause.isOn(forProfile: schedule.profileName)
         )
 
         // If the window is already open right now, apply the shields immediately.
@@ -518,6 +522,7 @@ enum ScheduleAutoStart {
             focusMinutes: minutes,
             breakMinutes: 0,
             isStrict: schedule.isStrict,
+            isMindful: MindfulPause.isOn(forProfile: schedule.profileName),
             blockAll: schedule.blockAllApps,
             allowedWebDomains: [],
             block: SelectionCodec.decode(schedule.blockSelectionData),

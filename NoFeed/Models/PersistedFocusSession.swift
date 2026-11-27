@@ -33,6 +33,9 @@ struct PersistedFocusSession: Codable {
     var allowData: Data?
     var blockAll: Bool = true
     var allowedWebDomains: [String] = []
+    /// "Pause, don't block" (see `MindfulPause`). Absent in snapshots written
+    /// before it existed, which read as false: they never offered the wait.
+    var isMindful: Bool = false
 
     init(startedAt: Date,
          focusMinutes: Int,
@@ -45,7 +48,8 @@ struct PersistedFocusSession: Codable {
          blockData: Data? = nil,
          allowData: Data? = nil,
          blockAll: Bool = true,
-         allowedWebDomains: [String] = []) {
+         allowedWebDomains: [String] = [],
+         isMindful: Bool = false) {
         self.startedAt = startedAt
         self.focusMinutes = focusMinutes
         self.breakMinutes = breakMinutes
@@ -58,6 +62,7 @@ struct PersistedFocusSession: Codable {
         self.allowData = allowData
         self.blockAll = blockAll
         self.allowedWebDomains = allowedWebDomains
+        self.isMindful = isMindful
     }
 
     /// Decoded by hand rather than by the synthesised initialiser: a session
@@ -79,6 +84,7 @@ struct PersistedFocusSession: Codable {
         allowData = try box.decodeIfPresent(Data.self, forKey: .allowData)
         blockAll = try box.decodeIfPresent(Bool.self, forKey: .blockAll) ?? true
         allowedWebDomains = try box.decodeIfPresent([String].self, forKey: .allowedWebDomains) ?? []
+        isMindful = try box.decodeIfPresent(Bool.self, forKey: .isMindful) ?? false
     }
 }
 

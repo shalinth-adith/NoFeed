@@ -46,6 +46,7 @@ final class FocusSessionController {
     private var phaseStart = Date()
     private var focusStartedAt = Date()
     private var isStrict = false
+    private var isMindful = false
     private var plannedFocusMinutes = 0
     private var breakMinutes = 0
     private var ticker: Task<Void, Never>?
@@ -120,6 +121,7 @@ final class FocusSessionController {
                     focusMinutes: Int,
                     breakMinutes: Int,
                     isStrict: Bool,
+                    isMindful: Bool = false,
                     blockAll: Bool,
                     allowedWebDomains: [String] = [],
                     block: FamilyActivitySelection,
@@ -129,6 +131,8 @@ final class FocusSessionController {
         self.plannedFocusMinutes = focusMinutes
         self.breakMinutes = breakMinutes
         self.isStrict = isStrict
+        // Strict promises no way out; a pause is a way out. Strict wins.
+        self.isMindful = isMindful && !isStrict
         self.focusStartedAt = Date()
         self.currentBlock = block
         self.currentAllow = allow
@@ -153,7 +157,8 @@ final class FocusSessionController {
         schedule.startOneOff(activity: .focusSession, block: block, allow: allow,
                              blockAll: blockAll, allowedWebDomains: allowedWebDomains,
                              durationMinutes: focusMinutes,
-                             isStrict: isStrict)
+                             isStrict: isStrict,
+                             isMindful: isMindful)
         notifications.scheduleFocusEnd(after: TimeInterval(focusMinutes * 60),
                                        profileName: profileName,
                                        startedAt: focusStartedAt)
@@ -189,7 +194,8 @@ final class FocusSessionController {
             blockData: SelectionCodec.encode(currentBlock),
             allowData: SelectionCodec.encode(currentAllow),
             blockAll: currentBlockAll,
-            allowedWebDomains: currentAllowedWebDomains
+            allowedWebDomains: currentAllowedWebDomains,
+            isMindful: isMindful
         ))
     }
 
@@ -203,6 +209,7 @@ final class FocusSessionController {
         plannedFocusMinutes = saved.focusMinutes
         breakMinutes = saved.breakMinutes
         isStrict = saved.isStrict
+        isMindful = saved.isMindful && !saved.isStrict
         focusStartedAt = saved.startedAt
         totalSeconds = saved.focusMinutes * 60
         currentBlock = SelectionCodec.decode(saved.blockData)
@@ -271,7 +278,8 @@ final class FocusSessionController {
                              blockAll: currentBlockAll,
                              allowedWebDomains: currentAllowedWebDomains,
                              durationMinutes: max(1, Int(ceil(Double(seconds) / 60))),
-                             isStrict: isStrict)
+                             isStrict: isStrict,
+                             isMindful: isMindful)
         blocking.startBlocking(currentBlock, allowing: currentAllow,
                                blockAll: currentBlockAll,
                                allowedWebDomains: currentAllowedWebDomains)
@@ -326,7 +334,8 @@ final class FocusSessionController {
                              blockAll: currentBlockAll,
                              allowedWebDomains: currentAllowedWebDomains,
                              durationMinutes: max(1, Int(ceil(secondsLeft / 60))),
-                             isStrict: isStrict)
+                             isStrict: isStrict,
+                             isMindful: isMindful)
         notifications.scheduleFocusEnd(after: secondsLeft, profileName: profileName,
                                        startedAt: focusStartedAt)
         // Anchor the card to the (shifted) phase start, not to now — otherwise
@@ -524,6 +533,7 @@ final class FocusSessionController {
                    focusMinutes: minutes ?? plannedFocusMinutes,
                    breakMinutes: breakMinutes,
                    isStrict: isStrict,
+                   isMindful: isMindful,
                    blockAll: currentBlockAll,
                    allowedWebDomains: currentAllowedWebDomains,
                    block: currentBlock,

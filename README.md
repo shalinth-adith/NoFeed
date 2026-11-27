@@ -13,12 +13,15 @@ DeviceActivity). No account, no server: everything stays on the device.
   with a three-second hold.
 - **Profiles.** Work, Study, Gym and Sleep ship by default. Each blocks everything
   or a chosen set of apps, keeps an allowlist, and sets its own length. **Strict
-  mode** removes pause and makes ending early a 60-second hold.
+  mode** removes pause and makes ending early a 60-second hold. **Pause, don't
+  block** turns the block screen into a ten-second wait before a timed pass.
 - **Schedules.** Recurring focus windows that block on their own, with clash
   detection.
 - **The block screen.** A custom shield ("Instagram is behind this door") with an
   optional timed **unlock window** (15, 30 or 60 minutes, off by default, never
-  offered during anything strict).
+  offered during anything strict). `ShieldDoor` decides the second button for
+  both the shield and the shield action.
+- **Daily limits.** "These apps, this long a day", then they lock until midnight.
 - **Insights.** The calendar week, sessions, how often a blocked app was reached
   for, daily goals, a weekly recap with a shareable card, and "What works for you"
   rules once ten sessions have a reflection (Focused / Distracted / Interrupted).

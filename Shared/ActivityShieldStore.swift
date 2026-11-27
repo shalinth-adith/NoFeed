@@ -23,6 +23,7 @@ enum ActivityShieldStore {
     private static let windowStartKey = "activityWindowStartMap"
     private static let windowEndKey = "activityWindowEndMap"
     private static let strictKey = "activityStrictMap"
+    private static let mindfulKey = "activityMindfulMap"
 
     /// - Parameters:
     ///   - weekdaysMask: bitmask of Calendar weekdays (1=Sun…7=Sat) the activity
@@ -55,6 +56,7 @@ enum ActivityShieldStore {
                     endMinutes: Int = -1,
                     absoluteWindow: (start: Date, end: Date)? = nil,
                     isStrict: Bool = false,
+                    isMindful: Bool = false,
                     for activity: String) {
         var blockMap = map(blockKey)
         var allowMap = map(allowKey)
@@ -78,6 +80,10 @@ enum ActivityShieldStore {
         var strictMap = boolMap(strictKey)
         strictMap[activity] = isStrict
         AppGroup.defaults.set(strictMap, forKey: strictKey)
+
+        var mindfulMap = boolMap(mindfulKey)
+        mindfulMap[activity] = isMindful && !isStrict
+        AppGroup.defaults.set(mindfulMap, forKey: mindfulKey)
 
         var startMap = intMap(startKey)
         startMap[activity] = startMinutes
@@ -132,6 +138,29 @@ enum ActivityShieldStore {
     /// other blocks happen to be open alongside it.
     static func anyActiveEnforcerIsStrict(_ now: Date = Date()) -> Bool {
         activeActivitiesNow(now).contains { isStrict(for: $0) }
+    }
+
+    /// Does this enforcer pause rather than block? See `MindfulPause`.
+    /// Never true for a strict one, whatever was passed in.
+    static func isMindful(for activity: String) -> Bool {
+        boolMap(mindfulKey)[activity] ?? false
+    }
+
+    /// Is any live enforcer in "pause, don't block" mode? Decides whether the
+    /// block screen makes you wait before it offers a pass.
+    static func anyActiveEnforcerIsMindful(_ now: Date = Date()) -> Bool {
+        activeActivitiesNow(now).contains { isMindful(for: $0) }
+    }
+
+    /// Is every live enforcer in "pause, don't block" mode?
+    ///
+    /// A pass lifts *everything*, so a mindful profile can only offer one on its
+    /// own authority when nothing else is enforcing. A plain schedule or a used-up
+    /// daily limit running alongside it did not agree to be lifted; then the
+    /// global unlock setting has to be on as well. False when nothing is live.
+    static func allActiveEnforcersAreMindful(_ now: Date = Date()) -> Bool {
+        let live = activeActivitiesNow(now)
+        return !live.isEmpty && live.allSatisfy { isMindful(for: $0) }
     }
 
     static func allowedWebDomains(for activity: String) -> [String] {
@@ -211,6 +240,8 @@ enum ActivityShieldStore {
         AppGroup.defaults.set(webMap, forKey: webKey)
         var strictMap = boolMap(strictKey); strictMap[activity] = nil
         AppGroup.defaults.set(strictMap, forKey: strictKey)
+        var mindfulMap = boolMap(mindfulKey); mindfulMap[activity] = nil
+        AppGroup.defaults.set(mindfulMap, forKey: mindfulKey)
         var startMap = intMap(startKey); startMap[activity] = nil
         AppGroup.defaults.set(startMap, forKey: startKey)
         var endMap = intMap(endKey); endMap[activity] = nil

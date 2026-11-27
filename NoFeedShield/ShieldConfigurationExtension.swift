@@ -6,8 +6,8 @@
 //  the relevant overload depending on whether the block came from an app, a
 //  website, or a category. We personalize with the subject's name when available.
 //
-//  Every overload draws the same one-button screen. See `ShieldTheme` for why
-//  the second button ("I need it for 5 minutes") no longer exists.
+//  Every overload draws the same screen. See `ShieldTheme` for what the second
+//  button offers, and `MindfulPause` for the wait it can walk through.
 //
 
 import ManagedSettings
@@ -15,8 +15,7 @@ import ManagedSettingsUI
 
 final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     override func configuration(shielding application: Application) -> ShieldConfiguration {
-        DistractionLog.recordAttempt()
-        PausedApp.record(name: application.localizedDisplayName)
+        record(application.localizedDisplayName)
         return ShieldTheme.configuration(subject: application.localizedDisplayName)
     }
 
@@ -24,21 +23,28 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     /// category — the default on all four shipped profiles.
     override func configuration(shielding application: Application,
                                 in category: ActivityCategory) -> ShieldConfiguration {
-        DistractionLog.recordAttempt()
-        PausedApp.record(name: application.localizedDisplayName)
+        record(application.localizedDisplayName)
         return ShieldTheme.configuration(subject: application.localizedDisplayName)
     }
 
     override func configuration(shielding webDomain: WebDomain) -> ShieldConfiguration {
-        DistractionLog.recordAttempt()
-        PausedApp.record(name: webDomain.domain)
+        record(webDomain.domain)
         return ShieldTheme.configuration(subject: webDomain.domain)
     }
 
     override func configuration(shielding webDomain: WebDomain,
                                 in category: ActivityCategory) -> ShieldConfiguration {
-        DistractionLog.recordAttempt()
-        PausedApp.record(name: webDomain.domain)
+        record(webDomain.domain)
         return ShieldTheme.configuration(subject: webDomain.domain)
+    }
+
+    /// Count the reach — unless this draw is the shield refreshing itself during
+    /// a mindful pause. Each tap there answers `.defer`, iOS asks for a new
+    /// screen, and counting each of those would turn one reach into several on
+    /// Insights and in the weekly recap.
+    private func record(_ name: String?) {
+        guard !ShieldDoor.current().isMidPause else { return }
+        DistractionLog.recordAttempt()
+        PausedApp.record(name: name)
     }
 }

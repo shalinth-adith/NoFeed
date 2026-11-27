@@ -418,10 +418,12 @@ private struct ProfileRow: View {
         let focus = String(localized: "\(profile.focusMinutes) min focus")
         let brk = profile.breakMinutes > 0 ? String(localized: " · \(profile.breakMinutes) min break") : ""
         let strict = profile.isStrict ? String(localized: " · strict") : ""
+        let pauses = !profile.isStrict && MindfulPause.isOn(forProfile: profile.name)
+            ? String(localized: " · pauses") : ""
         // A profile saved "without blocking" was indistinguishable from the
         // others in this list (review 2.3, L5).
         let nothing = blocksNothing ? String(localized: " · blocks nothing yet") : ""
-        return focus + brk + strict + nothing
+        return focus + brk + strict + pauses + nothing
     }
 
     private var blocksNothing: Bool {

@@ -387,6 +387,7 @@ struct ProfileEditView: View {
                            subtitle: "Ending early takes a full minute\u{2019}s hold",
                            isOn: $draft.isStrict,
                            tone: tone)
+            MindfulPauseRow(isMindful: $draft.isMindful, isStrict: $draft.isStrict, tone: tone)
         }
     }
 

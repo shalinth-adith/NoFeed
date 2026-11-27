@@ -154,6 +154,7 @@ targets:
       - path: Shared/PausedApp.swift
       # Read only to decide whether the block screen draws its second button.
       - path: Shared/UnlockWindow.swift
+      - path: Shared/MindfulPause.swift
       # Per-activity strictness, so a strict SCHEDULE (which is not a session and
       # so is invisible to ActiveSessionInfo) also suppresses that button.
       - path: Shared/ActivityShieldStore.swift
@@ -201,6 +202,7 @@ targets:
       - path: Shared/AppGroup.swift
       - path: Shared/DistractionLog.swift
       - path: Shared/UnlockWindow.swift
+      - path: Shared/MindfulPause.swift
       - path: Shared/UnlockActivity.swift
       - path: Shared/AppLimit.swift
       - path: Shared/ShieldApplier.swift

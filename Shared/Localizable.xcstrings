@@ -140,6 +140,40 @@
         }
       }
     },
+    " · pauses" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · pausiert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · pausa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · pause"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · 一時停止"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · pausa"
+          }
+        }
+      }
+    },
     " · strict" : {
       "localizations" : {
         "de" : {
@@ -6184,6 +6218,40 @@
         }
       }
     },
+    "Block screen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sperrbildschirm"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pantalla de bloqueo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écran de blocage"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブロック画面"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tela de bloqueio"
+          }
+        }
+      }
+    },
     "Blocked apps" : {
       "localizations" : {
         "de" : {
@@ -10753,6 +10821,40 @@
         }
       }
     },
+    "I still want it" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ich will es trotzdem"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún lo quiero"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je le veux quand même"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "それでも開きたい"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ainda quero"
+          }
+        }
+      }
+    },
     "Icon" : {
       "localizations" : {
         "de" : {
@@ -13236,6 +13338,40 @@
         }
       }
     },
+    "Open for %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für %@ öffnen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir durante %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir pendant %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@開く"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir por %@"
+          }
+        }
+      }
+    },
     "Open that one" : {
       "localizations" : {
         "de" : {
@@ -13640,6 +13776,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pausar sessão"
+          }
+        }
+      }
+    },
+    "Pause, don’t block" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausieren statt sperren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausar, no bloquear"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause, pas de blocage"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブロックせずに一時停止"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausar, não bloquear"
           }
         }
       }
@@ -16376,6 +16546,40 @@
         }
       }
     },
+    "Still want it? It opens for %@, then closes again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willst du es noch? Sie öffnet sich für %@ und schließt sich dann wieder."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Aún lo quieres? Se abre durante %@ y luego vuelve a cerrarse."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toujours envie ? Elle s’ouvre pendant %@, puis se referme."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まだ開きたいですか？%@開いて、また閉じます。"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ainda quer? Abre por %@ e depois fecha de novo."
+          }
+        }
+      }
+    },
     "Strict mode" : {
       "localizations" : {
         "de" : {
@@ -16611,6 +16815,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Respire fundo."
+          }
+        }
+      }
+    },
+    "Take a breath. Ten seconds, then it’s your call." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atme durch. Zehn Sekunden, dann entscheidest du."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respira. Diez segundos y luego decides tú."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respirez. Dix secondes, puis à vous de choisir."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ひと呼吸。10秒たったら、あなたが決めてください。"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respire. Dez segundos, depois você decide."
           }
         }
       }
@@ -17030,6 +17268,40 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "The block screen waits ten seconds, then lets you in" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Sperrbildschirm wartet zehn Sekunden und lässt dich dann rein"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La pantalla de bloqueo espera diez segundos y luego te deja pasar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’écran de blocage attend dix secondes, puis vous laisse entrer"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブロック画面で10秒待ってから開けます"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A tela de bloqueio espera dez segundos e depois deixa você entrar"
           }
         }
       }
@@ -18070,6 +18342,40 @@
         }
       }
     },
+    "Unlock for %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für %@ entsperren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desbloquear durante %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déverrouiller pendant %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ロック解除"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desbloquear por %@"
+          }
+        }
+      }
+    },
     "Unlock window" : {
       "localizations" : {
         "de" : {
@@ -18304,6 +18610,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Versão"
+          }
+        }
+      }
+    },
+    "Wait %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warte %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espera %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Patientez %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あと%@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aguarde %@"
           }
         }
       }

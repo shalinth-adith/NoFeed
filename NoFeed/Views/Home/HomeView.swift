@@ -365,6 +365,7 @@ struct HomeView: View {
             focusMinutes: selectedMinutes,
             breakMinutes: Int(profile.breakMinutes),
             isStrict: profile.isStrict,
+            isMindful: MindfulPause.isOn(forProfile: profile.name),
             blockAll: profile.blockAllApps,
             allowedWebDomains: WebDomainList.parse(profile.allowedWebDomains ?? ""),
             block: profiles.block(for: profile),

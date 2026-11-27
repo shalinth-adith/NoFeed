@@ -4,8 +4,9 @@
 //
 //  Handles taps on the block screen's button (Quiet spec, screen 03).
 //
-//  There is one button — "Back to focus" — and it closes the app you reached
-//  for. Every action closes, whichever overload iOS routes it to.
+//  "Back to focus" closes the app you reached for. The second button, when
+//  there is one, is decided by `ShieldDoor`: a timed pass, or the steps of a
+//  mindful pause (see `MindfulPause`).
 //
 //  There used to be a second button offering five minutes with the app, backed
 //  by a snooze store with an expiry. It is gone. Granting a pass means naming
@@ -58,10 +59,34 @@ final class ShieldActionExtension: ShieldActionDelegate {
         // Insights and in the weekly recap.
 
         guard action == .secondaryButtonPressed else {
+            // "Back to focus" — the outcome a pause hopes for. A wait that was
+            // under way is dropped, so the next reach starts from the beginning.
+            MindfulPause.reset()
             completionHandler(.close)
             return
         }
-        grantPass(completionHandler)
+
+        // Re-decided here, at the privileged operation, not trusted from the
+        // screen that was drawn: see `grantPass` for why that matters.
+        switch ShieldDoor.current() {
+        case .none:
+            completionHandler(.close)
+        case .unlock:
+            grantPass(minutes: nil, completionHandler)
+        case .mindful(.idle, _):
+            // "I still want it": start the ten seconds and stay on the shield.
+            // `.defer` keeps the user here and makes iOS redraw, and the redraw
+            // reads the new stage — "Wait 10 seconds".
+            MindfulPause.begin()
+            completionHandler(.defer)
+        case .mindful(.waiting, _):
+            // Tapped before the ten seconds were up. Nothing opens; the redraw
+            // shows how many are left.
+            completionHandler(.defer)
+        case .mindful(.ready, let minutes):
+            MindfulPause.reset()
+            grantPass(minutes: minutes, completionHandler)
+        }
     }
 
     /// Open a window, drop the shields, and arrange for them to come back.
@@ -76,7 +101,12 @@ final class ShieldActionExtension: ShieldActionDelegate {
     /// activity at all. If it fails the pass still closes itself: `isOpen` is a
     /// pure function of the clock, so the next reconcile from any source restores
     /// the shields. The interval only makes that prompt.
-    private func grantPass(_ completionHandler: @escaping (ShieldActionResponse) -> Void) {
+    ///
+    /// `minutes` is set for a pass earned by waiting out a mindful pause, which
+    /// does not depend on the global setting; nil means the plain pass, which
+    /// does.
+    private func grantPass(minutes: Int?,
+                           _ completionHandler: @escaping (ShieldActionResponse) -> Void) {
         // Strictness is re-checked HERE, not only where the button was drawn.
         //
         // Drawing and pressing happen in two different processes at two different
@@ -94,7 +124,8 @@ final class ShieldActionExtension: ShieldActionDelegate {
             return
         }
 
-        guard let until = UnlockWindow.open() else {
+        let granted: Date? = minutes.map { UnlockWindow.open(minutes: $0) } ?? UnlockWindow.open()
+        guard let until = granted else {
             // The setting was switched off between drawing the button and pressing
             // it. No pass, no pretending there was one.
             completionHandler(.close)

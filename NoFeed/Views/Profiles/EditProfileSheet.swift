@@ -85,6 +85,7 @@ struct EditProfileSheet: View {
             focusMinutes: Int(profile.focusMinutes),
             breakMinutes: Int(profile.breakMinutes),
             isStrict: profile.isStrict,
+            isMindful: MindfulPause.isOn(forProfile: profile.name),
             blockAllApps: profile.blockAllApps,
             allowedWebDomains: profile.allowedWebDomains ?? "",
             block: SelectionCodec.decode(profile.blockSelectionData),
@@ -405,6 +406,7 @@ struct EditProfileSheet: View {
                            subtitle: "Ending early takes a full minute\u{2019}s hold",
                            isOn: $draft.isStrict,
                            tone: tone)
+            MindfulPauseRow(isMindful: $draft.isMindful, isStrict: $draft.isStrict, tone: tone)
             QuietHairline(color: ZTheme.Palette.glassFill)
         }
     }
@@ -449,6 +451,7 @@ struct EditProfileSheet: View {
     private func save() {
         guard canSave else { return }
         let previousName = profile.name ?? ""
+        let wasMindful = MindfulPause.isOn(forProfile: previousName)
         draft.name = trimmedName
 
         store.update(profile, with: draft)
@@ -457,6 +460,12 @@ struct EditProfileSheet: View {
         // across or the profile silently stops starting on its own.
         if previousName != trimmedName {
             schedules.renameProfile(from: previousName, to: trimmedName)
+        }
+
+        // Schedules record "pause, don't block" when they register, so a change
+        // to it re-registers this profile's schedules to carry it across.
+        if wasMindful != MindfulPause.isOn(forProfile: trimmedName) || previousName != trimmedName {
+            schedules.rearmEnabled()
         }
 
         // A live session keeps enforcing what it started with — the note above

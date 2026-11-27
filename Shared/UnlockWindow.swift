@@ -103,7 +103,19 @@ enum UnlockWindow {
     static func open(now: Date = Date()) -> Date? {
         let minutes = configuredMinutes
         guard minutes >= minimumMinutes else { return nil }
-        let until = now.addingTimeInterval(TimeInterval(minutes * 60))
+        return open(minutes: minutes, now: now)
+    }
+
+    /// How long a pass earned by waiting out a mindful pause lasts: the user's
+    /// chosen length when they set one, else the floor. The profile's "pause,
+    /// don't block" switch is its own opt-in, so it does not also need the
+    /// global setting on. See `MindfulPause`.
+    static var mindfulMinutes: Int { isEnabled ? configuredMinutes : minimumMinutes }
+
+    /// Open a pass of an explicit length, never shorter than the floor.
+    @discardableResult
+    static func open(minutes: Int, now: Date = Date()) -> Date {
+        let until = now.addingTimeInterval(TimeInterval(max(minimumMinutes, minutes) * 60))
         AppGroup.defaults.set(until.timeIntervalSince1970, forKey: untilKey)
         return until
     }

@@ -33,7 +33,8 @@ final class ScheduleCenter {
                      blockAll: Bool,
                      allowedWebDomains: [String] = [],
                      durationMinutes: Int,
-                     isStrict: Bool = false) {
+                     isStrict: Bool = false,
+                     isMindful: Bool = false) {
         let calendar = Calendar.current
         let now = Date()
         let end = now.addingTimeInterval(TimeInterval(durationMinutes * 60))
@@ -57,6 +58,7 @@ final class ScheduleCenter {
                                 startMinutes: startMin, endMinutes: endMin,
                                 absoluteWindow: (now, end),
                                 isStrict: isStrict,
+                                isMindful: isMindful,
                                 for: activity.rawValue)
 
         // The 15-minute floor is Apple's, and it applies only to handing the
@@ -88,13 +90,15 @@ final class ScheduleCenter {
                         start: DateComponents,
                         end: DateComponents,
                         weekdaysMask: Int,
-                        isStrict: Bool = false) {
+                        isStrict: Bool = false,
+                        isMindful: Bool = false) {
         let startMin = (start.hour ?? 0) * 60 + (start.minute ?? 0)
         let endMin = (end.hour ?? 0) * 60 + (end.minute ?? 0)
         ActivityShieldStore.set(block: block, allow: allow, blockAll: blockAll,
                                 weekdaysMask: weekdaysMask,
                                 startMinutes: startMin, endMinutes: endMin,
                                 isStrict: isStrict,
+                                isMindful: isMindful,
                                 for: activity.rawValue)
         let schedule = DeviceActivitySchedule(intervalStart: start, intervalEnd: end, repeats: true)
         do {

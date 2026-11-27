@@ -78,8 +78,9 @@ enum ShieldTheme {
     /// The block screen, personalised with what is being paused (`subject` = app
     /// name or website domain, when iOS provides one).
     ///
-    /// One button. There was a second — "I need it for 5 minutes" — and it is
-    /// gone, because Screen Time cannot support it where it mattered.
+    /// The second button is decided by `ShieldDoor`. An earlier one — "I need it
+    /// for 5 minutes" — is gone for good, because Screen Time cannot support it
+    /// where it mattered:
     ///
     /// The pass has to name the app it lets through, and the only thing
     /// `shield.applicationCategories = .all(except:)` accepts is an
@@ -100,44 +101,32 @@ enum ShieldTheme {
 
         let title = ShieldConfiguration.Label(text: ShieldMessage.title(subject: name),
                                               color: primaryText)
-        let subtitle = ShieldConfiguration.Label(
-            text: ShieldMessage.subtitle(custom: custom),
-            color: secondaryText
-        )
-        let primary = ShieldConfiguration.Label(text: "Back to focus", color: onTone)
+        let door = ShieldDoor.current()
+        var subtitleText = ShieldMessage.subtitle(custom: custom)
+        if let lead = door.leadLine { subtitleText = lead + "\n\n" + subtitleText }
+        let subtitle = ShieldConfiguration.Label(text: subtitleText, color: secondaryText)
+        let primary = ShieldConfiguration.Label(text: String(localized: "Back to focus"), color: onTone)
 
-        // The second button is back, on different terms.
+        // The second button, decided by `ShieldDoor` so this screen and the
+        // action extension that handles the press always agree.
         //
-        // The old one tried to exempt *this app* and could not name it (see the
-        // note above). This one lifts everything for a fixed window, which needs
-        // no token and so works on every shield, category or not. It is drawn
-        // only when there is a real pass behind it:
+        //   · Off by default: a blocker should not ship with its own way out
+        //     already switched on. It appears when the user set an unlock length
+        //     in Settings, or turned on "Pause, don't block" for the profile.
+        //   · Never while anything strict is enforcing — strict's whole promise
+        //     is that there is no early exit. Strictness is asked of both
+        //     `ActiveSessionInfo` (an in-app session) and `ActivityShieldStore`
+        //     (a schedule that fired while the app was closed, before it ever
+        //     becomes a session).
+        //   · In "pause, don't block" the button walks through the wait — "I
+        //     still want it", "Wait 7 seconds", "Open for 15 minutes" — each step
+        //     a fresh draw that `.defer` asks iOS for. See `MindfulPause`.
         //
-        //   · the user set a duration — off by default, because a blocker should
-        //     not ship with its own way out already switched on; and
-        //   · nothing strict is enforcing — strict mode's whole promise is that
-        //     there is no early exit, and a door on that screen would break it.
-        //
-        // Strictness is asked of BOTH sources, and it has to be. `ActiveSessionInfo`
-        // only ever describes an in-app session, so a strict *schedule* that fired
-        // while the app was closed read as non-strict and was offered the pass —
-        // it does not become a session until `ScheduleAutoStart.run` converts it,
-        // and that only runs in the foreground. `ActivityShieldStore` now carries
-        // the flag per activity, which covers the schedule case and the window
-        // before any conversion happens.
-        //
-        // Both conditions are read from the App Group, the only channel this
-        // process has. A button that cannot deliver is worse than no button, so
-        // when either fails the screen stays one-button exactly as before.
-        let secondary: ShieldConfiguration.Label? = {
-            guard UnlockWindow.isEnabled,
-                  !ActiveSessionInfo.isStrict,
-                  !ActivityShieldStore.anyActiveEnforcerIsStrict() else { return nil }
-            return ShieldConfiguration.Label(
-                text: "Unlock for \(UnlockWindow.configuredMinutes) minutes",
-                color: secondaryText
-            )
-        }()
+        // A button that cannot deliver is worse than no button, so when nothing
+        // qualifies the screen stays one-button.
+        let secondary = door.buttonTitle.map {
+            ShieldConfiguration.Label(text: $0, color: secondaryText)
+        }
 
         // No icon. The words carry the screen on their own.
         //
